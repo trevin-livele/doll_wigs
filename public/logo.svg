@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <text x="10" y="42" font-family="Georgia, serif" font-size="28" font-weight="600" fill="#1f2937">DOLL</text>
+  <circle cx="100" cy="30" r="18" stroke="#e88b7d" stroke-width="2.5" fill="none"/>
+  <path d="M100 18 C96 18 93 21 93 25 C93 27 94 29 95 30 L100 36 L105 30 C106 29 107 27 107 25 C107 21 104 18 100 18 Z" fill="#e88b7d"/>
+  <text x="125" y="42" font-family="Georgia, serif" font-size="28" font-weight="600" fill="#1f2937">WIGS</text>
+</svg>
