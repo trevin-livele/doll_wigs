@@ -20,15 +20,15 @@ export default function CheckoutPage() {
   const shipping = 0;
   const total = subtotal + shipping;
 
-  const inputClasses = "w-full border-2 border-gray-200 rounded-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#CAB276] focus:ring-4 focus:ring-[#CAB276]/10 transition-all placeholder:text-gray-400 bg-white text-sm md:text-base";
-  const labelClasses = "block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2";
+  const inputClasses = "w-full border-2 border-gray-800 rounded-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#CAB276] focus:ring-4 focus:ring-[#CAB276]/10 transition-all placeholder:text-gray-400 bg-gray-800 text-white text-sm md:text-base";
+  const labelClasses = "block text-xs md:text-sm font-medium text-gray-300 mb-1.5 md:mb-2";
 
   return (
-    <div className="min-h-screen bg-[#faf9f7]">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <header className="bg-white py-3 md:py-4 px-4 border-b shadow-sm">
+      <header className="bg-black py-3 md:py-4 px-4 border-b border-gray-800 shadow-sm">
         <div className="container mx-auto flex items-center justify-between">
-          <Link href="/cart" className="flex items-center gap-2 text-gray-600 hover:text-[#CAB276] transition text-sm">
+          <Link href="/cart" className="flex items-center gap-2 text-gray-400 hover:text-[#CAB276] transition text-sm">
             <ArrowLeft className="w-4 h-4" />
             <span className="hidden md:inline">Back to Cart</span>
           </Link>
@@ -43,19 +43,19 @@ export default function CheckoutPage() {
       </header>
 
       {/* Progress Steps */}
-      <div className="bg-white border-b">
+      <div className="bg-black border-b border-gray-800">
         <div className="container mx-auto px-4 py-3 md:py-5">
           <div className="flex items-center justify-center gap-2 md:gap-4">
             {["Delivery", "Payment", "Done"].map((label, i) => (
               <div key={label} className="flex items-center gap-1 md:gap-3">
                 <div className={`w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center text-xs md:text-sm font-semibold transition-all ${
                   step > i + 1 ? 'bg-green-500 text-white shadow-lg shadow-green-500/30' : 
-                  step === i + 1 ? 'bg-[#CAB276] text-white shadow-lg shadow-[#CAB276]/30' : 'bg-gray-100 text-gray-400'
+                  step === i + 1 ? 'bg-[#CAB276] text-black shadow-lg shadow-[#CAB276]/30' : 'bg-gray-800 text-gray-500'
                 }`}>
                   {step > i + 1 ? '✓' : i + 1}
                 </div>
-                <span className={`transition-colors text-xs md:text-base font-medium hidden md:inline ${step === i + 1 ? 'text-gray-800' : 'text-gray-400'}`}>{label}</span>
-                {i < 2 && <div className={`w-6 md:w-12 h-0.5 ml-1 md:ml-2 ${step > i + 1 ? 'bg-green-500' : 'bg-gray-200'}`}></div>}
+                <span className={`transition-colors text-xs md:text-base font-medium hidden md:inline ${step === i + 1 ? 'text-white' : 'text-gray-400'}`}>{label}</span>
+                {i < 2 && <div className={`w-6 md:w-12 h-0.5 ml-1 md:ml-2 ${step > i + 1 ? 'bg-green-500' : 'bg-gray-700'}`}></div>}
               </div>
             ))}
           </div>
@@ -67,13 +67,13 @@ export default function CheckoutPage() {
           {/* Main Form */}
           <div className="lg:col-span-2 order-2 lg:order-1">
             {step === 1 && (
-              <div className="bg-white rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8">
+              <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8 border border-gray-800">
                 <div className="flex items-center gap-3 mb-6 md:mb-8">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f8f6f1] rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-900 rounded-xl flex items-center justify-center">
                     <MapPin className="w-5 h-5 md:w-6 md:h-6 text-[#CAB276]" />
                   </div>
                   <div>
-                    <h2 className="text-lg md:text-xl font-semibold text-gray-800">Delivery Information</h2>
+                    <h2 className="text-lg md:text-xl font-semibold text-white">Delivery Information</h2>
                     <p className="text-xs md:text-sm text-gray-500">Where should we deliver your wigs?</p>
                   </div>
                 </div>
@@ -119,10 +119,10 @@ export default function CheckoutPage() {
                   <div>
                     <label className={labelClasses}>Phone Number</label>
                     <div className="flex">
-                      <span className="inline-flex items-center px-3 md:px-4 border-2 border-r-0 border-gray-200 rounded-l-xl bg-gray-50 text-gray-600 font-medium text-sm">
+                      <span className="inline-flex items-center px-3 md:px-4 border-2 border-r-0 border-gray-800 rounded-l-xl bg-gray-900 text-gray-400 font-medium text-sm">
                         +254
                       </span>
-                      <input type="tel" className="flex-1 border-2 border-gray-200 rounded-r-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#CAB276] focus:ring-4 focus:ring-[#CAB276]/10 transition-all placeholder:text-gray-400 text-sm md:text-base" placeholder="792 164 579" />
+                      <input type="tel" className="flex-1 border-2 border-gray-800 bg-gray-800 text-white rounded-r-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#CAB276] focus:ring-4 focus:ring-[#CAB276]/10 transition-all placeholder:text-gray-500 text-sm md:text-base" placeholder="792 164 579" />
                     </div>
                   </div>
                   <div className="md:col-span-2">
@@ -133,7 +133,7 @@ export default function CheckoutPage() {
 
                 <button 
                   onClick={() => setStep(2)}
-                  className="w-full bg-[#CAB276] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#b39a5e] transition-all mt-6 md:mt-8 shadow-lg shadow-[#CAB276]/25"
+                  className="w-full bg-[#CAB276] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#b39a5e] transition-all mt-6 md:mt-8 shadow-lg shadow-[#CAB276]/20"
                 >
                   Continue to Payment
                 </button>
@@ -141,30 +141,30 @@ export default function CheckoutPage() {
             )}
 
             {step === 2 && (
-              <div className="bg-white rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8">
+              <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8 border border-gray-800">
                 <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
                   <div className="w-12 h-12 md:w-14 md:h-14 bg-green-500 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/30">
                     <Smartphone className="w-6 h-6 md:w-7 md:h-7 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-lg md:text-xl font-semibold text-gray-800">Pay with M-Pesa</h2>
+                    <h2 className="text-lg md:text-xl font-semibold text-white">Pay with M-Pesa</h2>
                     <p className="text-xs md:text-sm text-gray-500">Fast, secure mobile payment</p>
                   </div>
                 </div>
                 
                 {/* M-Pesa Info Box */}
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 md:p-6 mb-6 md:mb-8">
+                <div className="bg-gray-900 border border-green-800 rounded-xl p-4 md:p-6 mb-6 md:mb-8">
                   <div className="flex items-start gap-3 md:gap-4">
                     <div className="w-10 h-10 md:w-12 md:h-12 bg-green-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-green-500/30">
                       <span className="text-white font-bold text-base md:text-lg">M</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-green-800 mb-2 text-sm md:text-base">How M-Pesa Payment Works</h3>
-                      <ol className="text-xs md:text-sm text-green-700 space-y-1 md:space-y-1.5">
-                        <li className="flex items-start gap-2"><span className="font-semibold">1.</span> Enter your M-Pesa phone number</li>
-                        <li className="flex items-start gap-2"><span className="font-semibold">2.</span> Click &quot;Pay Now&quot; - you&apos;ll receive an STK push</li>
-                        <li className="flex items-start gap-2"><span className="font-semibold">3.</span> Enter your M-Pesa PIN to confirm</li>
-                        <li className="flex items-start gap-2"><span className="font-semibold">4.</span> Payment confirms instantly!</li>
+                      <h3 className="font-semibold text-green-500 mb-2 text-sm md:text-base">How M-Pesa Payment Works</h3>
+                      <ol className="text-xs md:text-sm text-gray-400 space-y-1 md:space-y-1.5">
+                        <li className="flex items-start gap-2"><span className="font-semibold text-green-500">1.</span> Enter your M-Pesa phone number</li>
+                        <li className="flex items-start gap-2"><span className="font-semibold text-green-500">2.</span> Click &quot;Pay Now&quot; - you&apos;ll receive an STK push</li>
+                        <li className="flex items-start gap-2"><span className="font-semibold text-green-500">3.</span> Enter your M-Pesa PIN to confirm</li>
+                        <li className="flex items-start gap-2"><span className="font-semibold text-green-500">4.</span> Payment confirms instantly!</li>
                       </ol>
                     </div>
                   </div>
@@ -174,33 +174,33 @@ export default function CheckoutPage() {
                   <div>
                     <label className={labelClasses}>M-Pesa Phone Number</label>
                     <div className="flex">
-                      <span className="inline-flex items-center px-4 md:px-5 border-2 border-r-0 border-green-200 rounded-l-xl bg-green-50 text-green-700 font-semibold text-sm md:text-base">
+                      <span className="inline-flex items-center px-4 md:px-5 border-2 border-r-0 border-green-700 rounded-l-xl bg-gray-900 text-green-500 font-semibold text-sm md:text-base">
                         +254
                       </span>
                       <input 
                         type="tel" 
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
-                        className="flex-1 border-2 border-green-200 rounded-r-xl px-3 md:px-4 py-3 md:py-4 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all placeholder:text-gray-400 text-base md:text-lg font-medium"
+                        className="flex-1 border-2 border-green-700 bg-gray-800 text-white rounded-r-xl px-3 md:px-4 py-3 md:py-4 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all placeholder:text-gray-500 text-base md:text-lg font-medium"
                         placeholder="792 164 579"
                       />
                     </div>
                     <p className="text-xs text-gray-500 mt-2">Enter the phone number registered with M-Pesa</p>
                   </div>
 
-                  <div className="bg-gradient-to-r from-[#f8f6f1] to-[#f5f3ed] rounded-xl p-4 md:p-6">
+                  <div className="bg-gray-900 rounded-xl p-4 md:p-6">
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-600 font-medium text-sm md:text-base">Amount to Pay</span>
+                      <span className="text-gray-400 font-medium text-sm md:text-base">Amount to Pay</span>
                       <span className="text-2xl md:text-3xl font-bold text-[#CAB276]">{formatPrice(total)}</span>
                     </div>
-                    <p className="text-xs md:text-sm text-green-600 mt-2">You&apos;re saving {formatPrice(savings)} on this order! 🎉</p>
+                    <p className="text-xs md:text-sm text-green-500 mt-2">You&apos;re saving {formatPrice(savings)} on this order! 🎉</p>
                   </div>
                 </div>
 
                 <div className="flex gap-3 md:gap-4 mt-6 md:mt-8">
                   <button 
                     onClick={() => setStep(1)}
-                    className="flex-1 border-2 border-gray-200 py-3 md:py-4 rounded-xl font-semibold hover:bg-gray-50 hover:border-gray-300 transition-all text-sm md:text-base"
+                    className="flex-1 border-2 border-gray-800 py-3 md:py-4 rounded-xl font-semibold hover:bg-gray-800 hover:border-gray-700 transition-all text-sm md:text-base"
                   >
                     Back
                   </button>
@@ -221,53 +221,53 @@ export default function CheckoutPage() {
             )}
 
             {step === 3 && (
-              <div className="bg-white rounded-xl md:rounded-2xl shadow-sm p-6 md:p-10 text-center">
+              <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-6 md:p-10 text-center border border-gray-800">
                 <div className="w-20 h-20 md:w-24 md:h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8 shadow-lg shadow-green-500/20">
                   <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-green-500" />
                 </div>
                 
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-3">Payment Successful! 🎉</h2>
-                <p className="text-gray-600 mb-6 md:mb-8 text-base md:text-lg">Your order has been confirmed and is being processed.</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-3">Payment Successful! 🎉</h2>
+                <p className="text-gray-400 mb-6 md:mb-8 text-base md:text-lg">Your order has been confirmed and is being processed.</p>
                 
-                <div className="bg-gradient-to-r from-[#f8f6f1] to-[#f5f3ed] rounded-xl p-4 md:p-6 mb-6 md:mb-8 text-left">
+                <div className="bg-gray-900 rounded-xl p-4 md:p-6 mb-6 md:mb-8 text-left">
                   <div className="grid grid-cols-2 gap-4 md:gap-6">
                     <div>
                       <p className="text-xs md:text-sm text-gray-500 mb-1">Order Number</p>
-                      <p className="font-bold text-gray-800 text-sm md:text-lg">DW-2026-004</p>
+                      <p className="font-bold text-white text-sm md:text-lg">DW-2026-004</p>
                     </div>
                     <div>
                       <p className="text-xs md:text-sm text-gray-500 mb-1">M-Pesa Reference</p>
-                      <p className="font-bold text-gray-800 text-sm md:text-lg">QKL7X9M2NP</p>
+                      <p className="font-bold text-white text-sm md:text-lg">QKL7X9M2NP</p>
                     </div>
                     <div>
                       <p className="text-xs md:text-sm text-gray-500 mb-1">Amount Paid</p>
-                      <p className="font-bold text-green-600 text-sm md:text-lg">{formatPrice(total)}</p>
+                      <p className="font-bold text-green-500 text-sm md:text-lg">{formatPrice(total)}</p>
                     </div>
                     <div>
                       <p className="text-xs md:text-sm text-gray-500 mb-1">Payment Status</p>
-                      <p className="font-bold text-green-600 text-sm md:text-lg flex items-center gap-1">
+                      <p className="font-bold text-green-500 text-sm md:text-lg flex items-center gap-1">
                         <CheckCircle className="w-3 h-3 md:w-4 md:h-4" /> Confirmed
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 md:p-4 mb-6 md:mb-8 text-left">
-                  <p className="text-xs md:text-sm text-blue-700">
-                    📦 <strong>Estimated Delivery:</strong> 2-3 business days within Nairobi, 4-5 days for other counties.
+                <div className="bg-gray-900 border border-gray-800 rounded-xl p-3 md:p-4 mb-6 md:mb-8 text-left">
+                  <p className="text-xs md:text-sm text-gray-400">
+                    📦 <strong className="text-white">Estimated Delivery:</strong> 2-3 business days within Nairobi, 4-5 days for other counties.
                   </p>
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-3 md:gap-4">
                   <Link 
                     href="/orders"
-                    className="flex-1 border-2 border-[#CAB276] text-[#CAB276] py-3 md:py-4 rounded-xl font-semibold hover:bg-[#f8f6f1] transition-all text-center text-sm md:text-base"
+                    className="flex-1 border-2 border-[#CAB276] text-[#CAB276] py-3 md:py-4 rounded-xl font-semibold hover:bg-gray-900 transition-all text-center text-sm md:text-base"
                   >
                     View My Orders
                   </Link>
                   <Link 
                     href="/"
-                    className="flex-1 bg-[#CAB276] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#b39a5e] transition-all text-center shadow-lg shadow-[#CAB276]/25 text-sm md:text-base"
+                    className="flex-1 bg-[#CAB276] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#b39a5e] transition-all text-center shadow-lg shadow-[#CAB276]/20 text-sm md:text-base"
                   >
                     Continue Shopping
                   </Link>
@@ -278,8 +278,8 @@ export default function CheckoutPage() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1 order-1 lg:order-2">
-            <div className="bg-white rounded-xl md:rounded-2xl shadow-sm p-5 md:p-6 lg:sticky lg:top-4">
-              <h2 className="text-base md:text-lg font-semibold text-gray-800 mb-4 md:mb-6">Order Summary</h2>
+            <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-5 md:p-6 lg:sticky lg:top-4 border border-gray-800">
+              <h2 className="text-base md:text-lg font-semibold text-white mb-4 md:mb-6">Order Summary</h2>
               
               <div className="space-y-3 md:space-y-4 mb-4 md:mb-6">
                 {orderItems.map(item => (
@@ -291,7 +291,7 @@ export default function CheckoutPage() {
                       </span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs md:text-sm font-medium text-gray-800 truncate">{item.name}</p>
+                      <p className="text-xs md:text-sm font-medium text-white truncate">{item.name}</p>
                       <p className="text-xs md:text-sm font-bold text-[#CAB276]">{formatPrice(item.price)}</p>
                       <p className="text-[10px] md:text-xs text-gray-400 line-through">{formatPrice(item.oldPrice)}</p>
                     </div>
@@ -299,11 +299,11 @@ export default function CheckoutPage() {
                 ))}
               </div>
 
-              <hr className="my-4 md:my-5" />
+              <hr className="my-4 md:my-5 border-gray-800" />
               
               <div className="space-y-2 md:space-y-3 text-xs md:text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
+                  <span className="text-gray-400">Subtotal</span>
                   <span className="font-medium">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-green-600">
@@ -311,10 +311,10 @@ export default function CheckoutPage() {
                   <span className="font-medium">-{formatPrice(savings)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Delivery</span>
+                  <span className="text-gray-400">Delivery</span>
                   <span className="font-medium text-green-600">FREE</span>
                 </div>
-                <hr className="my-2" />
+                <hr className="my-2 border-gray-800" />
                 <div className="flex justify-between text-base md:text-lg pt-2">
                   <span className="font-semibold">Total</span>
                   <span className="font-bold text-[#CAB276]">{formatPrice(total)}</span>

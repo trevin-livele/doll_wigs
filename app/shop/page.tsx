@@ -84,18 +84,18 @@ export default function ShopPage() {
   const filteredProducts = products.filter(p => selectedCategory === "All" || p.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <header className="bg-white py-3 px-4 border-b sticky top-0 z-40">
+      <header className="bg-black py-3 px-4 border-b border-gray-800 sticky top-0 z-40">
         <div className="container mx-auto flex items-center justify-between">
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-white">
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
           <nav className="hidden md:flex gap-6 text-sm">
-            <Link href="/" className="text-gray-700 hover:text-[#CAB276] transition">HOME</Link>
+            <Link href="/" className="text-gray-300 hover:text-[#CAB276] transition">HOME</Link>
             <Link href="/shop" className="text-[#CAB276] font-medium">SHOP</Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#CAB276] transition">ABOUT</Link>
-            <Link href="/contact" className="text-gray-700 hover:text-[#CAB276] transition">CONTACT</Link>
+            <Link href="/about" className="text-gray-300 hover:text-[#CAB276] transition">ABOUT</Link>
+            <Link href="/contact" className="text-gray-300 hover:text-[#CAB276] transition">CONTACT</Link>
           </nav>
           
           <Link href="/" className="flex items-center">
@@ -104,10 +104,10 @@ export default function ShopPage() {
 
           <div className="flex items-center gap-2 md:gap-4">
             <Link href="/wishlist" className="relative">
-              <Heart className={`w-5 h-5 ${wishlist.length > 0 ? 'text-[#CAB276] fill-[#CAB276]' : 'text-gray-600'}`} />
+              <Heart className={`w-5 h-5 ${wishlist.length > 0 ? 'text-[#CAB276] fill-[#CAB276]' : 'text-gray-400'}`} />
             </Link>
             <button onClick={() => setCartOpen(true)} className="relative">
-              <ShoppingCart className="w-5 h-5 text-gray-600" />
+              <ShoppingCart className="w-5 h-5 text-gray-400" />
               {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-[#CAB276] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                   {cartCount}
@@ -115,25 +115,25 @@ export default function ShopPage() {
               )}
             </button>
             <Link href="/account" className="hidden md:block">
-              <User className="w-5 h-5 text-gray-600" />
+              <User className="w-5 h-5 text-gray-400" />
             </Link>
           </div>
         </div>
         {mobileMenuOpen && (
           <nav className="md:hidden flex flex-col border-t mt-3 pt-3">
-            <Link href="/" className="py-2 text-gray-700">HOME</Link>
+            <Link href="/" className="py-2 text-gray-300">HOME</Link>
             <Link href="/shop" className="py-2 text-[#CAB276] font-medium">SHOP</Link>
-            <Link href="/about" className="py-2 text-gray-700">ABOUT</Link>
-            <Link href="/contact" className="py-2 text-gray-700">CONTACT</Link>
+            <Link href="/about" className="py-2 text-gray-300">ABOUT</Link>
+            <Link href="/contact" className="py-2 text-gray-300">CONTACT</Link>
           </nav>
         )}
       </header>
 
       {/* Breadcrumb */}
-      <div className="bg-[#f8f6f1] py-6 md:py-8">
+      <div className="bg-gray-900 py-6 md:py-8">
         <div className="container mx-auto px-4">
-          <h1 className="text-2xl md:text-3xl font-serif text-gray-800 mb-2">Shop All Wigs</h1>
-          <p className="text-gray-600 text-sm">
+          <h1 className="text-2xl md:text-3xl font-serif text-white mb-2">Shop All Wigs</h1>
+          <p className="text-gray-400 text-sm">
             <Link href="/" className="hover:text-[#CAB276]">Home</Link> / Shop
           </p>
         </div>
@@ -143,7 +143,7 @@ export default function ShopPage() {
         {/* Mobile Filter Button */}
         <button 
           onClick={() => setFilterOpen(!filterOpen)}
-          className="md:hidden flex items-center gap-2 mb-4 px-4 py-2 border rounded-lg"
+          className="md:hidden flex items-center gap-2 mb-4 px-4 py-2 border border-gray-700 rounded-lg text-white"
         >
           <Filter className="w-4 h-4" /> Filter by Category
         </button>
@@ -152,7 +152,7 @@ export default function ShopPage() {
           {/* Sidebar - Mobile Collapsible */}
           <div className={`${filterOpen ? 'block' : 'hidden'} md:block w-full md:w-64 flex-shrink-0`}>
             <div className="md:sticky md:top-24">
-              <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              <h3 className="font-semibold text-white mb-4 flex items-center gap-2">
                 <Filter className="w-4 h-4" /> Categories
               </h3>
               <ul className="space-y-2 mb-6">
@@ -163,7 +163,7 @@ export default function ShopPage() {
                       className={`w-full text-left px-3 py-2 rounded-lg transition text-sm ${
                         selectedCategory === cat 
                           ? 'bg-[#CAB276] text-white' 
-                          : 'text-gray-600 hover:bg-[#f8f6f1]'
+                          : 'text-gray-400 hover:bg-gray-900'
                       }`}
                     >
                       {cat}
@@ -172,9 +172,9 @@ export default function ShopPage() {
                 ))}
               </ul>
 
-              <div className="p-4 bg-[#f8f6f1] rounded-xl hidden md:block">
-                <h4 className="font-medium text-gray-800 mb-2">Need Help?</h4>
-                <p className="text-sm text-gray-600 mb-3">Chat with us on WhatsApp</p>
+              <div className="p-4 bg-gray-900 rounded-xl hidden md:block">
+                <h4 className="font-medium text-white mb-2">Need Help?</h4>
+                <p className="text-sm text-gray-400 mb-3">Chat with us on WhatsApp</p>
                 <a href="https://wa.me/254792164579" className="text-[#CAB276] text-sm font-medium hover:underline">
                   +254 792 164 579
                 </a>
@@ -185,11 +185,11 @@ export default function ShopPage() {
           {/* Products */}
           <div className="flex-1">
             <div className="flex justify-between items-center mb-4 md:mb-6">
-              <p className="text-gray-600 text-sm">{filteredProducts.length} products</p>
+              <p className="text-gray-400 text-sm">{filteredProducts.length} products</p>
               <select 
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#CAB276]"
+                className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#CAB276]"
               >
                 <option value="featured">Featured</option>
                 <option value="price-low">Price: Low to High</option>
@@ -200,12 +200,12 @@ export default function ShopPage() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
               {filteredProducts.map(product => (
-                <div key={product.id} className="bg-white rounded-lg overflow-hidden group shadow-sm hover:shadow-md transition">
-                  <div className="relative h-48 md:h-72 bg-[#f8f6f1] overflow-hidden">
+                <div key={product.id} className="bg-black rounded-lg overflow-hidden group shadow-sm hover:shadow-md transition">
+                  <div className="relative h-48 md:h-72 bg-gray-900 overflow-hidden">
                     <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-green-500 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10">SALE</span>
                     <button
                       onClick={() => toggleWishlist(product.id)}
-                      className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center shadow-md z-10"
+                      className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-black rounded-full flex items-center justify-center shadow-md z-10"
                     >
                       <Heart className={`w-3 h-3 md:w-4 md:h-4 ${wishlist.includes(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-gray-400'}`} />
                     </button>
@@ -213,14 +213,14 @@ export default function ShopPage() {
                     <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition hidden md:flex items-center justify-center">
                       <button 
                         onClick={() => addToCart(product)}
-                        className="bg-white text-gray-800 px-6 py-2 rounded-full text-sm font-medium hover:bg-[#CAB276] hover:text-white transition"
+                        className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-[#CAB276] hover:text-white transition"
                       >
                         Add to Cart
                       </button>
                     </div>
                   </div>
                   <div className="p-3 md:p-4">
-                    <h3 className="font-medium text-xs md:text-sm mb-1 md:mb-2 text-gray-800 line-clamp-1">{product.name}</h3>
+                    <h3 className="font-medium text-xs md:text-sm mb-1 md:mb-2 text-white line-clamp-1">{product.name}</h3>
                     <div className="flex gap-0.5 mb-1 md:mb-2">
                       {[...Array(5)].map((_, i) => <span key={i} className="text-yellow-400 text-[10px] md:text-xs">★</span>)}
                     </div>
@@ -246,10 +246,10 @@ export default function ShopPage() {
       {cartOpen && (
         <div className="fixed inset-0 z-50">
           <div className="absolute inset-0 bg-black/50" onClick={() => setCartOpen(false)}></div>
-          <div className="absolute right-0 top-0 h-full w-full md:w-96 bg-white shadow-xl flex flex-col">
-            <div className="p-4 border-b flex justify-between items-center">
+          <div className="absolute right-0 top-0 h-full w-full md:w-96 bg-black shadow-xl flex flex-col">
+            <div className="p-4 border-b border-gray-800 flex justify-between items-center">
               <h2 className="text-lg font-semibold">Shopping Cart ({cartCount})</h2>
-              <button onClick={() => setCartOpen(false)} className="p-1 hover:bg-gray-100 rounded transition">
+              <button onClick={() => setCartOpen(false)} className="p-1 hover:bg-gray-800 rounded transition">
                 <X className="w-5 h-5 text-gray-500" />
               </button>
             </div>
@@ -266,24 +266,24 @@ export default function ShopPage() {
               ) : (
                 <div className="space-y-4">
                   {cart.map(item => (
-                    <div key={item.id} className="flex gap-3 md:gap-4 p-3 bg-[#f8f6f1] rounded-lg">
+                    <div key={item.id} className="flex gap-3 md:gap-4 p-3 bg-gray-900 rounded-lg">
                       <div className="relative w-16 h-16 md:w-20 md:h-20 rounded overflow-hidden flex-shrink-0">
                         <Image src={item.image} alt={item.name} fill className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-sm font-medium text-gray-800 truncate">{item.name}</h3>
+                        <h3 className="text-sm font-medium text-white truncate">{item.name}</h3>
                         <p className="text-[#CAB276] font-semibold text-sm">{formatPrice(item.price)}</p>
                         <div className="flex items-center gap-2 mt-2">
                           <button 
                             onClick={() => updateQuantity(item.id, -1)}
-                            className="w-6 h-6 rounded border flex items-center justify-center hover:bg-gray-100 transition"
+                            className="w-6 h-6 rounded border flex items-center justify-center hover:bg-gray-800 transition"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
                           <span className="text-sm w-6 text-center">{item.quantity}</span>
                           <button 
                             onClick={() => updateQuantity(item.id, 1)}
-                            className="w-6 h-6 rounded border flex items-center justify-center hover:bg-gray-100 transition"
+                            className="w-6 h-6 rounded border flex items-center justify-center hover:bg-gray-800 transition"
                           >
                             <Plus className="w-3 h-3" />
                           </button>
@@ -301,7 +301,7 @@ export default function ShopPage() {
             {cart.length > 0 && (
               <div className="p-4 border-t">
                 <div className="flex justify-between mb-4">
-                  <span className="text-gray-600">Subtotal:</span>
+                  <span className="text-gray-400">Subtotal:</span>
                   <span className="font-semibold text-lg">{formatPrice(cartTotal)}</span>
                 </div>
                 <Link 

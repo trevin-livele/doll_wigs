@@ -43,18 +43,18 @@ const orders = [
 ];
 
 const statusConfig = {
-  delivered: { label: "Delivered", color: "bg-green-100 text-green-700 border-green-200", icon: CheckCircle },
-  shipped: { label: "Out for Delivery", color: "bg-blue-100 text-blue-700 border-blue-200", icon: Truck },
-  processing: { label: "Processing", color: "bg-amber-100 text-amber-700 border-amber-200", icon: Clock },
+  delivered: { label: "Delivered", color: "bg-green-900/50 text-green-500 border-green-800", icon: CheckCircle },
+  shipped: { label: "Out for Delivery", color: "bg-blue-900/50 text-blue-400 border-blue-800", icon: Truck },
+  processing: { label: "Processing", color: "bg-amber-900/50 text-amber-500 border-amber-800", icon: Clock },
 };
 
 export default function OrdersPage() {
   return (
-    <div className="min-h-screen bg-[#faf9f7]">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <header className="bg-white py-3 md:py-4 px-4 border-b shadow-sm">
+      <header className="bg-black py-3 md:py-4 px-4 border-b border-gray-800 shadow-sm">
         <div className="container mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-gray-600 hover:text-[#CAB276] transition text-sm">
+          <Link href="/" className="flex items-center gap-2 text-gray-400 hover:text-[#CAB276] transition text-sm">
             <ArrowLeft className="w-4 h-4" />
             <span className="hidden md:inline">Back to Shop</span>
           </Link>
@@ -67,20 +67,20 @@ export default function OrdersPage() {
 
       <div className="container mx-auto px-4 py-6 md:py-12">
         <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-10">
-          <div className="w-10 h-10 md:w-14 md:h-14 bg-[#f8f6f1] rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 md:w-14 md:h-14 bg-gray-900 rounded-xl flex items-center justify-center">
             <Package className="w-5 h-5 md:w-7 md:h-7 text-[#CAB276]" />
           </div>
           <div>
-            <h1 className="text-2xl md:text-3xl font-serif text-gray-800">My Orders</h1>
+            <h1 className="text-2xl md:text-3xl font-serif text-white">My Orders</h1>
             <p className="text-gray-500 text-sm">Track and manage your orders</p>
           </div>
         </div>
 
         {orders.length === 0 ? (
-          <div className="text-center py-12 md:py-20 bg-white rounded-xl md:rounded-2xl shadow-sm">
+          <div className="text-center py-12 md:py-20 bg-gray-900 rounded-xl md:rounded-2xl shadow-sm border border-gray-800">
             <Package className="w-16 md:w-20 h-16 md:h-20 mx-auto mb-4 md:mb-6 text-gray-300" />
             <p className="text-gray-500 mb-4 md:mb-6 text-base md:text-lg">You haven&apos;t placed any orders yet</p>
-            <Link href="/" className="inline-block bg-[#CAB276] text-white px-6 md:px-8 py-3 md:py-4 rounded-xl hover:bg-[#b39a5e] transition font-semibold shadow-lg shadow-[#CAB276]/25">
+            <Link href="/" className="inline-block bg-[#CAB276] text-white px-6 md:px-8 py-3 md:py-4 rounded-xl hover:bg-[#b39a5e] transition font-semibold shadow-lg shadow-[#CAB276]/20">
               Start Shopping
             </Link>
           </div>
@@ -91,22 +91,22 @@ export default function OrdersPage() {
               const StatusIcon = status.icon;
               
               return (
-                <div key={order.id} className="bg-white rounded-xl md:rounded-2xl shadow-sm overflow-hidden">
+                <div key={order.id} className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm overflow-hidden border border-gray-800">
                   {/* Order Header */}
-                  <div className="p-4 md:p-5 bg-gradient-to-r from-[#f8f6f1] to-[#f5f3ed] border-b">
+                  <div className="p-4 md:p-5 bg-gray-800 border-b border-gray-700">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                       <div className="flex flex-wrap items-center gap-3 md:gap-8 text-sm">
                         <div>
                           <p className="text-xs text-gray-500 mb-0.5">Order</p>
-                          <p className="font-bold text-gray-800">{order.id}</p>
+                          <p className="font-bold text-white">{order.id}</p>
                         </div>
                         <div className="hidden md:block">
                           <p className="text-xs text-gray-500 mb-0.5">Date</p>
-                          <p className="font-medium text-gray-800">{order.date}</p>
+                          <p className="font-medium text-white">{order.date}</p>
                         </div>
                         <div className="hidden md:block">
                           <p className="text-xs text-gray-500 mb-0.5">M-Pesa Ref</p>
-                          <p className="font-medium text-gray-800">{order.mpesaRef}</p>
+                          <p className="font-medium text-white">{order.mpesaRef}</p>
                         </div>
                         <div>
                           <p className="text-xs text-gray-500 mb-0.5">Total</p>
@@ -129,7 +129,7 @@ export default function OrdersPage() {
                             <Image src={item.image} alt={item.name} fill className="object-cover" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-gray-800 text-sm md:text-base truncate">{item.name}</h3>
+                            <h3 className="font-semibold text-white text-sm md:text-base truncate">{item.name}</h3>
                             <p className="text-xs md:text-sm text-gray-500">Qty: {item.quantity}</p>
                           </div>
                           <div className="text-right">
@@ -142,22 +142,22 @@ export default function OrdersPage() {
                   </div>
 
                   {/* Order Actions */}
-                  <div className="p-4 md:p-5 border-t bg-gray-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                  <div className="p-4 md:p-5 border-t bg-gray-900 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                     <button className="text-xs md:text-sm text-[#CAB276] hover:underline font-medium">View Details</button>
                     <div className="flex gap-2 md:gap-3 w-full md:w-auto">
                       {order.status === "delivered" && (
-                        <button className="flex-1 md:flex-none px-4 md:px-5 py-2 md:py-2.5 border-2 border-[#CAB276] text-[#CAB276] rounded-lg text-xs md:text-sm font-semibold hover:bg-[#f8f6f1] transition">
+                        <button className="flex-1 md:flex-none px-4 md:px-5 py-2 md:py-2.5 border-2 border-[#CAB276] text-[#CAB276] rounded-lg text-xs md:text-sm font-semibold hover:bg-gray-900 transition">
                           Buy Again
                         </button>
                       )}
                       {order.status === "shipped" && (
-                        <button className="flex-1 md:flex-none px-4 md:px-5 py-2 md:py-2.5 bg-blue-500 text-white rounded-lg text-xs md:text-sm font-semibold hover:bg-blue-600 transition flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25">
+                        <button className="flex-1 md:flex-none px-4 md:px-5 py-2 md:py-2.5 bg-blue-600 text-white rounded-lg text-xs md:text-sm font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20">
                           <MapPin className="w-3 h-3 md:w-4 md:h-4" />
                           Track
                         </button>
                       )}
                       {order.status === "processing" && (
-                        <button className="flex-1 md:flex-none px-4 md:px-5 py-2 md:py-2.5 bg-gray-100 text-gray-600 rounded-lg text-xs md:text-sm font-medium flex items-center justify-center gap-2">
+                        <button className="flex-1 md:flex-none px-4 md:px-5 py-2 md:py-2.5 bg-gray-800 text-gray-300 rounded-lg text-xs md:text-sm font-medium flex items-center justify-center gap-2">
                           <Phone className="w-3 h-3 md:w-4 md:h-4" />
                           Support
                         </button>
@@ -171,20 +171,20 @@ export default function OrdersPage() {
         )}
 
         {/* Help Section */}
-        <div className="mt-8 md:mt-12 bg-white rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8">
-          <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-4">Need Help?</h2>
+        <div className="mt-8 md:mt-12 bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8 border border-gray-800">
+          <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Need Help?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            <div className="p-4 bg-[#f8f6f1] rounded-xl">
-              <h3 className="font-medium text-gray-800 mb-2 text-sm md:text-base">📦 Shipping Info</h3>
-              <p className="text-xs md:text-sm text-gray-600">Free delivery in Nairobi for orders above KSh 25,000.</p>
+            <div className="p-4 bg-gray-900 rounded-xl">
+              <h3 className="font-medium text-white mb-2 text-sm md:text-base">📦 Shipping Info</h3>
+              <p className="text-xs md:text-sm text-gray-400">Free delivery in Nairobi for orders above KSh 25,000.</p>
             </div>
-            <div className="p-4 bg-[#f8f6f1] rounded-xl">
-              <h3 className="font-medium text-gray-800 mb-2 text-sm md:text-base">🔄 Returns</h3>
-              <p className="text-xs md:text-sm text-gray-600">Easy returns within 7 days. Wigs must be unworn.</p>
+            <div className="p-4 bg-gray-900 rounded-xl">
+              <h3 className="font-medium text-white mb-2 text-sm md:text-base">🔄 Returns</h3>
+              <p className="text-xs md:text-sm text-gray-400">Easy returns within 7 days. Wigs must be unworn.</p>
             </div>
-            <div className="p-4 bg-[#f8f6f1] rounded-xl">
-              <h3 className="font-medium text-gray-800 mb-2 text-sm md:text-base">📞 Contact Us</h3>
-              <p className="text-xs md:text-sm text-gray-600">WhatsApp: +254 792 164 579</p>
+            <div className="p-4 bg-gray-900 rounded-xl">
+              <h3 className="font-medium text-white mb-2 text-sm md:text-base">📞 Contact Us</h3>
+              <p className="text-xs md:text-sm text-gray-400">WhatsApp: +254 792 164 579</p>
             </div>
           </div>
         </div>

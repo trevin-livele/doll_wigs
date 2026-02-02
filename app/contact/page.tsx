@@ -29,20 +29,20 @@ export default function ContactPage() {
     setFormData({ name: "", email: "", phone: "", message: "" });
   };
 
-  const inputClasses = "w-full border-2 border-gray-200 rounded-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#CAB276] focus:ring-4 focus:ring-[#CAB276]/10 transition-all placeholder:text-gray-400 text-sm md:text-base";
+  const inputClasses = "w-full border-2 border-gray-800 bg-black text-white rounded-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#CAB276] focus:ring-4 focus:ring-[#CAB276]/10 transition-all placeholder:text-gray-500 text-sm md:text-base";
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <header className="bg-white py-3 px-4 border-b sticky top-0 z-40">
+      <header className="bg-black py-3 px-4 border-b border-gray-800 sticky top-0 z-40">
         <div className="container mx-auto flex items-center justify-between">
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2">
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
           <nav className="hidden md:flex gap-6 text-sm">
-            <Link href="/" className="text-gray-700 hover:text-[#CAB276] transition">HOME</Link>
-            <Link href="/shop" className="text-gray-700 hover:text-[#CAB276] transition">SHOP</Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#CAB276] transition">ABOUT</Link>
+            <Link href="/" className="text-gray-300 hover:text-[#CAB276] transition">HOME</Link>
+            <Link href="/shop" className="text-gray-300 hover:text-[#CAB276] transition">SHOP</Link>
+            <Link href="/about" className="text-gray-300 hover:text-[#CAB276] transition">ABOUT</Link>
             <Link href="/contact" className="text-[#CAB276] font-medium">CONTACT</Link>
           </nav>
           
@@ -51,26 +51,26 @@ export default function ContactPage() {
           </Link>
 
           <div className="flex items-center gap-2 md:gap-4">
-            <Link href="/wishlist"><Heart className="w-5 h-5 text-gray-600" /></Link>
-            <Link href="/cart"><ShoppingCart className="w-5 h-5 text-gray-600" /></Link>
-            <Link href="/account" className="hidden md:block"><User className="w-5 h-5 text-gray-600" /></Link>
+            <Link href="/wishlist"><Heart className="w-5 h-5 text-gray-400" /></Link>
+            <Link href="/cart"><ShoppingCart className="w-5 h-5 text-gray-400" /></Link>
+            <Link href="/account" className="hidden md:block"><User className="w-5 h-5 text-gray-400" /></Link>
           </div>
         </div>
         {mobileMenuOpen && (
           <nav className="md:hidden flex flex-col border-t mt-3 pt-3">
-            <Link href="/" className="py-2 text-gray-700">HOME</Link>
-            <Link href="/shop" className="py-2 text-gray-700">SHOP</Link>
-            <Link href="/about" className="py-2 text-gray-700">ABOUT</Link>
+            <Link href="/" className="py-2 text-gray-300">HOME</Link>
+            <Link href="/shop" className="py-2 text-gray-300">SHOP</Link>
+            <Link href="/about" className="py-2 text-gray-300">ABOUT</Link>
             <Link href="/contact" className="py-2 text-[#CAB276] font-medium">CONTACT</Link>
           </nav>
         )}
       </header>
 
       {/* Hero */}
-      <div className="bg-[#f8f6f1] py-10 md:py-16">
+      <div className="bg-gray-900 py-10 md:py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-4xl font-serif text-gray-800 mb-3 md:mb-4">Contact Us</h1>
-          <p className="text-gray-600 text-sm md:text-base">We&apos;d love to hear from you!</p>
+          <h1 className="text-3xl md:text-4xl font-serif text-white mb-3 md:mb-4">Contact Us</h1>
+          <p className="text-gray-400 text-sm md:text-base">We&apos;d love to hear from you!</p>
         </div>
       </div>
 
@@ -79,96 +79,96 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {/* Contact Info */}
             <div>
-              <h2 className="text-xl md:text-2xl font-serif text-gray-800 mb-6 md:mb-8">Get In Touch</h2>
+              <h2 className="text-xl md:text-2xl font-serif text-white mb-6 md:mb-8">Get In Touch</h2>
               
               <div className="space-y-4 md:space-y-6">
                 <div className="flex items-start gap-3 md:gap-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f8f6f1] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-900 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Phone className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Phone / WhatsApp</h3>
-                    <p className="text-gray-600 text-sm">+254 792 164 579</p>
+                    <h3 className="font-semibold text-white mb-1 text-sm md:text-base">Phone / WhatsApp</h3>
+                    <p className="text-gray-400 text-sm">+254 792 164 579</p>
                     <a href="https://wa.me/254792164579" className="text-[#CAB276] text-xs md:text-sm hover:underline">Chat on WhatsApp →</a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3 md:gap-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f8f6f1] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-900 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Mail className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Email</h3>
-                    <p className="text-gray-600 text-sm">info@dollwigs.co.ke</p>
+                    <h3 className="font-semibold text-white mb-1 text-sm md:text-base">Email</h3>
+                    <p className="text-gray-400 text-sm">info@dollwigs.co.ke</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3 md:gap-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f8f6f1] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-900 rounded-xl flex items-center justify-center flex-shrink-0">
                     <MapPin className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Location</h3>
-                    <p className="text-gray-600 text-sm">Westlands, Nairobi, Kenya</p>
+                    <h3 className="font-semibold text-white mb-1 text-sm md:text-base">Location</h3>
+                    <p className="text-gray-400 text-sm">Westlands, Nairobi, Kenya</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3 md:gap-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f8f6f1] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-900 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Clock className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Business Hours</h3>
-                    <p className="text-gray-600 text-sm">Mon - Sat: 9AM - 6PM</p>
+                    <h3 className="font-semibold text-white mb-1 text-sm md:text-base">Business Hours</h3>
+                    <p className="text-gray-400 text-sm">Mon - Sat: 9AM - 6PM</p>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-6 md:mt-8 p-4 md:p-6 bg-green-50 rounded-xl border border-green-200">
-                <h3 className="font-semibold text-green-800 mb-2 text-sm md:text-base">💬 Quick Response</h3>
-                <p className="text-xs md:text-sm text-green-700 mb-3">Get instant replies on WhatsApp.</p>
-                <a href="https://wa.me/254792164579" target="_blank" className="inline-flex items-center gap-2 bg-green-500 text-white px-4 md:px-6 py-2 rounded-lg text-xs md:text-sm font-medium hover:bg-green-600 transition">
+              <div className="mt-6 md:mt-8 p-4 md:p-6 bg-gray-900 rounded-xl border border-green-800">
+                <h3 className="font-semibold text-green-500 mb-2 text-sm md:text-base">💬 Quick Response</h3>
+                <p className="text-xs md:text-sm text-green-500 mb-3">Get instant replies on WhatsApp.</p>
+                <a href="https://wa.me/254792164579" target="_blank" className="inline-flex items-center gap-2 bg-green-600 text-white px-4 md:px-6 py-2 rounded-lg text-xs md:text-sm font-medium hover:bg-green-500 transition">
                   <WhatsAppIcon className="w-4 h-4" /> Chat Now
                 </a>
               </div>
 
               <div className="mt-6">
-                <h3 className="font-semibold text-gray-800 mb-3 text-sm md:text-base">Follow Us</h3>
+                <h3 className="font-semibold text-white mb-3 text-sm md:text-base">Follow Us</h3>
                 <div className="flex gap-3">
-                  <a href="https://facebook.com/dollwigs" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-blue-100 rounded-full flex items-center justify-center hover:bg-blue-200 transition">
-                    <Facebook className="w-4 h-4 md:w-5 md:h-5 text-blue-600" />
+                  <a href="https://facebook.com/dollwigs" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#CAB276] transition group">
+                    <Facebook className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-black" />
                   </a>
-                  <a href="https://instagram.com/dollwigs" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-pink-100 rounded-full flex items-center justify-center hover:bg-pink-200 transition">
-                    <Instagram className="w-4 h-4 md:w-5 md:h-5 text-pink-600" />
+                  <a href="https://instagram.com/dollwigs" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#CAB276] transition group">
+                    <Instagram className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-black" />
                   </a>
-                  <a href="https://x.com/dollwigs" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition">
-                    <XIcon className="w-4 h-4 md:w-5 md:h-5 text-black" />
+                  <a href="https://x.com/dollwigs" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#CAB276] transition group">
+                    <XIcon className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-black" />
                   </a>
-                  <a href="https://wa.me/254792164579" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-green-100 rounded-full flex items-center justify-center hover:bg-green-200 transition">
-                    <WhatsAppIcon className="w-4 h-4 md:w-5 md:h-5 text-green-600" />
+                  <a href="https://wa.me/254792164579" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#CAB276] transition group">
+                    <WhatsAppIcon className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-black" />
                   </a>
                 </div>
               </div>
             </div>
 
             {/* Contact Form */}
-            <div className="bg-white rounded-xl md:rounded-2xl shadow-sm border p-5 md:p-8">
-              <h2 className="text-xl md:text-2xl font-serif text-gray-800 mb-4 md:mb-6">Send Us a Message</h2>
+            <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm border border-gray-800 p-5 md:p-8">
+              <h2 className="text-xl md:text-2xl font-serif text-white mb-4 md:mb-6">Send Us a Message</h2>
               <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
                 <div>
-                  <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Full Name</label>
+                  <label className="block text-xs md:text-sm font-medium text-gray-300 mb-1.5 md:mb-2">Full Name</label>
                   <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className={inputClasses} placeholder="Your name" required />
                 </div>
                 <div>
-                  <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Email</label>
+                  <label className="block text-xs md:text-sm font-medium text-gray-300 mb-1.5 md:mb-2">Email</label>
                   <input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className={inputClasses} placeholder="your@email.com" required />
                 </div>
                 <div>
-                  <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Phone</label>
+                  <label className="block text-xs md:text-sm font-medium text-gray-300 mb-1.5 md:mb-2">Phone</label>
                   <input type="tel" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className={inputClasses} placeholder="+254 792 164 579" />
                 </div>
                 <div>
-                  <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Message</label>
+                  <label className="block text-xs md:text-sm font-medium text-gray-300 mb-1.5 md:mb-2">Message</label>
                   <textarea value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className={`${inputClasses} resize-none`} rows={4} placeholder="How can we help?" required></textarea>
                 </div>
                 <button type="submit" className="w-full bg-[#CAB276] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#b39a5e] transition flex items-center justify-center gap-2 text-sm md:text-base">
@@ -180,8 +180,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <footer className="bg-[#f8f6f1] py-6 md:py-8 border-t">
-        <div className="container mx-auto px-4 text-center text-xs md:text-sm text-gray-600">
+      <footer className="bg-black py-6 md:py-8 border-t border-gray-800">
+        <div className="container mx-auto px-4 text-center text-xs md:text-sm text-gray-400">
           <p>&copy; 2026 Doll Wigs. All rights reserved.</p>
         </div>
       </footer>

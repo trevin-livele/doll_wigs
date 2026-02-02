@@ -28,18 +28,18 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#faf9f7]">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <header className="bg-white py-3 px-4 border-b sticky top-0 z-40">
+      <header className="bg-black py-3 px-4 border-b border-gray-800 sticky top-0 z-40">
         <div className="container mx-auto flex items-center justify-between">
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2">
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
           <nav className="hidden md:flex gap-6 text-sm">
-            <Link href="/" className="text-gray-700 hover:text-[#CAB276] transition">HOME</Link>
-            <Link href="/shop" className="text-gray-700 hover:text-[#CAB276] transition">SHOP</Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#CAB276] transition">ABOUT</Link>
-            <Link href="/contact" className="text-gray-700 hover:text-[#CAB276] transition">CONTACT</Link>
+            <Link href="/" className="text-gray-300 hover:text-[#CAB276] transition">HOME</Link>
+            <Link href="/shop" className="text-gray-300 hover:text-[#CAB276] transition">SHOP</Link>
+            <Link href="/about" className="text-gray-300 hover:text-[#CAB276] transition">ABOUT</Link>
+            <Link href="/contact" className="text-gray-300 hover:text-[#CAB276] transition">CONTACT</Link>
           </nav>
           
           <Link href="/" className="flex items-center">
@@ -53,16 +53,16 @@ export default function WishlistPage() {
                 {wishlist.length}
               </span>
             </Link>
-            <Link href="/cart"><ShoppingCart className="w-5 h-5 text-gray-600" /></Link>
-            <Link href="/account" className="hidden md:block"><User className="w-5 h-5 text-gray-600" /></Link>
+            <Link href="/cart"><ShoppingCart className="w-5 h-5 text-gray-400" /></Link>
+            <Link href="/account" className="hidden md:block"><User className="w-5 h-5 text-gray-400" /></Link>
           </div>
         </div>
         {mobileMenuOpen && (
           <nav className="md:hidden flex flex-col border-t mt-3 pt-3">
-            <Link href="/" className="py-2 text-gray-700">HOME</Link>
-            <Link href="/shop" className="py-2 text-gray-700">SHOP</Link>
-            <Link href="/about" className="py-2 text-gray-700">ABOUT</Link>
-            <Link href="/contact" className="py-2 text-gray-700">CONTACT</Link>
+            <Link href="/" className="py-2 text-gray-300">HOME</Link>
+            <Link href="/shop" className="py-2 text-gray-300">SHOP</Link>
+            <Link href="/about" className="py-2 text-gray-300">ABOUT</Link>
+            <Link href="/contact" className="py-2 text-gray-300">CONTACT</Link>
           </nav>
         )}
       </header>
@@ -73,15 +73,15 @@ export default function WishlistPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-2xl md:text-3xl font-serif text-gray-800">My Wishlist</h1>
+            <h1 className="text-2xl md:text-3xl font-serif text-white">My Wishlist</h1>
             <p className="text-gray-500 text-sm">{wishlist.length} items saved</p>
           </div>
         </div>
 
         {wishlist.length === 0 ? (
-          <div className="text-center py-12 md:py-20 bg-white rounded-xl md:rounded-2xl shadow-sm">
+          <div className="text-center py-12 md:py-20 bg-gray-900 rounded-xl md:rounded-2xl shadow-sm border border-gray-800">
             <Heart className="w-16 md:w-20 h-16 md:h-20 mx-auto mb-4 md:mb-6 text-gray-300" />
-            <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">Your wishlist is empty</h2>
+            <h2 className="text-lg md:text-xl font-semibold text-white mb-2">Your wishlist is empty</h2>
             <p className="text-gray-500 mb-4 md:mb-6 text-sm md:text-base">Save items you love by clicking the heart icon</p>
             <Link href="/shop" className="inline-block bg-[#CAB276] text-white px-6 md:px-8 py-3 rounded-lg font-medium hover:bg-[#b39a5e] transition">
               Browse Products
@@ -90,19 +90,19 @@ export default function WishlistPage() {
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
             {wishlist.map(product => (
-              <div key={product.id} className="bg-white rounded-lg md:rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
-                <div className="relative h-48 md:h-72 bg-[#f8f6f1] overflow-hidden">
-                  <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-green-500 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10">SALE</span>
+              <div key={product.id} className="bg-gray-900 rounded-lg md:rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group border border-gray-800">
+                <div className="relative h-48 md:h-72 bg-gray-800 overflow-hidden">
+                  <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-red-600 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10">SALE</span>
                   <button
                     onClick={() => removeFromWishlist(product.id)}
-                    className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center shadow-md z-10 hover:bg-red-50 transition"
+                    className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-gray-900 rounded-full flex items-center justify-center shadow-md z-10 hover:bg-red-900/50 transition"
                   >
                     <Trash2 className="w-3 h-3 md:w-4 md:h-4 text-red-500" />
                   </button>
                   <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
                 </div>
                 <div className="p-3 md:p-4">
-                  <h3 className="font-medium text-xs md:text-sm mb-1 md:mb-2 text-gray-800 line-clamp-1">{product.name}</h3>
+                  <h3 className="font-medium text-xs md:text-sm mb-1 md:mb-2 text-white line-clamp-1">{product.name}</h3>
                   <div className="flex gap-0.5 mb-1 md:mb-2">
                     {[...Array(5)].map((_, i) => <span key={i} className="text-yellow-400 text-[10px] md:text-xs">★</span>)}
                   </div>
