@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, ShoppingCart, User, Phone, Mail, MapPin, Clock, Send, Facebook, Instagram, MessageCircle } from "lucide-react";
+import { Heart, ShoppingCart, User, Phone, Mail, MapPin, Clock, Send, Facebook, Instagram, Menu, X } from "lucide-react";
 
 // X (Twitter) icon component
 const XIcon = ({ className }: { className?: string }) => (
@@ -21,6 +21,7 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,14 +29,17 @@ export default function ContactPage() {
     setFormData({ name: "", email: "", phone: "", message: "" });
   };
 
-  const inputClasses = "w-full border-2 border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:border-[#e88b7d] focus:ring-4 focus:ring-[#e88b7d]/10 transition-all placeholder:text-gray-400";
+  const inputClasses = "w-full border-2 border-gray-200 rounded-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#e88b7d] focus:ring-4 focus:ring-[#e88b7d]/10 transition-all placeholder:text-gray-400 text-sm md:text-base";
 
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-white py-3 px-4 border-b sticky top-0 z-40">
         <div className="container mx-auto flex items-center justify-between">
-          <nav className="flex gap-6 text-sm">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2">
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+          <nav className="hidden md:flex gap-6 text-sm">
             <Link href="/" className="text-gray-700 hover:text-[#e88b7d] transition">HOME</Link>
             <Link href="/shop" className="text-gray-700 hover:text-[#e88b7d] transition">SHOP</Link>
             <Link href="/about" className="text-gray-700 hover:text-[#e88b7d] transition">ABOUT</Link>
@@ -43,165 +47,132 @@ export default function ContactPage() {
           </nav>
           
           <Link href="/" className="flex items-center">
-            <Image src="/logo.svg" alt="Doll Wigs" width={140} height={40} className="h-10 w-auto" />
+            <Image src="/logo.svg" alt="Doll Wigs" width={140} height={40} className="h-8 md:h-10 w-auto" />
           </Link>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <Link href="/wishlist"><Heart className="w-5 h-5 text-gray-600" /></Link>
             <Link href="/cart"><ShoppingCart className="w-5 h-5 text-gray-600" /></Link>
-            <Link href="/account"><User className="w-5 h-5 text-gray-600" /></Link>
+            <Link href="/account" className="hidden md:block"><User className="w-5 h-5 text-gray-600" /></Link>
           </div>
         </div>
+        {mobileMenuOpen && (
+          <nav className="md:hidden flex flex-col border-t mt-3 pt-3">
+            <Link href="/" className="py-2 text-gray-700">HOME</Link>
+            <Link href="/shop" className="py-2 text-gray-700">SHOP</Link>
+            <Link href="/about" className="py-2 text-gray-700">ABOUT</Link>
+            <Link href="/contact" className="py-2 text-[#e88b7d] font-medium">CONTACT</Link>
+          </nav>
+        )}
       </header>
 
       {/* Hero */}
-      <div className="bg-[#fdf6f0] py-16">
+      <div className="bg-[#fdf6f0] py-10 md:py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-serif text-gray-800 mb-4">Contact Us</h1>
-          <p className="text-gray-600">We&apos;d love to hear from you. Get in touch with us!</p>
+          <h1 className="text-3xl md:text-4xl font-serif text-gray-800 mb-3 md:mb-4">Contact Us</h1>
+          <p className="text-gray-600 text-sm md:text-base">We&apos;d love to hear from you!</p>
         </div>
       </div>
 
-      <section className="py-16">
+      <section className="py-10 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {/* Contact Info */}
             <div>
-              <h2 className="text-2xl font-serif text-gray-800 mb-8">Get In Touch</h2>
+              <h2 className="text-xl md:text-2xl font-serif text-gray-800 mb-6 md:mb-8">Get In Touch</h2>
               
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 text-[#e88b7d]" />
+              <div className="space-y-4 md:space-y-6">
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-4 h-4 md:w-5 md:h-5 text-[#e88b7d]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 mb-1">Phone / WhatsApp</h3>
-                    <p className="text-gray-600">+254 792 164 579</p>
-                    <a href="https://wa.me/254792164579" className="text-[#e88b7d] text-sm hover:underline">Chat on WhatsApp →</a>
+                    <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Phone / WhatsApp</h3>
+                    <p className="text-gray-600 text-sm">+254 792 164 579</p>
+                    <a href="https://wa.me/254792164579" className="text-[#e88b7d] text-xs md:text-sm hover:underline">Chat on WhatsApp →</a>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 text-[#e88b7d]" />
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-4 h-4 md:w-5 md:h-5 text-[#e88b7d]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 mb-1">Email</h3>
-                    <p className="text-gray-600">info@dollwigs.co.ke</p>
-                    <p className="text-gray-600">support@dollwigs.co.ke</p>
+                    <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Email</h3>
+                    <p className="text-gray-600 text-sm">info@dollwigs.co.ke</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 text-[#e88b7d]" />
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-4 h-4 md:w-5 md:h-5 text-[#e88b7d]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 mb-1">Location</h3>
-                    <p className="text-gray-600">Westlands, Nairobi</p>
-                    <p className="text-gray-600">Kenya</p>
+                    <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Location</h3>
+                    <p className="text-gray-600 text-sm">Westlands, Nairobi, Kenya</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 text-[#e88b7d]" />
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-4 h-4 md:w-5 md:h-5 text-[#e88b7d]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 mb-1">Business Hours</h3>
-                    <p className="text-gray-600">Mon - Sat: 9:00 AM - 6:00 PM</p>
-                    <p className="text-gray-600">Sunday: 10:00 AM - 4:00 PM</p>
+                    <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Business Hours</h3>
+                    <p className="text-gray-600 text-sm">Mon - Sat: 9AM - 6PM</p>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 p-6 bg-green-50 rounded-xl border border-green-200">
-                <h3 className="font-semibold text-green-800 mb-2">💬 Quick Response on WhatsApp</h3>
-                <p className="text-sm text-green-700 mb-3">Get instant replies to your questions about wigs, orders, and deliveries.</p>
-                <a 
-                  href="https://wa.me/254792164579" 
-                  target="_blank"
-                  className="inline-flex items-center gap-2 bg-green-500 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-green-600 transition"
-                >
-                  <WhatsAppIcon className="w-4 h-4" />
-                  Chat Now
+              <div className="mt-6 md:mt-8 p-4 md:p-6 bg-green-50 rounded-xl border border-green-200">
+                <h3 className="font-semibold text-green-800 mb-2 text-sm md:text-base">💬 Quick Response</h3>
+                <p className="text-xs md:text-sm text-green-700 mb-3">Get instant replies on WhatsApp.</p>
+                <a href="https://wa.me/254792164579" target="_blank" className="inline-flex items-center gap-2 bg-green-500 text-white px-4 md:px-6 py-2 rounded-lg text-xs md:text-sm font-medium hover:bg-green-600 transition">
+                  <WhatsAppIcon className="w-4 h-4" /> Chat Now
                 </a>
               </div>
 
-              {/* Social Media */}
               <div className="mt-6">
-                <h3 className="font-semibold text-gray-800 mb-3">Follow Us</h3>
+                <h3 className="font-semibold text-gray-800 mb-3 text-sm md:text-base">Follow Us</h3>
                 <div className="flex gap-3">
-                  <a href="https://facebook.com/dollwigs" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center hover:bg-blue-200 transition">
-                    <Facebook className="w-5 h-5 text-blue-600" />
+                  <a href="https://facebook.com/dollwigs" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-blue-100 rounded-full flex items-center justify-center hover:bg-blue-200 transition">
+                    <Facebook className="w-4 h-4 md:w-5 md:h-5 text-blue-600" />
                   </a>
-                  <a href="https://instagram.com/dollwigs" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center hover:bg-pink-200 transition">
-                    <Instagram className="w-5 h-5 text-pink-600" />
+                  <a href="https://instagram.com/dollwigs" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-pink-100 rounded-full flex items-center justify-center hover:bg-pink-200 transition">
+                    <Instagram className="w-4 h-4 md:w-5 md:h-5 text-pink-600" />
                   </a>
-                  <a href="https://x.com/dollwigs" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition">
-                    <XIcon className="w-5 h-5 text-black" />
+                  <a href="https://x.com/dollwigs" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition">
+                    <XIcon className="w-4 h-4 md:w-5 md:h-5 text-black" />
                   </a>
-                  <a href="https://wa.me/254792164579" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center hover:bg-green-200 transition">
-                    <WhatsAppIcon className="w-5 h-5 text-green-600" />
+                  <a href="https://wa.me/254792164579" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-green-100 rounded-full flex items-center justify-center hover:bg-green-200 transition">
+                    <WhatsAppIcon className="w-4 h-4 md:w-5 md:h-5 text-green-600" />
                   </a>
                 </div>
               </div>
             </div>
 
             {/* Contact Form */}
-            <div className="bg-white rounded-2xl shadow-sm border p-8">
-              <h2 className="text-2xl font-serif text-gray-800 mb-6">Send Us a Message</h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="bg-white rounded-xl md:rounded-2xl shadow-sm border p-5 md:p-8">
+              <h2 className="text-xl md:text-2xl font-serif text-gray-800 mb-4 md:mb-6">Send Us a Message</h2>
+              <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                  <input 
-                    type="text" 
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className={inputClasses}
-                    placeholder="Your name"
-                    required
-                  />
+                  <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Full Name</label>
+                  <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className={inputClasses} placeholder="Your name" required />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                  <input 
-                    type="email" 
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className={inputClasses}
-                    placeholder="your@email.com"
-                    required
-                  />
+                  <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Email</label>
+                  <input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className={inputClasses} placeholder="your@email.com" required />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                  <input 
-                    type="tel" 
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    className={inputClasses}
-                    placeholder="+254 792 164 579"
-                  />
+                  <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Phone</label>
+                  <input type="tel" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className={inputClasses} placeholder="+254 792 164 579" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                  <textarea 
-                    value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
-                    className={`${inputClasses} resize-none`}
-                    rows={4}
-                    placeholder="How can we help you?"
-                    required
-                  ></textarea>
+                  <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Message</label>
+                  <textarea value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className={`${inputClasses} resize-none`} rows={4} placeholder="How can we help?" required></textarea>
                 </div>
-                <button 
-                  type="submit"
-                  className="w-full bg-[#e88b7d] text-white py-4 rounded-xl font-semibold hover:bg-[#d67a6c] transition flex items-center justify-center gap-2"
-                >
-                  <Send className="w-4 h-4" />
-                  Send Message
+                <button type="submit" className="w-full bg-[#e88b7d] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#d67a6c] transition flex items-center justify-center gap-2 text-sm md:text-base">
+                  <Send className="w-4 h-4" /> Send Message
                 </button>
               </form>
             </div>
@@ -209,9 +180,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#fdf6f0] py-8 border-t">
-        <div className="container mx-auto px-4 text-center text-sm text-gray-600">
+      <footer className="bg-[#fdf6f0] py-6 md:py-8 border-t">
+        <div className="container mx-auto px-4 text-center text-xs md:text-sm text-gray-600">
           <p>&copy; 2026 Doll Wigs. All rights reserved.</p>
         </div>
       </footer>

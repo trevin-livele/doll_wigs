@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Heart, ShoppingCart, Phone, Mail, ChevronDown, X, Plus, Minus, User, Facebook, Instagram, MessageCircle } from "lucide-react";
+import { Search, Heart, ShoppingCart, Phone, Mail, ChevronDown, X, Plus, Minus, User, Facebook, Instagram, MessageCircle, Menu } from "lucide-react";
 
 // X (Twitter) icon component
 const XIcon = ({ className }: { className?: string }) => (
@@ -68,6 +68,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("All");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Auto-slide carousel every 3 seconds
   useEffect(() => {
@@ -142,24 +143,38 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Top Bar */}
-      <div className="bg-[#fdf6f0] py-2 px-4 text-xs flex justify-between items-center border-b border-[#f5e6db]">
-        <div className="flex gap-4 items-center text-gray-600">
-          <span className="flex items-center gap-1"><Phone className="w-3 h-3" /> +254 792 164 579</span>
-          <span className="flex items-center gap-1"><Mail className="w-3 h-3" /> info@dollwigs.co.ke</span>
+      <div className="bg-[#fdf6f0] py-2 px-4 text-xs border-b border-[#f5e6db]">
+        <div className="hidden md:flex justify-between items-center">
+          <div className="flex gap-4 items-center text-gray-600">
+            <span className="flex items-center gap-1"><Phone className="w-3 h-3" /> +254 792 164 579</span>
+            <span className="flex items-center gap-1"><Mail className="w-3 h-3" /> info@dollwigs.co.ke</span>
+          </div>
+          <div className="text-center flex-1">
+            <span className="text-gray-700">Summer Sale Starts Now & Free Delivery in Nairobi Above KSh 25,000</span>
+          </div>
+          <div className="flex gap-4 text-gray-600">
+            <span>KES</span>
+            <span>English</span>
+          </div>
         </div>
-        <div className="text-center flex-1">
-          <span className="text-gray-700">Summer Sale Starts Now & Free Delivery in Nairobi Above KSh 25,000</span>
-        </div>
-        <div className="flex gap-4 text-gray-600">
-          <span>KES</span>
-          <span>English</span>
+        <div className="md:hidden text-center text-gray-700">
+          <span>🔥 Summer Sale - Free Delivery Above KSh 25,000</span>
         </div>
       </div>
 
       {/* Header */}
       <header className="bg-white py-3 px-4 border-b sticky top-0 z-40">
         <div className="container mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-8">
+          {/* Mobile menu button */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+            className="md:hidden p-2 hover:bg-gray-100 rounded-lg"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+
+          {/* Desktop nav */}
+          <div className="hidden md:flex items-center gap-8">
             <span className="bg-[#fdf6f0] text-[#e88b7d] text-xs px-2 py-1 rounded font-medium">NEW</span>
             <nav className="flex gap-6 text-sm">
               <Link href="/" className="text-[#e88b7d] font-medium">HOME</Link>
@@ -182,11 +197,12 @@ export default function Home() {
           
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <Image src="/logo.svg" alt="Doll Wigs" width={140} height={40} className="h-10 w-auto" />
+            <Image src="/logo.svg" alt="Doll Wigs" width={140} height={40} className="h-8 md:h-10 w-auto" />
           </Link>
 
-          <div className="flex items-center gap-4">
-            <div className="relative">
+          <div className="flex items-center gap-2 md:gap-4">
+            {/* Search - hidden on mobile */}
+            <div className="relative hidden md:block">
               <input 
                 type="text" 
                 placeholder="Search wigs..." 
@@ -233,18 +249,37 @@ export default function Home() {
             </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute left-0 right-0 top-full bg-white border-b shadow-lg z-50">
+            <nav className="flex flex-col p-4">
+              <Link href="/" className="py-3 text-[#e88b7d] font-medium border-b">HOME</Link>
+              <Link href="/shop" className="py-3 text-gray-700 border-b">SHOP</Link>
+              <Link href="/about" className="py-3 text-gray-700 border-b">ABOUT</Link>
+              <Link href="/contact" className="py-3 text-gray-700 border-b">CONTACT</Link>
+              <div className="pt-4">
+                <input 
+                  type="text" 
+                  placeholder="Search wigs..." 
+                  className="w-full border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#e88b7d]"
+                />
+              </div>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero Section with Carousel */}
       <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #fef7f2 0%, #fce8e0 50%, #e8f5e9 100%)' }}>
-        <div className="container mx-auto px-4 py-12 flex items-center">
-          <div className="w-1/2 relative">
-            <div className="relative w-full h-[500px]">
-              <div className="absolute top-0 left-0 w-32 h-48 opacity-60">
+        <div className="container mx-auto px-4 py-8 md:py-12 flex flex-col-reverse md:flex-row items-center">
+          <div className="w-full md:w-1/2 relative mt-8 md:mt-0">
+            <div className="relative w-full h-[300px] md:h-[500px]">
+              <div className="absolute top-0 left-0 w-20 md:w-32 h-32 md:h-48 opacity-60 hidden md:block">
                 <Image src="https://images.unsplash.com/photo-1518882605630-8eb738f13eb1?w=200&h=300&fit=crop" alt="leaf" fill className="object-contain" />
               </div>
               <div className="relative z-10 w-full h-full flex items-center justify-center">
-                <div className="relative w-[400px] h-[450px] rounded-b-full overflow-hidden transition-all duration-500">
+                <div className="relative w-[250px] md:w-[400px] h-[300px] md:h-[450px] rounded-b-full overflow-hidden transition-all duration-500">
                   <Image 
                     src={currentHero.image}
                     alt="Beautiful woman with wig" 
@@ -257,24 +292,24 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="w-1/2 pl-12">
-            <p className="text-[#e88b7d] text-sm tracking-widest mb-4 transition-all duration-500">{currentHero.subtitle}</p>
-            <h1 className="text-5xl font-serif mb-6 leading-tight text-gray-800 whitespace-pre-line transition-all duration-500">
+          <div className="w-full md:w-1/2 md:pl-12 text-center md:text-left">
+            <p className="text-[#e88b7d] text-xs md:text-sm tracking-widest mb-2 md:mb-4 transition-all duration-500">{currentHero.subtitle}</p>
+            <h1 className="text-3xl md:text-5xl font-serif mb-4 md:mb-6 leading-tight text-gray-800 whitespace-pre-line transition-all duration-500">
               {currentHero.title}
             </h1>
-            <p className="text-gray-600 mb-8 leading-relaxed transition-all duration-500">
+            <p className="text-gray-600 mb-6 md:mb-8 leading-relaxed transition-all duration-500 text-sm md:text-base">
               {currentHero.description}
             </p>
-            <div className="flex gap-4">
-              <Link href={currentHero.buttonLink} className="bg-[#e88b7d] text-white px-8 py-3 rounded hover:bg-[#d67a6c] transition inline-block">
+            <div className="flex gap-3 md:gap-4 justify-center md:justify-start">
+              <Link href={currentHero.buttonLink} className="bg-[#e88b7d] text-white px-6 md:px-8 py-2.5 md:py-3 rounded hover:bg-[#d67a6c] transition inline-block text-sm md:text-base">
                 {currentHero.buttonText}
               </Link>
-              <Link href="/about" className="border border-gray-400 text-gray-700 px-8 py-3 rounded hover:border-gray-600 transition inline-block">
+              <Link href="/about" className="border border-gray-400 text-gray-700 px-6 md:px-8 py-2.5 md:py-3 rounded hover:border-gray-600 transition inline-block text-sm md:text-base">
                 Learn More
               </Link>
             </div>
             {/* Auto-sliding carousel dots */}
-            <div className="flex gap-2 mt-8">
+            <div className="flex gap-2 mt-6 md:mt-8 justify-center md:justify-start">
               {heroSlides.map((_, index) => (
                 <button
                   key={index}
@@ -288,19 +323,19 @@ export default function Home() {
           </div>
         </div>
         
-        <div className="absolute bottom-0 right-0 w-40 h-60 opacity-50">
+        <div className="absolute bottom-0 right-0 w-24 md:w-40 h-36 md:h-60 opacity-50 hidden md:block">
           <Image src="https://images.unsplash.com/photo-1518882605630-8eb738f13eb1?w=200&h=300&fit=crop" alt="leaf" fill className="object-contain transform rotate-180" />
         </div>
       </section>
 
       {/* Shop By Category */}
-      <section className="py-16 bg-white">
+      <section className="py-10 md:py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-serif text-center mb-12 text-gray-800">Shop By Category</h2>
-          <div className="flex justify-center gap-10">
+          <h2 className="text-2xl md:text-3xl font-serif text-center mb-8 md:mb-12 text-gray-800">Shop By Category</h2>
+          <div className="flex gap-4 md:gap-10 overflow-x-auto pb-4 md:pb-0 md:justify-center scrollbar-hide">
             {categories.map((category, index) => (
-              <Link key={index} href={`/shop?category=${category.slug}`} className="text-center cursor-pointer group">
-                <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-3 border-2 border-transparent group-hover:border-[#e88b7d] transition-all shadow-md">
+              <Link key={index} href={`/shop?category=${category.slug}`} className="text-center cursor-pointer group flex-shrink-0">
+                <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden mx-auto mb-2 md:mb-3 border-2 border-transparent group-hover:border-[#e88b7d] transition-all shadow-md">
                   <Image 
                     src={category.image} 
                     alt={category.name}
@@ -309,7 +344,7 @@ export default function Home() {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform"
                   />
                 </div>
-                <p className="text-sm text-gray-700 group-hover:text-[#e88b7d] transition">{category.name}</p>
+                <p className="text-xs md:text-sm text-gray-700 group-hover:text-[#e88b7d] transition whitespace-nowrap">{category.name}</p>
               </Link>
             ))}
           </div>
@@ -317,17 +352,17 @@ export default function Home() {
       </section>
 
       {/* Hand Picked Products */}
-      <section className="py-16 bg-[#fdfbfa]">
+      <section className="py-10 md:py-16 bg-[#fdfbfa]">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-serif text-center mb-8 text-gray-800">Hand Picked Products</h2>
+          <h2 className="text-2xl md:text-3xl font-serif text-center mb-6 md:mb-8 text-gray-800">Hand Picked Products</h2>
           
           {/* Tabs */}
-          <div className="flex justify-center gap-8 mb-10">
+          <div className="flex justify-center gap-4 md:gap-8 mb-8 md:mb-10 overflow-x-auto pb-2">
             {["All", "Straight", "Curly", "Lace Front"].map(tab => (
               <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`pb-2 text-sm transition ${activeTab === tab ? 'border-b-2 border-gray-800 text-gray-800 font-medium' : 'text-gray-500 hover:text-gray-700'}`}
+                className={`pb-2 text-sm transition whitespace-nowrap ${activeTab === tab ? 'border-b-2 border-gray-800 text-gray-800 font-medium' : 'text-gray-500 hover:text-gray-700'}`}
               >
                 {tab}
               </button>
@@ -335,24 +370,24 @@ export default function Home() {
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
             {products
               .filter(p => activeTab === "All" || p.category === activeTab)
               .slice(0, 8)
               .map((product) => (
               <div key={product.id} className="bg-white rounded-lg overflow-hidden group cursor-pointer shadow-sm hover:shadow-md transition-shadow">
-                <div className="relative h-72 bg-[#fdf6f0] overflow-hidden">
+                <div className="relative h-48 md:h-72 bg-[#fdf6f0] overflow-hidden">
                   {product.sale && (
-                    <span className="absolute top-3 left-3 bg-green-500 text-white text-xs px-2 py-1 rounded z-10">
+                    <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-green-500 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10">
                       SALE
                     </span>
                   )}
                   {/* Wishlist button */}
                   <button
                     onClick={(e) => { e.preventDefault(); toggleWishlist(product.id); }}
-                    className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md z-10 hover:scale-110 transition-transform"
+                    className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center shadow-md z-10 hover:scale-110 transition-transform"
                   >
-                    <Heart className={`w-4 h-4 ${wishlist.includes(product.id) ? 'text-[#e88b7d] fill-[#e88b7d]' : 'text-gray-400'}`} />
+                    <Heart className={`w-3 h-3 md:w-4 md:h-4 ${wishlist.includes(product.id) ? 'text-[#e88b7d] fill-[#e88b7d]' : 'text-gray-400'}`} />
                   </button>
                   <Image 
                     src={product.image} 
@@ -360,8 +395,8 @@ export default function Home() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  {/* Quick add overlay */}
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  {/* Quick add overlay - hidden on mobile */}
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex items-center justify-center">
                     <button 
                       onClick={() => addToCart(product)}
                       className="bg-white text-gray-800 px-6 py-2 rounded-full text-sm font-medium hover:bg-[#e88b7d] hover:text-white transition"
@@ -370,27 +405,34 @@ export default function Home() {
                     </button>
                   </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-medium text-sm mb-2 text-gray-800">{product.name}</h3>
-                  <div className="flex gap-0.5 mb-2">
+                <div className="p-3 md:p-4">
+                  <h3 className="font-medium text-xs md:text-sm mb-1 md:mb-2 text-gray-800 line-clamp-1">{product.name}</h3>
+                  <div className="flex gap-0.5 mb-1 md:mb-2">
                     {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-yellow-400 text-xs">★</span>
+                      <span key={i} className="text-yellow-400 text-[10px] md:text-xs">★</span>
                     ))}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-[#e88b7d]">{formatPrice(product.price)}</span>
+                  <div className="flex items-center gap-1 md:gap-2 flex-wrap">
+                    <span className="font-semibold text-[#e88b7d] text-sm md:text-base">{formatPrice(product.price)}</span>
                     {product.oldPrice && (
-                      <span className="text-gray-400 line-through text-sm">{formatPrice(product.oldPrice)}</span>
+                      <span className="text-gray-400 line-through text-xs md:text-sm">{formatPrice(product.oldPrice)}</span>
                     )}
                   </div>
+                  {/* Mobile add to cart button */}
+                  <button 
+                    onClick={() => addToCart(product)}
+                    className="md:hidden w-full mt-2 bg-[#e88b7d] text-white py-1.5 rounded text-xs font-medium"
+                  >
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             ))}
           </div>
 
           {/* View All Button */}
-          <div className="text-center mt-10">
-            <Link href="/shop" className="inline-block border-2 border-[#e88b7d] text-[#e88b7d] px-8 py-3 rounded-lg font-medium hover:bg-[#e88b7d] hover:text-white transition">
+          <div className="text-center mt-8 md:mt-10">
+            <Link href="/shop" className="inline-block border-2 border-[#e88b7d] text-[#e88b7d] px-6 md:px-8 py-2.5 md:py-3 rounded-lg font-medium hover:bg-[#e88b7d] hover:text-white transition text-sm md:text-base">
               View All Products
             </Link>
           </div>
@@ -398,12 +440,12 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#fdf6f0] py-12 border-t border-[#f5e6db]">
+      <footer className="bg-[#fdf6f0] py-10 md:py-12 border-t border-[#f5e6db]">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-4 gap-8 mb-8">
-            <div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-8">
+            <div className="col-span-2 md:col-span-1">
               <Link href="/" className="block mb-4">
-                <Image src="/logo.svg" alt="Doll Wigs" width={120} height={35} className="h-9 w-auto" />
+                <Image src="/logo.svg" alt="Doll Wigs" width={120} height={35} className="h-8 md:h-9 w-auto" />
               </Link>
               <p className="text-gray-600 text-sm leading-relaxed mb-4">Premium quality wigs for every style and occasion. Transform your look today.</p>
               <div className="flex gap-3">
@@ -422,8 +464,8 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <h4 className="font-medium mb-4 text-gray-800">Quick Links</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <h4 className="font-medium mb-3 md:mb-4 text-gray-800 text-sm md:text-base">Quick Links</h4>
+              <ul className="space-y-2 text-xs md:text-sm text-gray-600">
                 <li><Link href="/about" className="hover:text-[#e88b7d] transition">About Us</Link></li>
                 <li><Link href="/shop" className="hover:text-[#e88b7d] transition">Shop All</Link></li>
                 <li><Link href="/contact" className="hover:text-[#e88b7d] transition">Contact Us</Link></li>
@@ -431,24 +473,24 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h4 className="font-medium mb-4 text-gray-800">Customer Service</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <h4 className="font-medium mb-3 md:mb-4 text-gray-800 text-sm md:text-base">Customer Service</h4>
+              <ul className="space-y-2 text-xs md:text-sm text-gray-600">
                 <li><Link href="/shipping" className="hover:text-[#e88b7d] transition">Shipping Info</Link></li>
                 <li><Link href="/returns" className="hover:text-[#e88b7d] transition">Returns & Refunds</Link></li>
                 <li><Link href="/orders" className="hover:text-[#e88b7d] transition">Track Order</Link></li>
                 <li><Link href="/size-guide" className="hover:text-[#e88b7d] transition">Size Guide</Link></li>
               </ul>
             </div>
-            <div>
-              <h4 className="font-medium mb-4 text-gray-800">Newsletter</h4>
-              <p className="text-sm text-gray-600 mb-3">Subscribe for exclusive offers & updates</p>
+            <div className="col-span-2 md:col-span-1">
+              <h4 className="font-medium mb-3 md:mb-4 text-gray-800 text-sm md:text-base">Newsletter</h4>
+              <p className="text-xs md:text-sm text-gray-600 mb-3">Subscribe for exclusive offers & updates</p>
               <div className="flex">
                 <input 
                   type="email" 
                   placeholder="Your email" 
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-l text-sm focus:outline-none focus:border-[#e88b7d]"
+                  className="flex-1 px-3 md:px-4 py-2 border border-gray-300 rounded-l text-sm focus:outline-none focus:border-[#e88b7d]"
                 />
-                <button className="bg-[#e88b7d] text-white px-4 py-2 rounded-r hover:bg-[#d67a6c] transition">
+                <button className="bg-[#e88b7d] text-white px-3 md:px-4 py-2 rounded-r hover:bg-[#d67a6c] transition text-sm">
                   Subscribe
                 </button>
               </div>
@@ -458,7 +500,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="border-t border-[#f5e6db] pt-6 flex justify-between items-center text-sm text-gray-500">
+          <div className="border-t border-[#f5e6db] pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs md:text-sm text-gray-500">
             <p>&copy; 2026 Doll Wigs. All rights reserved.</p>
             <div className="flex gap-4">
               <Link href="/privacy" className="hover:text-[#e88b7d] transition">Privacy Policy</Link>
@@ -472,7 +514,7 @@ export default function Home() {
       {cartOpen && (
         <div className="fixed inset-0 z-50">
           <div className="absolute inset-0 bg-black/50" onClick={() => setCartOpen(false)}></div>
-          <div className="absolute right-0 top-0 h-full w-96 bg-white shadow-xl flex flex-col">
+          <div className="absolute right-0 top-0 h-full w-full md:w-96 bg-white shadow-xl flex flex-col">
             <div className="p-4 border-b flex justify-between items-center">
               <h2 className="text-lg font-semibold">Shopping Cart ({cartCount})</h2>
               <button onClick={() => setCartOpen(false)} className="p-1 hover:bg-gray-100 rounded transition">
@@ -492,13 +534,13 @@ export default function Home() {
               ) : (
                 <div className="space-y-4">
                   {cart.map(item => (
-                    <div key={item.id} className="flex gap-4 p-3 bg-[#fdf6f0] rounded-lg">
-                      <div className="relative w-20 h-20 rounded overflow-hidden flex-shrink-0">
+                    <div key={item.id} className="flex gap-3 md:gap-4 p-3 bg-[#fdf6f0] rounded-lg">
+                      <div className="relative w-16 h-16 md:w-20 md:h-20 rounded overflow-hidden flex-shrink-0">
                         <Image src={item.image} alt={item.name} fill className="object-cover" />
                       </div>
-                      <div className="flex-1">
-                        <h3 className="text-sm font-medium text-gray-800">{item.name}</h3>
-                        <p className="text-[#e88b7d] font-semibold">{formatPrice(item.price)}</p>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-sm font-medium text-gray-800 truncate">{item.name}</h3>
+                        <p className="text-[#e88b7d] font-semibold text-sm">{formatPrice(item.price)}</p>
                         <div className="flex items-center gap-2 mt-2">
                           <button 
                             onClick={() => updateQuantity(item.id, -1)}
@@ -506,7 +548,7 @@ export default function Home() {
                           >
                             <Minus className="w-3 h-3" />
                           </button>
-                          <span className="text-sm w-8 text-center">{item.quantity}</span>
+                          <span className="text-sm w-6 text-center">{item.quantity}</span>
                           <button 
                             onClick={() => updateQuantity(item.id, 1)}
                             className="w-6 h-6 rounded border flex items-center justify-center hover:bg-gray-100 transition"
