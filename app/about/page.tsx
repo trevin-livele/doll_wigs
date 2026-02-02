@@ -30,7 +30,7 @@ export default function AboutPage() {
       {/* Hero */}
       <div className="bg-gray-900 py-10 md:py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-4xl font-serif text-white mb-3 md:mb-4">About Doll Wigs</h1>
+          <h1 className="text-3xl md:text-4xl font-serif text-white mb-3 md:mb-4 font-bold uppercase">About Doll Wigs</h1>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
             Kenya&apos;s premier destination for premium quality wigs. We believe every woman deserves to feel beautiful and confident.
           </p>
@@ -50,7 +50,7 @@ export default function AboutPage() {
               />
             </div>
             <div className="order-1 md:order-2">
-              <h2 className="text-2xl md:text-3xl font-serif text-white mb-4 md:mb-6">Our Story</h2>
+              <h2 className="text-2xl md:text-3xl font-serif text-white mb-4 md:mb-6 font-bold uppercase">Our Story</h2>
               <p className="text-gray-400 mb-4 leading-relaxed text-sm md:text-base">
                 Founded in 2020, Doll Wigs started with a simple mission: to provide Kenyan women with access to high-quality, affordable wigs that look and feel natural.
               </p>
@@ -68,7 +68,7 @@ export default function AboutPage() {
       {/* Why Choose Us */}
       <section className="py-10 md:py-16 bg-black">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-serif text-center text-white mb-8 md:mb-12">Why Choose Doll Wigs?</h2>
+          <h2 className="text-2xl md:text-3xl font-serif text-center text-white mb-8 md:mb-12 font-bold uppercase">Why Choose Doll Wigs?</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
               { title: "Premium Quality", desc: "100% human hair and high-grade synthetic options" },
@@ -80,7 +80,7 @@ export default function AboutPage() {
                 <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
                   <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-[#CAB276]" />
                 </div>
-                <h3 className="font-semibold text-white mb-1 md:mb-2 text-sm md:text-base">{item.title}</h3>
+                <h3 className="font-bold text-white mb-1 md:mb-2 text-sm md:text-base uppercase">{item.title}</h3>
                 <p className="text-xs md:text-sm text-gray-400">{item.desc}</p>
               </div>
             ))}
@@ -91,7 +91,7 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-10 md:py-16 bg-[#CAB276]">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-black mb-3 md:mb-4">Ready to Transform Your Look?</h2>
+          <h2 className="text-2xl md:text-3xl font-serif text-black mb-3 md:mb-4 font-bold uppercase">Ready to Transform Your Look?</h2>
           <p className="text-black/70 mb-6 md:mb-8 text-sm md:text-base">Browse our collection and find your perfect wig today.</p>
           <Link href="/shop" className="inline-block bg-black text-white px-6 md:px-8 py-2.5 md:py-3 rounded-lg font-medium hover:bg-gray-900 transition text-sm md:text-base">
             Shop Now

@@ -73,7 +73,7 @@ export default function CheckoutPage() {
                     <MapPin className="w-5 h-5 md:w-6 md:h-6 text-[#CAB276]" />
                   </div>
                   <div>
-                    <h2 className="text-lg md:text-xl font-semibold text-white">Delivery Information</h2>
+                    <h2 className="text-lg md:text-xl font-bold text-white uppercase">Delivery Information</h2>
                     <p className="text-xs md:text-sm text-gray-500">Where should we deliver your wigs?</p>
                   </div>
                 </div>
@@ -147,7 +147,7 @@ export default function CheckoutPage() {
                     <Smartphone className="w-6 h-6 md:w-7 md:h-7 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-lg md:text-xl font-semibold text-white">Pay with M-Pesa</h2>
+                    <h2 className="text-lg md:text-xl font-bold text-white uppercase">Pay with M-Pesa</h2>
                     <p className="text-xs md:text-sm text-gray-500">Fast, secure mobile payment</p>
                   </div>
                 </div>
@@ -226,7 +226,7 @@ export default function CheckoutPage() {
                   <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-green-500" />
                 </div>
                 
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-3">Payment Successful! 🎉</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-3 uppercase">Payment Successful! 🎉</h2>
                 <p className="text-gray-400 mb-6 md:mb-8 text-base md:text-lg">Your order has been confirmed and is being processed.</p>
                 
                 <div className="bg-gray-900 rounded-xl p-4 md:p-6 mb-6 md:mb-8 text-left">
@@ -279,7 +279,7 @@ export default function CheckoutPage() {
           {/* Order Summary */}
           <div className="lg:col-span-1 order-1 lg:order-2">
             <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-5 md:p-6 lg:sticky lg:top-4 border border-gray-800">
-              <h2 className="text-base md:text-lg font-semibold text-white mb-4 md:mb-6">Order Summary</h2>
+              <h2 className="text-base md:text-lg font-bold text-white mb-4 md:mb-6 uppercase">Order Summary</h2>
               
               <div className="space-y-3 md:space-y-4 mb-4 md:mb-6">
                 {orderItems.map(item => (

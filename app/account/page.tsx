@@ -130,8 +130,8 @@ export default function AccountPage() {
               <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8 border border-gray-800">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4">
                   <div>
-                    <h2 className="text-xl md:text-2xl font-serif text-white">Personal Information</h2>
-                    <p className="text-gray-500 text-sm">Manage your personal details</p>
+                    <h2 className="text-xl md:text-2xl font-serif text-white font-bold uppercase">Personal Information</h2>
+                    <p className="text-gray-500 text-sm md:text-base">Manage your personal details</p>
                   </div>
                   <button onClick={() => setIsEditing(!isEditing)} className={`flex items-center gap-2 px-4 py-2 rounded-lg transition text-sm ${isEditing ? 'bg-gray-100 text-gray-400' : 'bg-gray-900 text-[#CAB276]'}`}>
                     <Edit2 className="w-4 h-4" />{isEditing ? 'Cancel' : 'Edit'}
@@ -153,15 +153,15 @@ export default function AccountPage() {
             )}
             {activeTab === "orders" && (
               <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8 border border-gray-800">
-                <h2 className="text-xl md:text-2xl font-serif text-white mb-4 md:mb-6">My Orders</h2>
-                <p className="text-gray-500 mb-4 text-sm">View and track your orders</p>
+                <h2 className="text-xl md:text-2xl font-serif text-white mb-4 md:mb-6 font-bold uppercase">My Orders</h2>
+                <p className="text-gray-500 mb-4 text-sm md:text-base">View and track your orders</p>
                 <Link href="/orders" className="inline-block bg-[#CAB276] text-white px-5 md:px-6 py-2.5 md:py-3 rounded-lg font-medium hover:bg-[#b39a5e] transition text-sm">View All Orders →</Link>
               </div>
             )}
             {activeTab === "addresses" && (
               <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8 border border-gray-800">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6 gap-3">
-                  <div><h2 className="text-xl md:text-2xl font-serif text-white">Saved Addresses</h2><p className="text-gray-500 text-sm">Manage your delivery addresses</p></div>
+                  <div><h2 className="text-xl md:text-2xl font-serif text-white font-bold uppercase">Saved Addresses</h2><p className="text-gray-500 text-sm md:text-base">Manage your delivery addresses</p></div>
                   <button className="bg-[#CAB276] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#b39a5e] transition text-sm">+ Add New</button>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
@@ -177,8 +177,8 @@ export default function AccountPage() {
             )}
             {activeTab === "payments" && (
               <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8 border border-gray-800">
-                <h2 className="text-xl md:text-2xl font-serif text-white mb-2">Payment Methods</h2>
-                <p className="text-gray-500 mb-4 md:mb-6 text-sm">We accept M-Pesa payments only</p>
+                <h2 className="text-xl md:text-2xl font-serif text-white mb-2 font-bold uppercase">Payment Methods</h2>
+                <p className="text-gray-500 mb-4 md:mb-6 text-sm md:text-base">We accept M-Pesa payments only</p>
                 <div className="bg-gray-900 border border-green-800 rounded-xl p-4 md:p-6">
                   <div className="flex items-center gap-3 md:gap-4">
                     <div className="w-12 h-12 md:w-14 md:h-14 bg-green-900 rounded-xl flex items-center justify-center"><span className="text-white font-bold text-lg md:text-xl">M</span></div>
@@ -189,7 +189,7 @@ export default function AccountPage() {
             )}
             {activeTab === "notifications" && (
               <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8 border border-gray-800">
-                <h2 className="text-xl md:text-2xl font-serif text-white mb-4 md:mb-6">Notification Preferences</h2>
+                <h2 className="text-xl md:text-2xl font-serif text-white mb-4 md:mb-6 font-bold uppercase">Notification Preferences</h2>
                 <div className="space-y-3 md:space-y-4">
                   {[{ label: "Order Updates", desc: "Get notified about your order status" },{ label: "Promotions & Sales", desc: "Receive exclusive offers and discounts" },{ label: "New Arrivals", desc: "Be the first to know about new wigs" },{ label: "SMS Notifications", desc: "Receive updates via SMS" }].map((item, i) => (
                     <div key={i} className="flex items-center justify-between p-3 md:p-4 bg-gray-800 rounded-xl">

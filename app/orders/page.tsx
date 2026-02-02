@@ -71,8 +71,8 @@ export default function OrdersPage() {
             <Package className="w-5 h-5 md:w-7 md:h-7 text-[#CAB276]" />
           </div>
           <div>
-            <h1 className="text-2xl md:text-3xl font-serif text-white">My Orders</h1>
-            <p className="text-gray-500 text-sm">Track and manage your orders</p>
+            <h1 className="text-2xl md:text-3xl font-serif text-white font-bold uppercase">My Orders</h1>
+            <p className="text-gray-500 text-sm md:text-base">Track and manage your orders</p>
           </div>
         </div>
 
@@ -129,7 +129,7 @@ export default function OrdersPage() {
                             <Image src={item.image} alt={item.name} fill className="object-cover" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-white text-sm md:text-base truncate">{item.name}</h3>
+                            <h3 className="font-bold text-white text-sm md:text-base truncate uppercase">{item.name}</h3>
                             <p className="text-xs md:text-sm text-gray-500">Qty: {item.quantity}</p>
                           </div>
                           <div className="text-right">
@@ -172,7 +172,7 @@ export default function OrdersPage() {
 
         {/* Help Section */}
         <div className="mt-8 md:mt-12 bg-gray-900 rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8 border border-gray-800">
-          <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Need Help?</h2>
+          <h2 className="text-lg md:text-xl font-bold text-white mb-4 uppercase">Need Help?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <div className="p-4 bg-gray-900 rounded-xl">
               <h3 className="font-medium text-white mb-2 text-sm md:text-base">📦 Shipping Info</h3>

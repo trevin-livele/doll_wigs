@@ -55,7 +55,7 @@ export default function CartPage() {
       </header>
 
       <div className="container mx-auto px-4 py-6 md:py-12">
-        <h1 className="text-2xl md:text-3xl font-serif text-white mb-6 md:mb-8">Shopping Cart</h1>
+        <h1 className="text-2xl md:text-3xl font-serif text-white mb-6 md:mb-8 font-bold uppercase">Shopping Cart</h1>
 
         {cart.length === 0 ? (
           <div className="text-center py-12 md:py-16 bg-gray-900 rounded-xl shadow-sm border border-gray-800">
@@ -160,7 +160,7 @@ export default function CartPage() {
             {/* Order Summary */}
             <div className="lg:col-span-1">
               <div className="bg-gray-900 rounded-xl shadow-sm p-5 md:p-6 sticky top-4 border border-gray-800">
-                <h2 className="text-lg font-semibold text-white mb-4 md:mb-6">Order Summary</h2>
+                <h2 className="text-lg font-bold text-white mb-4 md:mb-6 uppercase">Order Summary</h2>
                 
                 <div className="space-y-3 md:space-y-4 text-sm">
                   <div className="flex justify-between">
