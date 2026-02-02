@@ -135,9 +135,9 @@ export default function Home() {
       <section className="bg-black">
         <div className="container mx-auto px-4 py-12 md:py-20 flex flex-col md:flex-row items-center">
           <div className="w-full md:w-1/2 text-center md:text-left mb-8 md:mb-0">
-            <p className="text-[#CAB276] text-sm md:text-base tracking-[0.3em] mb-4 font-bold uppercase">{currentHero.subtitle}</p>
-            <h1 className="text-5xl md:text-7xl font-serif mb-6 leading-tight text-white whitespace-pre-line font-bold">{currentHero.title}</h1>
-            <p className="text-gray-300 mb-8 leading-relaxed text-base md:text-lg max-w-md">{currentHero.description}</p>
+            <p className="text-[#CAB276] text-xs md:text-sm tracking-[0.3em] mb-4">{currentHero.subtitle}</p>
+            <h1 className="text-4xl md:text-6xl font-serif mb-6 leading-tight text-white whitespace-pre-line">{currentHero.title}</h1>
+            <p className="text-gray-400 mb-8 leading-relaxed text-sm md:text-base max-w-md">{currentHero.description}</p>
             <div className="flex gap-4 justify-center md:justify-start">
               <Link href={currentHero.buttonLink} className="bg-[#CAB276] text-black px-8 py-3 rounded font-medium hover:bg-[#b39a5e] transition tracking-wide">{currentHero.buttonText}</Link>
               <Link href="/about" className="border border-[#CAB276] text-[#CAB276] px-8 py-3 rounded font-medium hover:bg-[#CAB276] hover:text-black transition tracking-wide">Learn More</Link>
@@ -157,14 +157,14 @@ export default function Home() {
       {/* Categories Section */}
       <section className="bg-white py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-serif text-center mb-10 text-black font-bold">SHOP BY CATEGORY</h2>
+          <h2 className="text-2xl md:text-3xl font-serif text-center mb-10 text-black">Shop By Category</h2>
           <div className="flex gap-6 md:gap-10 overflow-x-auto pb-4 md:pb-0 md:justify-center scrollbar-hide">
             {categories.map((category, index) => (
               <Link key={index} href={`/shop?category=${category.slug}`} className="text-center group flex-shrink-0">
                 <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden mx-auto mb-3 border-2 border-transparent group-hover:border-[#CAB276] transition-all shadow-lg">
                   <Image src={category.image} alt={category.name} width={112} height={112} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
                 </div>
-                <p className="text-sm md:text-base text-gray-800 group-hover:text-[#CAB276] transition font-bold uppercase">{category.name}</p>
+                <p className="text-sm text-gray-800 group-hover:text-[#CAB276] transition font-medium">{category.name}</p>
               </Link>
             ))}
           </div>
@@ -174,11 +174,11 @@ export default function Home() {
       {/* Products Section - Black Background */}
       <section className="bg-black py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-serif text-center mb-4 text-white font-bold">HAND PICKED PRODUCTS</h2>
-          <p className="text-gray-400 text-center mb-8 text-base md:text-lg">Premium quality wigs for every occasion</p>
+          <h2 className="text-2xl md:text-3xl font-serif text-center mb-4 text-white">Hand Picked Products</h2>
+          <p className="text-gray-500 text-center mb-8">Premium quality wigs for every occasion</p>
           <div className="flex justify-center gap-6 md:gap-8 mb-10 overflow-x-auto pb-2">
             {["All", "Straight", "Curly", "Lace Front"].map(tab => (
-              <button key={tab} onClick={() => setActiveTab(tab)} className={`pb-2 text-base md:text-lg transition tracking-wide ${activeTab === tab ? 'border-b-2 border-[#CAB276] text-[#CAB276] font-bold' : 'text-gray-500 hover:text-white font-medium'}`}>{tab.toUpperCase()}</button>
+              <button key={tab} onClick={() => setActiveTab(tab)} className={`pb-2 text-sm transition tracking-wide ${activeTab === tab ? 'border-b-2 border-[#CAB276] text-[#CAB276] font-medium' : 'text-gray-500 hover:text-white'}`}>{tab}</button>
             ))}
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -195,11 +195,11 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-bold text-sm md:text-base mb-2 text-white uppercase">{product.name}</h3>
+                  <h3 className="font-medium text-sm mb-2 text-white">{product.name}</h3>
                   <div className="flex gap-1 mb-2">{[...Array(5)].map((_, i) => <span key={i} className="text-[#CAB276] text-xs">★</span>)}</div>
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-[#CAB276] text-base md:text-lg">{formatPrice(product.price)}</span>
-                    {product.oldPrice && <span className="text-gray-500 line-through text-sm md:text-base">{formatPrice(product.oldPrice)}</span>}
+                    <span className="font-semibold text-[#CAB276]">{formatPrice(product.price)}</span>
+                    {product.oldPrice && <span className="text-gray-500 line-through text-sm">{formatPrice(product.oldPrice)}</span>}
                   </div>
                   <button onClick={() => addToCart(product)} className="md:hidden w-full mt-3 bg-[#CAB276] text-black py-2 rounded text-sm font-medium">Add to Cart</button>
                 </div>
@@ -220,10 +220,10 @@ export default function Home() {
               <Image src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=600&h=700&fit=crop" alt="About" fill className="object-cover" />
             </div>
             <div>
-              <p className="text-[#CAB276] text-sm md:text-base tracking-[0.3em] mb-4 font-bold">ABOUT US</p>
-              <h2 className="text-4xl md:text-5xl font-serif text-white mb-6 font-bold">MEET YOUR BEAUTY PARTNER</h2>
-              <p className="text-gray-300 mb-6 leading-relaxed text-base md:text-lg">At Doll Wigs, we believe every woman deserves to feel confident and beautiful. Our premium collection of wigs is carefully curated to help you express your unique style.</p>
-              <p className="text-gray-300 mb-8 leading-relaxed text-base md:text-lg">From natural-looking lace fronts to bold colored styles, we have something for every occasion and personality.</p>
+              <p className="text-[#CAB276] text-xs tracking-[0.3em] mb-4">ABOUT US</p>
+              <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">Meet Your Beauty Partner</h2>
+              <p className="text-gray-400 mb-6 leading-relaxed">At Doll Wigs, we believe every woman deserves to feel confident and beautiful. Our premium collection of wigs is carefully curated to help you express your unique style.</p>
+              <p className="text-gray-400 mb-8 leading-relaxed">From natural-looking lace fronts to bold colored styles, we have something for every occasion and personality.</p>
               <Link href="/about" className="inline-block border-b-2 border-[#CAB276] text-[#CAB276] pb-1 font-medium hover:text-white hover:border-white transition tracking-wide">READ MORE</Link>
             </div>
           </div>
@@ -241,8 +241,8 @@ export default function Home() {
               { title: "Free Returns", desc: "7 Day Policy" }
             ].map((item, i) => (
               <div key={i}>
-                <h3 className="font-bold text-black mb-1 text-base md:text-lg uppercase">{item.title}</h3>
-                <p className="text-black/80 text-sm md:text-base font-medium">{item.desc}</p>
+                <h3 className="font-semibold text-black mb-1">{item.title}</h3>
+                <p className="text-black/70 text-sm">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -264,7 +264,7 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <h4 className="font-bold mb-4 text-white text-base tracking-wide">QUICK LINKS</h4>
+              <h4 className="font-medium mb-4 text-white text-sm tracking-wide">QUICK LINKS</h4>
               <ul className="space-y-2 text-sm text-gray-500">
                 <li><Link href="/about" className="hover:text-[#CAB276] transition">About Us</Link></li>
                 <li><Link href="/shop" className="hover:text-[#CAB276] transition">Shop All</Link></li>
@@ -272,7 +272,7 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-4 text-white text-base tracking-wide">SUPPORT</h4>
+              <h4 className="font-medium mb-4 text-white text-sm tracking-wide">SUPPORT</h4>
               <ul className="space-y-2 text-sm text-gray-500">
                 <li><Link href="/shipping" className="hover:text-[#CAB276] transition">Shipping</Link></li>
                 <li><Link href="/returns" className="hover:text-[#CAB276] transition">Returns</Link></li>
@@ -280,7 +280,7 @@ export default function Home() {
               </ul>
             </div>
             <div className="col-span-2 md:col-span-1">
-              <h4 className="font-bold mb-4 text-white text-base tracking-wide">NEWSLETTER</h4>
+              <h4 className="font-medium mb-4 text-white text-sm tracking-wide">NEWSLETTER</h4>
               <p className="text-sm text-gray-500 mb-3">Get exclusive offers</p>
               <div className="flex">
                 <input type="email" placeholder="Your email" className="flex-1 px-4 py-2 bg-gray-900 border border-gray-800 rounded-l text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#CAB276]" />
