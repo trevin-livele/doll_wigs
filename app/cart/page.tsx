@@ -17,10 +17,7 @@ interface CartItem {
 const formatPrice = (price: number) => `KSh ${price.toLocaleString()}`;
 
 export default function CartPage() {
-  const [cart, setCart] = useState<CartItem[]>([
-    { id: 1, name: "Silky Straight Wig", price: 18500, oldPrice: 24000, image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=200&h=200&fit=crop", quantity: 1 },
-    { id: 2, name: "Body Wave Lace Front", price: 24900, oldPrice: 32000, image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=200&h=200&fit=crop", quantity: 2 },
-  ]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   const updateQuantity = (id: number, delta: number) => {
     setCart(prev => prev.map(item => {
