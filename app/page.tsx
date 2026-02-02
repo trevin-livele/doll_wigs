@@ -143,7 +143,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Top Bar */}
-      <div className="bg-[#fdf6f0] py-2 px-4 text-xs border-b border-[#f5e6db]">
+      <div className="bg-[#f8f6f1] py-2 px-4 text-xs border-b border-[#e8e4d9]">
         <div className="hidden md:flex justify-between items-center">
           <div className="flex gap-4 items-center text-gray-600">
             <span className="flex items-center gap-1"><Phone className="w-3 h-3" /> +254 792 164 579</span>
@@ -175,23 +175,23 @@ export default function Home() {
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
-            <span className="bg-[#fdf6f0] text-[#e88b7d] text-xs px-2 py-1 rounded font-medium">NEW</span>
+            <span className="bg-[#f8f6f1] text-[#CAB276] text-xs px-2 py-1 rounded font-medium">NEW</span>
             <nav className="flex gap-6 text-sm">
-              <Link href="/" className="text-[#e88b7d] font-medium">HOME</Link>
+              <Link href="/" className="text-[#CAB276] font-medium">HOME</Link>
               <div className="relative group">
-                <Link href="/shop" className="text-gray-700 hover:text-[#e88b7d] flex items-center gap-1 transition">
+                <Link href="/shop" className="text-gray-700 hover:text-[#CAB276] flex items-center gap-1 transition">
                   SHOP <ChevronDown className="w-3 h-3" />
                 </Link>
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  <Link href="/shop?category=straight" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#fdf6f0]">Straight Wigs</Link>
-                  <Link href="/shop?category=curly" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#fdf6f0]">Curly Wigs</Link>
-                  <Link href="/shop?category=bob" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#fdf6f0]">Bob Wigs</Link>
-                  <Link href="/shop?category=lace-front" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#fdf6f0]">Lace Front</Link>
-                  <Link href="/shop?category=colored" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#fdf6f0]">Colored Wigs</Link>
+                  <Link href="/shop?category=straight" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f8f6f1]">Straight Wigs</Link>
+                  <Link href="/shop?category=curly" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f8f6f1]">Curly Wigs</Link>
+                  <Link href="/shop?category=bob" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f8f6f1]">Bob Wigs</Link>
+                  <Link href="/shop?category=lace-front" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f8f6f1]">Lace Front</Link>
+                  <Link href="/shop?category=colored" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f8f6f1]">Colored Wigs</Link>
                 </div>
               </div>
-              <Link href="/about" className="text-gray-700 hover:text-[#e88b7d] transition">ABOUT</Link>
-              <Link href="/contact" className="text-gray-700 hover:text-[#e88b7d] transition">CONTACT</Link>
+              <Link href="/about" className="text-gray-700 hover:text-[#CAB276] transition">ABOUT</Link>
+              <Link href="/contact" className="text-gray-700 hover:text-[#CAB276] transition">CONTACT</Link>
             </nav>
           </div>
           
@@ -206,7 +206,7 @@ export default function Home() {
               <input 
                 type="text" 
                 placeholder="Search wigs..." 
-                className="border border-gray-200 rounded-full px-4 py-2 pr-10 text-sm w-48 focus:outline-none focus:border-[#e88b7d] transition"
+                className="border border-gray-200 rounded-full px-4 py-2 pr-10 text-sm w-48 focus:outline-none focus:border-[#CAB276] transition"
               />
               <Search className="absolute right-3 top-2.5 w-4 h-4 text-gray-400" />
             </div>
@@ -218,21 +218,21 @@ export default function Home() {
               </button>
               {userMenuOpen && (
                 <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-xl border py-2 z-50">
-                  <Link href="/account" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#fdf6f0]">My Account</Link>
-                  <Link href="/orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#fdf6f0]">My Orders</Link>
-                  <Link href="/wishlist" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#fdf6f0]">Wishlist ({wishlist.length})</Link>
+                  <Link href="/account" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f8f6f1]">My Account</Link>
+                  <Link href="/orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f8f6f1]">My Orders</Link>
+                  <Link href="/wishlist" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f8f6f1]">Wishlist ({wishlist.length})</Link>
                   <hr className="my-2" />
-                  <Link href="/login" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#fdf6f0]">Login</Link>
-                  <Link href="/register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#fdf6f0]">Register</Link>
+                  <Link href="/login" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f8f6f1]">Login</Link>
+                  <Link href="/register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#f8f6f1]">Register</Link>
                 </div>
               )}
             </div>
             
             {/* Wishlist */}
             <Link href="/wishlist" className="relative p-2 hover:bg-gray-100 rounded-full transition">
-              <Heart className={`w-5 h-5 ${wishlist.length > 0 ? 'text-[#e88b7d] fill-[#e88b7d]' : 'text-gray-600'}`} />
+              <Heart className={`w-5 h-5 ${wishlist.length > 0 ? 'text-[#CAB276] fill-[#CAB276]' : 'text-gray-600'}`} />
               {wishlist.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#e88b7d] text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-[#CAB276] text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
                   {wishlist.length}
                 </span>
               )}
@@ -242,7 +242,7 @@ export default function Home() {
             <button onClick={() => setCartOpen(true)} className="relative p-2 hover:bg-gray-100 rounded-full transition">
               <ShoppingCart className="w-5 h-5 text-gray-600" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#e88b7d] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-[#CAB276] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
@@ -254,7 +254,7 @@ export default function Home() {
         {mobileMenuOpen && (
           <div className="md:hidden absolute left-0 right-0 top-full bg-white border-b shadow-lg z-50">
             <nav className="flex flex-col p-4">
-              <Link href="/" className="py-3 text-[#e88b7d] font-medium border-b">HOME</Link>
+              <Link href="/" className="py-3 text-[#CAB276] font-medium border-b">HOME</Link>
               <Link href="/shop" className="py-3 text-gray-700 border-b">SHOP</Link>
               <Link href="/about" className="py-3 text-gray-700 border-b">ABOUT</Link>
               <Link href="/contact" className="py-3 text-gray-700 border-b">CONTACT</Link>
@@ -262,7 +262,7 @@ export default function Home() {
                 <input 
                   type="text" 
                   placeholder="Search wigs..." 
-                  className="w-full border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#e88b7d]"
+                  className="w-full border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#CAB276]"
                 />
               </div>
             </nav>
@@ -271,7 +271,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section with Carousel */}
-      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #fef7f2 0%, #fce8e0 50%, #e8f5e9 100%)' }}>
+      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #faf9f7 0%, #f5f3ed 50%, #f8f6f1 100%)' }}>
         <div className="container mx-auto px-4 py-8 md:py-12 flex flex-col-reverse md:flex-row items-center">
           <div className="w-full md:w-1/2 relative mt-8 md:mt-0">
             <div className="relative w-full h-[300px] md:h-[500px]">
@@ -293,7 +293,7 @@ export default function Home() {
           </div>
           
           <div className="w-full md:w-1/2 md:pl-12 text-center md:text-left">
-            <p className="text-[#e88b7d] text-xs md:text-sm tracking-widest mb-2 md:mb-4 transition-all duration-500">{currentHero.subtitle}</p>
+            <p className="text-[#CAB276] text-xs md:text-sm tracking-widest mb-2 md:mb-4 transition-all duration-500">{currentHero.subtitle}</p>
             <h1 className="text-3xl md:text-5xl font-serif mb-4 md:mb-6 leading-tight text-gray-800 whitespace-pre-line transition-all duration-500">
               {currentHero.title}
             </h1>
@@ -301,10 +301,10 @@ export default function Home() {
               {currentHero.description}
             </p>
             <div className="flex gap-3 md:gap-4 justify-center md:justify-start">
-              <Link href={currentHero.buttonLink} className="bg-[#e88b7d] text-white px-6 md:px-8 py-2.5 md:py-3 rounded hover:bg-[#d67a6c] transition inline-block text-sm md:text-base">
+              <Link href={currentHero.buttonLink} className="bg-black text-white px-6 md:px-8 py-2.5 md:py-3 rounded hover:bg-gray-800 transition inline-block text-sm md:text-base">
                 {currentHero.buttonText}
               </Link>
-              <Link href="/about" className="border border-gray-400 text-gray-700 px-6 md:px-8 py-2.5 md:py-3 rounded hover:border-gray-600 transition inline-block text-sm md:text-base">
+              <Link href="/about" className="border border-[#CAB276] text-[#CAB276] px-6 md:px-8 py-2.5 md:py-3 rounded hover:bg-[#CAB276] hover:text-white transition inline-block text-sm md:text-base">
                 Learn More
               </Link>
             </div>
@@ -315,7 +315,7 @@ export default function Home() {
                   key={index}
                   onClick={() => setCurrentSlide(index)}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    currentSlide === index ? 'bg-[#e88b7d] w-8' : 'bg-gray-300 w-2 hover:bg-gray-400'
+                    currentSlide === index ? 'bg-[#CAB276] w-8' : 'bg-gray-300 w-2 hover:bg-gray-400'
                   }`}
                 />
               ))}
@@ -335,7 +335,7 @@ export default function Home() {
           <div className="flex gap-4 md:gap-10 overflow-x-auto pb-4 md:pb-0 md:justify-center scrollbar-hide">
             {categories.map((category, index) => (
               <Link key={index} href={`/shop?category=${category.slug}`} className="text-center cursor-pointer group flex-shrink-0">
-                <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden mx-auto mb-2 md:mb-3 border-2 border-transparent group-hover:border-[#e88b7d] transition-all shadow-md">
+                <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden mx-auto mb-2 md:mb-3 border-2 border-transparent group-hover:border-[#CAB276] transition-all shadow-md">
                   <Image 
                     src={category.image} 
                     alt={category.name}
@@ -344,7 +344,7 @@ export default function Home() {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform"
                   />
                 </div>
-                <p className="text-xs md:text-sm text-gray-700 group-hover:text-[#e88b7d] transition whitespace-nowrap">{category.name}</p>
+                <p className="text-xs md:text-sm text-gray-700 group-hover:text-[#CAB276] transition whitespace-nowrap">{category.name}</p>
               </Link>
             ))}
           </div>
@@ -352,7 +352,7 @@ export default function Home() {
       </section>
 
       {/* Hand Picked Products */}
-      <section className="py-10 md:py-16 bg-[#fdfbfa]">
+      <section className="py-10 md:py-16 bg-[#faf9f7]">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-serif text-center mb-6 md:mb-8 text-gray-800">Hand Picked Products</h2>
           
@@ -376,7 +376,7 @@ export default function Home() {
               .slice(0, 8)
               .map((product) => (
               <div key={product.id} className="bg-white rounded-lg overflow-hidden group cursor-pointer shadow-sm hover:shadow-md transition-shadow">
-                <div className="relative h-48 md:h-72 bg-[#fdf6f0] overflow-hidden">
+                <div className="relative h-48 md:h-72 bg-[#f8f6f1] overflow-hidden">
                   {product.sale && (
                     <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-green-500 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10">
                       SALE
@@ -387,7 +387,7 @@ export default function Home() {
                     onClick={(e) => { e.preventDefault(); toggleWishlist(product.id); }}
                     className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center shadow-md z-10 hover:scale-110 transition-transform"
                   >
-                    <Heart className={`w-3 h-3 md:w-4 md:h-4 ${wishlist.includes(product.id) ? 'text-[#e88b7d] fill-[#e88b7d]' : 'text-gray-400'}`} />
+                    <Heart className={`w-3 h-3 md:w-4 md:h-4 ${wishlist.includes(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-gray-400'}`} />
                   </button>
                   <Image 
                     src={product.image} 
@@ -399,7 +399,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex items-center justify-center">
                     <button 
                       onClick={() => addToCart(product)}
-                      className="bg-white text-gray-800 px-6 py-2 rounded-full text-sm font-medium hover:bg-[#e88b7d] hover:text-white transition"
+                      className="bg-white text-gray-800 px-6 py-2 rounded-full text-sm font-medium hover:bg-[#CAB276] hover:text-white transition"
                     >
                       Add to Cart
                     </button>
@@ -413,7 +413,7 @@ export default function Home() {
                     ))}
                   </div>
                   <div className="flex items-center gap-1 md:gap-2 flex-wrap">
-                    <span className="font-semibold text-[#e88b7d] text-sm md:text-base">{formatPrice(product.price)}</span>
+                    <span className="font-semibold text-[#CAB276] text-sm md:text-base">{formatPrice(product.price)}</span>
                     {product.oldPrice && (
                       <span className="text-gray-400 line-through text-xs md:text-sm">{formatPrice(product.oldPrice)}</span>
                     )}
@@ -421,7 +421,7 @@ export default function Home() {
                   {/* Mobile add to cart button */}
                   <button 
                     onClick={() => addToCart(product)}
-                    className="md:hidden w-full mt-2 bg-[#e88b7d] text-white py-1.5 rounded text-xs font-medium"
+                    className="md:hidden w-full mt-2 bg-[#CAB276] text-white py-1.5 rounded text-xs font-medium"
                   >
                     Add to Cart
                   </button>
@@ -430,9 +430,8 @@ export default function Home() {
             ))}
           </div>
 
-          {/* View All Button */}
           <div className="text-center mt-8 md:mt-10">
-            <Link href="/shop" className="inline-block border-2 border-[#e88b7d] text-[#e88b7d] px-6 md:px-8 py-2.5 md:py-3 rounded-lg font-medium hover:bg-[#e88b7d] hover:text-white transition text-sm md:text-base">
+            <Link href="/shop" className="inline-block bg-black text-white px-6 md:px-8 py-2.5 md:py-3 rounded-lg font-medium hover:bg-gray-800 transition text-sm md:text-base">
               View All Products
             </Link>
           </div>
@@ -440,7 +439,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#fdf6f0] py-10 md:py-12 border-t border-[#f5e6db]">
+      <footer className="bg-[#f8f6f1] py-10 md:py-12 border-t border-[#e8e4d9]">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-8">
             <div className="col-span-2 md:col-span-1">
@@ -466,19 +465,19 @@ export default function Home() {
             <div>
               <h4 className="font-medium mb-3 md:mb-4 text-gray-800 text-sm md:text-base">Quick Links</h4>
               <ul className="space-y-2 text-xs md:text-sm text-gray-600">
-                <li><Link href="/about" className="hover:text-[#e88b7d] transition">About Us</Link></li>
-                <li><Link href="/shop" className="hover:text-[#e88b7d] transition">Shop All</Link></li>
-                <li><Link href="/contact" className="hover:text-[#e88b7d] transition">Contact Us</Link></li>
-                <li><Link href="/faq" className="hover:text-[#e88b7d] transition">FAQ</Link></li>
+                <li><Link href="/about" className="hover:text-[#CAB276] transition">About Us</Link></li>
+                <li><Link href="/shop" className="hover:text-[#CAB276] transition">Shop All</Link></li>
+                <li><Link href="/contact" className="hover:text-[#CAB276] transition">Contact Us</Link></li>
+                <li><Link href="/faq" className="hover:text-[#CAB276] transition">FAQ</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-medium mb-3 md:mb-4 text-gray-800 text-sm md:text-base">Customer Service</h4>
               <ul className="space-y-2 text-xs md:text-sm text-gray-600">
-                <li><Link href="/shipping" className="hover:text-[#e88b7d] transition">Shipping Info</Link></li>
-                <li><Link href="/returns" className="hover:text-[#e88b7d] transition">Returns & Refunds</Link></li>
-                <li><Link href="/orders" className="hover:text-[#e88b7d] transition">Track Order</Link></li>
-                <li><Link href="/size-guide" className="hover:text-[#e88b7d] transition">Size Guide</Link></li>
+                <li><Link href="/shipping" className="hover:text-[#CAB276] transition">Shipping Info</Link></li>
+                <li><Link href="/returns" className="hover:text-[#CAB276] transition">Returns & Refunds</Link></li>
+                <li><Link href="/orders" className="hover:text-[#CAB276] transition">Track Order</Link></li>
+                <li><Link href="/size-guide" className="hover:text-[#CAB276] transition">Size Guide</Link></li>
               </ul>
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -488,9 +487,9 @@ export default function Home() {
                 <input 
                   type="email" 
                   placeholder="Your email" 
-                  className="flex-1 px-3 md:px-4 py-2 border border-gray-300 rounded-l text-sm focus:outline-none focus:border-[#e88b7d]"
+                  className="flex-1 px-3 md:px-4 py-2 border border-gray-300 rounded-l text-sm focus:outline-none focus:border-[#CAB276]"
                 />
-                <button className="bg-[#e88b7d] text-white px-3 md:px-4 py-2 rounded-r hover:bg-[#d67a6c] transition text-sm">
+                <button className="bg-[#CAB276] text-white px-3 md:px-4 py-2 rounded-r hover:bg-[#b39a5e] transition text-sm">
                   Subscribe
                 </button>
               </div>
@@ -500,11 +499,11 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="border-t border-[#f5e6db] pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs md:text-sm text-gray-500">
+          <div className="border-t border-[#e8e4d9] pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs md:text-sm text-gray-500">
             <p>&copy; 2026 Doll Wigs. All rights reserved.</p>
             <div className="flex gap-4">
-              <Link href="/privacy" className="hover:text-[#e88b7d] transition">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-[#e88b7d] transition">Terms of Service</Link>
+              <Link href="/privacy" className="hover:text-[#CAB276] transition">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-[#CAB276] transition">Terms of Service</Link>
             </div>
           </div>
         </div>
@@ -527,20 +526,20 @@ export default function Home() {
                 <div className="text-center py-12 text-gray-500">
                   <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                   <p className="mb-4">Your cart is empty</p>
-                  <button onClick={() => setCartOpen(false)} className="text-[#e88b7d] hover:underline">
+                  <button onClick={() => setCartOpen(false)} className="text-[#CAB276] hover:underline">
                     Continue Shopping
                   </button>
                 </div>
               ) : (
                 <div className="space-y-4">
                   {cart.map(item => (
-                    <div key={item.id} className="flex gap-3 md:gap-4 p-3 bg-[#fdf6f0] rounded-lg">
+                    <div key={item.id} className="flex gap-3 md:gap-4 p-3 bg-[#f8f6f1] rounded-lg">
                       <div className="relative w-16 h-16 md:w-20 md:h-20 rounded overflow-hidden flex-shrink-0">
                         <Image src={item.image} alt={item.name} fill className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-sm font-medium text-gray-800 truncate">{item.name}</h3>
-                        <p className="text-[#e88b7d] font-semibold text-sm">{formatPrice(item.price)}</p>
+                        <p className="text-[#CAB276] font-semibold text-sm">{formatPrice(item.price)}</p>
                         <div className="flex items-center gap-2 mt-2">
                           <button 
                             onClick={() => updateQuantity(item.id, -1)}
@@ -582,7 +581,7 @@ export default function Home() {
                 <Link 
                   href="/checkout"
                   onClick={() => setCartOpen(false)}
-                  className="block w-full bg-[#e88b7d] text-white py-3 rounded text-center font-medium hover:bg-[#d67a6c] transition"
+                  className="block w-full bg-[#CAB276] text-white py-3 rounded text-center font-medium hover:bg-[#b39a5e] transition"
                 >
                   Checkout
                 </Link>

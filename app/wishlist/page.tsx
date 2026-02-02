@@ -28,7 +28,7 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfbfa]">
+    <div className="min-h-screen bg-[#faf9f7]">
       {/* Header */}
       <header className="bg-white py-3 px-4 border-b sticky top-0 z-40">
         <div className="container mx-auto flex items-center justify-between">
@@ -36,10 +36,10 @@ export default function WishlistPage() {
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
           <nav className="hidden md:flex gap-6 text-sm">
-            <Link href="/" className="text-gray-700 hover:text-[#e88b7d] transition">HOME</Link>
-            <Link href="/shop" className="text-gray-700 hover:text-[#e88b7d] transition">SHOP</Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#e88b7d] transition">ABOUT</Link>
-            <Link href="/contact" className="text-gray-700 hover:text-[#e88b7d] transition">CONTACT</Link>
+            <Link href="/" className="text-gray-700 hover:text-[#CAB276] transition">HOME</Link>
+            <Link href="/shop" className="text-gray-700 hover:text-[#CAB276] transition">SHOP</Link>
+            <Link href="/about" className="text-gray-700 hover:text-[#CAB276] transition">ABOUT</Link>
+            <Link href="/contact" className="text-gray-700 hover:text-[#CAB276] transition">CONTACT</Link>
           </nav>
           
           <Link href="/" className="flex items-center">
@@ -48,8 +48,8 @@ export default function WishlistPage() {
 
           <div className="flex items-center gap-2 md:gap-4">
             <Link href="/wishlist" className="relative">
-              <Heart className="w-5 h-5 text-[#e88b7d] fill-[#e88b7d]" />
-              <span className="absolute -top-1 -right-1 bg-[#e88b7d] text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+              <Heart className="w-5 h-5 text-[#CAB276] fill-[#CAB276]" />
+              <span className="absolute -top-1 -right-1 bg-[#CAB276] text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
                 {wishlist.length}
               </span>
             </Link>
@@ -69,7 +69,7 @@ export default function WishlistPage() {
 
       <div className="container mx-auto px-4 py-6 md:py-12">
         <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
-          <Link href="/" className="text-gray-500 hover:text-[#e88b7d] transition">
+          <Link href="/" className="text-gray-500 hover:text-[#CAB276] transition">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
@@ -83,7 +83,7 @@ export default function WishlistPage() {
             <Heart className="w-16 md:w-20 h-16 md:h-20 mx-auto mb-4 md:mb-6 text-gray-300" />
             <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">Your wishlist is empty</h2>
             <p className="text-gray-500 mb-4 md:mb-6 text-sm md:text-base">Save items you love by clicking the heart icon</p>
-            <Link href="/shop" className="inline-block bg-[#e88b7d] text-white px-6 md:px-8 py-3 rounded-lg font-medium hover:bg-[#d67a6c] transition">
+            <Link href="/shop" className="inline-block bg-[#CAB276] text-white px-6 md:px-8 py-3 rounded-lg font-medium hover:bg-[#b39a5e] transition">
               Browse Products
             </Link>
           </div>
@@ -91,7 +91,7 @@ export default function WishlistPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
             {wishlist.map(product => (
               <div key={product.id} className="bg-white rounded-lg md:rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
-                <div className="relative h-48 md:h-72 bg-[#fdf6f0] overflow-hidden">
+                <div className="relative h-48 md:h-72 bg-[#f8f6f1] overflow-hidden">
                   <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-green-500 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10">SALE</span>
                   <button
                     onClick={() => removeFromWishlist(product.id)}
@@ -107,12 +107,12 @@ export default function WishlistPage() {
                     {[...Array(5)].map((_, i) => <span key={i} className="text-yellow-400 text-[10px] md:text-xs">★</span>)}
                   </div>
                   <div className="flex items-center gap-1 md:gap-2 mb-2 md:mb-4 flex-wrap">
-                    <span className="font-semibold text-[#e88b7d] text-sm">{formatPrice(product.price)}</span>
+                    <span className="font-semibold text-[#CAB276] text-sm">{formatPrice(product.price)}</span>
                     <span className="text-gray-400 line-through text-xs">{formatPrice(product.oldPrice)}</span>
                   </div>
                   <Link 
                     href="/cart"
-                    className="block w-full bg-[#e88b7d] text-white py-2 md:py-2.5 rounded-lg text-center text-xs md:text-sm font-medium hover:bg-[#d67a6c] transition"
+                    className="block w-full bg-[#CAB276] text-white py-2 md:py-2.5 rounded-lg text-center text-xs md:text-sm font-medium hover:bg-[#b39a5e] transition"
                   >
                     Add to Cart
                   </Link>
@@ -124,7 +124,7 @@ export default function WishlistPage() {
 
         {wishlist.length > 0 && (
           <div className="mt-6 md:mt-8 text-center">
-            <Link href="/shop" className="text-[#e88b7d] hover:underline font-medium text-sm md:text-base">
+            <Link href="/shop" className="text-[#CAB276] hover:underline font-medium text-sm md:text-base">
               Continue Shopping →
             </Link>
           </div>

@@ -20,15 +20,15 @@ export default function CheckoutPage() {
   const shipping = 0;
   const total = subtotal + shipping;
 
-  const inputClasses = "w-full border-2 border-gray-200 rounded-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#e88b7d] focus:ring-4 focus:ring-[#e88b7d]/10 transition-all placeholder:text-gray-400 bg-white text-sm md:text-base";
+  const inputClasses = "w-full border-2 border-gray-200 rounded-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#CAB276] focus:ring-4 focus:ring-[#CAB276]/10 transition-all placeholder:text-gray-400 bg-white text-sm md:text-base";
   const labelClasses = "block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2";
 
   return (
-    <div className="min-h-screen bg-[#fdfbfa]">
+    <div className="min-h-screen bg-[#faf9f7]">
       {/* Header */}
       <header className="bg-white py-3 md:py-4 px-4 border-b shadow-sm">
         <div className="container mx-auto flex items-center justify-between">
-          <Link href="/cart" className="flex items-center gap-2 text-gray-600 hover:text-[#e88b7d] transition text-sm">
+          <Link href="/cart" className="flex items-center gap-2 text-gray-600 hover:text-[#CAB276] transition text-sm">
             <ArrowLeft className="w-4 h-4" />
             <span className="hidden md:inline">Back to Cart</span>
           </Link>
@@ -50,7 +50,7 @@ export default function CheckoutPage() {
               <div key={label} className="flex items-center gap-1 md:gap-3">
                 <div className={`w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center text-xs md:text-sm font-semibold transition-all ${
                   step > i + 1 ? 'bg-green-500 text-white shadow-lg shadow-green-500/30' : 
-                  step === i + 1 ? 'bg-[#e88b7d] text-white shadow-lg shadow-[#e88b7d]/30' : 'bg-gray-100 text-gray-400'
+                  step === i + 1 ? 'bg-[#CAB276] text-white shadow-lg shadow-[#CAB276]/30' : 'bg-gray-100 text-gray-400'
                 }`}>
                   {step > i + 1 ? '✓' : i + 1}
                 </div>
@@ -69,8 +69,8 @@ export default function CheckoutPage() {
             {step === 1 && (
               <div className="bg-white rounded-xl md:rounded-2xl shadow-sm p-5 md:p-8">
                 <div className="flex items-center gap-3 mb-6 md:mb-8">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center">
-                    <MapPin className="w-5 h-5 md:w-6 md:h-6 text-[#e88b7d]" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f8f6f1] rounded-xl flex items-center justify-center">
+                    <MapPin className="w-5 h-5 md:w-6 md:h-6 text-[#CAB276]" />
                   </div>
                   <div>
                     <h2 className="text-lg md:text-xl font-semibold text-gray-800">Delivery Information</h2>
@@ -122,7 +122,7 @@ export default function CheckoutPage() {
                       <span className="inline-flex items-center px-3 md:px-4 border-2 border-r-0 border-gray-200 rounded-l-xl bg-gray-50 text-gray-600 font-medium text-sm">
                         +254
                       </span>
-                      <input type="tel" className="flex-1 border-2 border-gray-200 rounded-r-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#e88b7d] focus:ring-4 focus:ring-[#e88b7d]/10 transition-all placeholder:text-gray-400 text-sm md:text-base" placeholder="792 164 579" />
+                      <input type="tel" className="flex-1 border-2 border-gray-200 rounded-r-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#CAB276] focus:ring-4 focus:ring-[#CAB276]/10 transition-all placeholder:text-gray-400 text-sm md:text-base" placeholder="792 164 579" />
                     </div>
                   </div>
                   <div className="md:col-span-2">
@@ -133,7 +133,7 @@ export default function CheckoutPage() {
 
                 <button 
                   onClick={() => setStep(2)}
-                  className="w-full bg-[#e88b7d] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#d67a6c] transition-all mt-6 md:mt-8 shadow-lg shadow-[#e88b7d]/25"
+                  className="w-full bg-[#CAB276] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#b39a5e] transition-all mt-6 md:mt-8 shadow-lg shadow-[#CAB276]/25"
                 >
                   Continue to Payment
                 </button>
@@ -188,10 +188,10 @@ export default function CheckoutPage() {
                     <p className="text-xs text-gray-500 mt-2">Enter the phone number registered with M-Pesa</p>
                   </div>
 
-                  <div className="bg-gradient-to-r from-[#fdf6f0] to-[#fef0eb] rounded-xl p-4 md:p-6">
+                  <div className="bg-gradient-to-r from-[#f8f6f1] to-[#f5f3ed] rounded-xl p-4 md:p-6">
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600 font-medium text-sm md:text-base">Amount to Pay</span>
-                      <span className="text-2xl md:text-3xl font-bold text-[#e88b7d]">{formatPrice(total)}</span>
+                      <span className="text-2xl md:text-3xl font-bold text-[#CAB276]">{formatPrice(total)}</span>
                     </div>
                     <p className="text-xs md:text-sm text-green-600 mt-2">You&apos;re saving {formatPrice(savings)} on this order! 🎉</p>
                   </div>
@@ -229,7 +229,7 @@ export default function CheckoutPage() {
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-3">Payment Successful! 🎉</h2>
                 <p className="text-gray-600 mb-6 md:mb-8 text-base md:text-lg">Your order has been confirmed and is being processed.</p>
                 
-                <div className="bg-gradient-to-r from-[#fdf6f0] to-[#fef0eb] rounded-xl p-4 md:p-6 mb-6 md:mb-8 text-left">
+                <div className="bg-gradient-to-r from-[#f8f6f1] to-[#f5f3ed] rounded-xl p-4 md:p-6 mb-6 md:mb-8 text-left">
                   <div className="grid grid-cols-2 gap-4 md:gap-6">
                     <div>
                       <p className="text-xs md:text-sm text-gray-500 mb-1">Order Number</p>
@@ -261,13 +261,13 @@ export default function CheckoutPage() {
                 <div className="flex flex-col md:flex-row gap-3 md:gap-4">
                   <Link 
                     href="/orders"
-                    className="flex-1 border-2 border-[#e88b7d] text-[#e88b7d] py-3 md:py-4 rounded-xl font-semibold hover:bg-[#fdf6f0] transition-all text-center text-sm md:text-base"
+                    className="flex-1 border-2 border-[#CAB276] text-[#CAB276] py-3 md:py-4 rounded-xl font-semibold hover:bg-[#f8f6f1] transition-all text-center text-sm md:text-base"
                   >
                     View My Orders
                   </Link>
                   <Link 
                     href="/"
-                    className="flex-1 bg-[#e88b7d] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#d67a6c] transition-all text-center shadow-lg shadow-[#e88b7d]/25 text-sm md:text-base"
+                    className="flex-1 bg-[#CAB276] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#b39a5e] transition-all text-center shadow-lg shadow-[#CAB276]/25 text-sm md:text-base"
                   >
                     Continue Shopping
                   </Link>
@@ -286,13 +286,13 @@ export default function CheckoutPage() {
                   <div key={item.id} className="flex gap-3 md:gap-4">
                     <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
                       <Image src={item.image} alt={item.name} fill className="object-cover" />
-                      <span className="absolute -top-1 -right-1 bg-[#e88b7d] text-white text-[10px] md:text-xs w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center font-medium">
+                      <span className="absolute -top-1 -right-1 bg-[#CAB276] text-white text-[10px] md:text-xs w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center font-medium">
                         {item.quantity}
                       </span>
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-xs md:text-sm font-medium text-gray-800 truncate">{item.name}</p>
-                      <p className="text-xs md:text-sm font-bold text-[#e88b7d]">{formatPrice(item.price)}</p>
+                      <p className="text-xs md:text-sm font-bold text-[#CAB276]">{formatPrice(item.price)}</p>
                       <p className="text-[10px] md:text-xs text-gray-400 line-through">{formatPrice(item.oldPrice)}</p>
                     </div>
                   </div>
@@ -317,7 +317,7 @@ export default function CheckoutPage() {
                 <hr className="my-2" />
                 <div className="flex justify-between text-base md:text-lg pt-2">
                   <span className="font-semibold">Total</span>
-                  <span className="font-bold text-[#e88b7d]">{formatPrice(total)}</span>
+                  <span className="font-bold text-[#CAB276]">{formatPrice(total)}</span>
                 </div>
               </div>
             </div>

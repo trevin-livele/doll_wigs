@@ -29,7 +29,7 @@ export default function ContactPage() {
     setFormData({ name: "", email: "", phone: "", message: "" });
   };
 
-  const inputClasses = "w-full border-2 border-gray-200 rounded-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#e88b7d] focus:ring-4 focus:ring-[#e88b7d]/10 transition-all placeholder:text-gray-400 text-sm md:text-base";
+  const inputClasses = "w-full border-2 border-gray-200 rounded-xl px-3 md:px-4 py-3 md:py-3.5 focus:outline-none focus:border-[#CAB276] focus:ring-4 focus:ring-[#CAB276]/10 transition-all placeholder:text-gray-400 text-sm md:text-base";
 
   return (
     <div className="min-h-screen bg-white">
@@ -40,10 +40,10 @@ export default function ContactPage() {
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
           <nav className="hidden md:flex gap-6 text-sm">
-            <Link href="/" className="text-gray-700 hover:text-[#e88b7d] transition">HOME</Link>
-            <Link href="/shop" className="text-gray-700 hover:text-[#e88b7d] transition">SHOP</Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#e88b7d] transition">ABOUT</Link>
-            <Link href="/contact" className="text-[#e88b7d] font-medium">CONTACT</Link>
+            <Link href="/" className="text-gray-700 hover:text-[#CAB276] transition">HOME</Link>
+            <Link href="/shop" className="text-gray-700 hover:text-[#CAB276] transition">SHOP</Link>
+            <Link href="/about" className="text-gray-700 hover:text-[#CAB276] transition">ABOUT</Link>
+            <Link href="/contact" className="text-[#CAB276] font-medium">CONTACT</Link>
           </nav>
           
           <Link href="/" className="flex items-center">
@@ -61,13 +61,13 @@ export default function ContactPage() {
             <Link href="/" className="py-2 text-gray-700">HOME</Link>
             <Link href="/shop" className="py-2 text-gray-700">SHOP</Link>
             <Link href="/about" className="py-2 text-gray-700">ABOUT</Link>
-            <Link href="/contact" className="py-2 text-[#e88b7d] font-medium">CONTACT</Link>
+            <Link href="/contact" className="py-2 text-[#CAB276] font-medium">CONTACT</Link>
           </nav>
         )}
       </header>
 
       {/* Hero */}
-      <div className="bg-[#fdf6f0] py-10 md:py-16">
+      <div className="bg-[#f8f6f1] py-10 md:py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-4xl font-serif text-gray-800 mb-3 md:mb-4">Contact Us</h1>
           <p className="text-gray-600 text-sm md:text-base">We&apos;d love to hear from you!</p>
@@ -83,19 +83,19 @@ export default function ContactPage() {
               
               <div className="space-y-4 md:space-y-6">
                 <div className="flex items-start gap-3 md:gap-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-4 h-4 md:w-5 md:h-5 text-[#e88b7d]" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f8f6f1] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Phone / WhatsApp</h3>
                     <p className="text-gray-600 text-sm">+254 792 164 579</p>
-                    <a href="https://wa.me/254792164579" className="text-[#e88b7d] text-xs md:text-sm hover:underline">Chat on WhatsApp →</a>
+                    <a href="https://wa.me/254792164579" className="text-[#CAB276] text-xs md:text-sm hover:underline">Chat on WhatsApp →</a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3 md:gap-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-4 h-4 md:w-5 md:h-5 text-[#e88b7d]" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f8f6f1] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Email</h3>
@@ -104,8 +104,8 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-3 md:gap-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-4 h-4 md:w-5 md:h-5 text-[#e88b7d]" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f8f6f1] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Location</h3>
@@ -114,8 +114,8 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-3 md:gap-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#fdf6f0] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-4 h-4 md:w-5 md:h-5 text-[#e88b7d]" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f8f6f1] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-1 text-sm md:text-base">Business Hours</h3>
@@ -171,7 +171,7 @@ export default function ContactPage() {
                   <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Message</label>
                   <textarea value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className={`${inputClasses} resize-none`} rows={4} placeholder="How can we help?" required></textarea>
                 </div>
-                <button type="submit" className="w-full bg-[#e88b7d] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#d67a6c] transition flex items-center justify-center gap-2 text-sm md:text-base">
+                <button type="submit" className="w-full bg-[#CAB276] text-white py-3 md:py-4 rounded-xl font-semibold hover:bg-[#b39a5e] transition flex items-center justify-center gap-2 text-sm md:text-base">
                   <Send className="w-4 h-4" /> Send Message
                 </button>
               </form>
@@ -180,7 +180,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <footer className="bg-[#fdf6f0] py-6 md:py-8 border-t">
+      <footer className="bg-[#f8f6f1] py-6 md:py-8 border-t">
         <div className="container mx-auto px-4 text-center text-xs md:text-sm text-gray-600">
           <p>&copy; 2026 Doll Wigs. All rights reserved.</p>
         </div>

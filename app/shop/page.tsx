@@ -92,10 +92,10 @@ export default function ShopPage() {
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
           <nav className="hidden md:flex gap-6 text-sm">
-            <Link href="/" className="text-gray-700 hover:text-[#e88b7d] transition">HOME</Link>
-            <Link href="/shop" className="text-[#e88b7d] font-medium">SHOP</Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#e88b7d] transition">ABOUT</Link>
-            <Link href="/contact" className="text-gray-700 hover:text-[#e88b7d] transition">CONTACT</Link>
+            <Link href="/" className="text-gray-700 hover:text-[#CAB276] transition">HOME</Link>
+            <Link href="/shop" className="text-[#CAB276] font-medium">SHOP</Link>
+            <Link href="/about" className="text-gray-700 hover:text-[#CAB276] transition">ABOUT</Link>
+            <Link href="/contact" className="text-gray-700 hover:text-[#CAB276] transition">CONTACT</Link>
           </nav>
           
           <Link href="/" className="flex items-center">
@@ -104,12 +104,12 @@ export default function ShopPage() {
 
           <div className="flex items-center gap-2 md:gap-4">
             <Link href="/wishlist" className="relative">
-              <Heart className={`w-5 h-5 ${wishlist.length > 0 ? 'text-[#e88b7d] fill-[#e88b7d]' : 'text-gray-600'}`} />
+              <Heart className={`w-5 h-5 ${wishlist.length > 0 ? 'text-[#CAB276] fill-[#CAB276]' : 'text-gray-600'}`} />
             </Link>
             <button onClick={() => setCartOpen(true)} className="relative">
               <ShoppingCart className="w-5 h-5 text-gray-600" />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#e88b7d] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-[#CAB276] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
@@ -122,7 +122,7 @@ export default function ShopPage() {
         {mobileMenuOpen && (
           <nav className="md:hidden flex flex-col border-t mt-3 pt-3">
             <Link href="/" className="py-2 text-gray-700">HOME</Link>
-            <Link href="/shop" className="py-2 text-[#e88b7d] font-medium">SHOP</Link>
+            <Link href="/shop" className="py-2 text-[#CAB276] font-medium">SHOP</Link>
             <Link href="/about" className="py-2 text-gray-700">ABOUT</Link>
             <Link href="/contact" className="py-2 text-gray-700">CONTACT</Link>
           </nav>
@@ -130,11 +130,11 @@ export default function ShopPage() {
       </header>
 
       {/* Breadcrumb */}
-      <div className="bg-[#fdf6f0] py-6 md:py-8">
+      <div className="bg-[#f8f6f1] py-6 md:py-8">
         <div className="container mx-auto px-4">
           <h1 className="text-2xl md:text-3xl font-serif text-gray-800 mb-2">Shop All Wigs</h1>
           <p className="text-gray-600 text-sm">
-            <Link href="/" className="hover:text-[#e88b7d]">Home</Link> / Shop
+            <Link href="/" className="hover:text-[#CAB276]">Home</Link> / Shop
           </p>
         </div>
       </div>
@@ -162,8 +162,8 @@ export default function ShopPage() {
                       onClick={() => { setSelectedCategory(cat); setFilterOpen(false); }}
                       className={`w-full text-left px-3 py-2 rounded-lg transition text-sm ${
                         selectedCategory === cat 
-                          ? 'bg-[#e88b7d] text-white' 
-                          : 'text-gray-600 hover:bg-[#fdf6f0]'
+                          ? 'bg-[#CAB276] text-white' 
+                          : 'text-gray-600 hover:bg-[#f8f6f1]'
                       }`}
                     >
                       {cat}
@@ -172,10 +172,10 @@ export default function ShopPage() {
                 ))}
               </ul>
 
-              <div className="p-4 bg-[#fdf6f0] rounded-xl hidden md:block">
+              <div className="p-4 bg-[#f8f6f1] rounded-xl hidden md:block">
                 <h4 className="font-medium text-gray-800 mb-2">Need Help?</h4>
                 <p className="text-sm text-gray-600 mb-3">Chat with us on WhatsApp</p>
-                <a href="https://wa.me/254792164579" className="text-[#e88b7d] text-sm font-medium hover:underline">
+                <a href="https://wa.me/254792164579" className="text-[#CAB276] text-sm font-medium hover:underline">
                   +254 792 164 579
                 </a>
               </div>
@@ -189,7 +189,7 @@ export default function ShopPage() {
               <select 
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#e88b7d]"
+                className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#CAB276]"
               >
                 <option value="featured">Featured</option>
                 <option value="price-low">Price: Low to High</option>
@@ -201,19 +201,19 @@ export default function ShopPage() {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
               {filteredProducts.map(product => (
                 <div key={product.id} className="bg-white rounded-lg overflow-hidden group shadow-sm hover:shadow-md transition">
-                  <div className="relative h-48 md:h-72 bg-[#fdf6f0] overflow-hidden">
+                  <div className="relative h-48 md:h-72 bg-[#f8f6f1] overflow-hidden">
                     <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-green-500 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10">SALE</span>
                     <button
                       onClick={() => toggleWishlist(product.id)}
                       className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center shadow-md z-10"
                     >
-                      <Heart className={`w-3 h-3 md:w-4 md:h-4 ${wishlist.includes(product.id) ? 'text-[#e88b7d] fill-[#e88b7d]' : 'text-gray-400'}`} />
+                      <Heart className={`w-3 h-3 md:w-4 md:h-4 ${wishlist.includes(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-gray-400'}`} />
                     </button>
                     <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
                     <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition hidden md:flex items-center justify-center">
                       <button 
                         onClick={() => addToCart(product)}
-                        className="bg-white text-gray-800 px-6 py-2 rounded-full text-sm font-medium hover:bg-[#e88b7d] hover:text-white transition"
+                        className="bg-white text-gray-800 px-6 py-2 rounded-full text-sm font-medium hover:bg-[#CAB276] hover:text-white transition"
                       >
                         Add to Cart
                       </button>
@@ -225,12 +225,12 @@ export default function ShopPage() {
                       {[...Array(5)].map((_, i) => <span key={i} className="text-yellow-400 text-[10px] md:text-xs">★</span>)}
                     </div>
                     <div className="flex items-center gap-1 md:gap-2 flex-wrap">
-                      <span className="font-semibold text-[#e88b7d] text-sm">{formatPrice(product.price)}</span>
+                      <span className="font-semibold text-[#CAB276] text-sm">{formatPrice(product.price)}</span>
                       <span className="text-gray-400 line-through text-xs">{formatPrice(product.oldPrice)}</span>
                     </div>
                     <button 
                       onClick={() => addToCart(product)}
-                      className="md:hidden block w-full mt-2 bg-[#e88b7d] text-white py-1.5 rounded text-center text-xs font-medium"
+                      className="md:hidden block w-full mt-2 bg-[#CAB276] text-white py-1.5 rounded text-center text-xs font-medium"
                     >
                       Add to Cart
                     </button>
@@ -259,20 +259,20 @@ export default function ShopPage() {
                 <div className="text-center py-12 text-gray-500">
                   <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                   <p className="mb-4">Your cart is empty</p>
-                  <button onClick={() => setCartOpen(false)} className="text-[#e88b7d] hover:underline">
+                  <button onClick={() => setCartOpen(false)} className="text-[#CAB276] hover:underline">
                     Continue Shopping
                   </button>
                 </div>
               ) : (
                 <div className="space-y-4">
                   {cart.map(item => (
-                    <div key={item.id} className="flex gap-3 md:gap-4 p-3 bg-[#fdf6f0] rounded-lg">
+                    <div key={item.id} className="flex gap-3 md:gap-4 p-3 bg-[#f8f6f1] rounded-lg">
                       <div className="relative w-16 h-16 md:w-20 md:h-20 rounded overflow-hidden flex-shrink-0">
                         <Image src={item.image} alt={item.name} fill className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-sm font-medium text-gray-800 truncate">{item.name}</h3>
-                        <p className="text-[#e88b7d] font-semibold text-sm">{formatPrice(item.price)}</p>
+                        <p className="text-[#CAB276] font-semibold text-sm">{formatPrice(item.price)}</p>
                         <div className="flex items-center gap-2 mt-2">
                           <button 
                             onClick={() => updateQuantity(item.id, -1)}
@@ -314,7 +314,7 @@ export default function ShopPage() {
                 <Link 
                   href="/checkout"
                   onClick={() => setCartOpen(false)}
-                  className="block w-full bg-[#e88b7d] text-white py-3 rounded text-center font-medium hover:bg-[#d67a6c] transition"
+                  className="block w-full bg-[#CAB276] text-white py-3 rounded text-center font-medium hover:bg-[#b39a5e] transition"
                 >
                   Checkout
                 </Link>

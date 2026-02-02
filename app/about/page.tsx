@@ -9,10 +9,10 @@ export default function AboutPage() {
       <header className="bg-white py-3 px-4 border-b sticky top-0 z-40">
         <div className="container mx-auto flex items-center justify-between">
           <nav className="hidden md:flex gap-6 text-sm">
-            <Link href="/" className="text-gray-700 hover:text-[#e88b7d] transition">HOME</Link>
-            <Link href="/shop" className="text-gray-700 hover:text-[#e88b7d] transition">SHOP</Link>
-            <Link href="/about" className="text-[#e88b7d] font-medium">ABOUT</Link>
-            <Link href="/contact" className="text-gray-700 hover:text-[#e88b7d] transition">CONTACT</Link>
+            <Link href="/" className="text-gray-700 hover:text-[#CAB276] transition">HOME</Link>
+            <Link href="/shop" className="text-gray-700 hover:text-[#CAB276] transition">SHOP</Link>
+            <Link href="/about" className="text-[#CAB276] font-medium">ABOUT</Link>
+            <Link href="/contact" className="text-gray-700 hover:text-[#CAB276] transition">CONTACT</Link>
           </nav>
           
           <Link href="/" className="flex items-center md:absolute md:left-1/2 md:-translate-x-1/2">
@@ -28,7 +28,7 @@ export default function AboutPage() {
       </header>
 
       {/* Hero */}
-      <div className="bg-[#fdf6f0] py-10 md:py-16">
+      <div className="bg-[#f8f6f1] py-10 md:py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-4xl font-serif text-gray-800 mb-3 md:mb-4">About Doll Wigs</h1>
           <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">
@@ -66,7 +66,7 @@ export default function AboutPage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-10 md:py-16 bg-[#fdfbfa]">
+      <section className="py-10 md:py-16 bg-[#faf9f7]">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-serif text-center text-gray-800 mb-8 md:mb-12">Why Choose Doll Wigs?</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -77,8 +77,8 @@ export default function AboutPage() {
               { title: "M-Pesa Payment", desc: "Easy and secure mobile payment" },
             ].map((item, i) => (
               <div key={i} className="bg-white p-4 md:p-6 rounded-xl shadow-sm text-center">
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-[#fdf6f0] rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
-                  <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-[#e88b7d]" />
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f8f6f1] rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                  <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-[#CAB276]" />
                 </div>
                 <h3 className="font-semibold text-gray-800 mb-1 md:mb-2 text-sm md:text-base">{item.title}</h3>
                 <p className="text-xs md:text-sm text-gray-600">{item.desc}</p>
@@ -89,24 +89,24 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-10 md:py-16 bg-[#e88b7d]">
+      <section className="py-10 md:py-16 bg-black">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-serif text-white mb-3 md:mb-4">Ready to Transform Your Look?</h2>
-          <p className="text-white/90 mb-6 md:mb-8 text-sm md:text-base">Browse our collection and find your perfect wig today.</p>
-          <Link href="/shop" className="inline-block bg-white text-[#e88b7d] px-6 md:px-8 py-2.5 md:py-3 rounded-lg font-medium hover:bg-gray-100 transition text-sm md:text-base">
+          <p className="text-white/80 mb-6 md:mb-8 text-sm md:text-base">Browse our collection and find your perfect wig today.</p>
+          <Link href="/shop" className="inline-block bg-[#CAB276] text-white px-6 md:px-8 py-2.5 md:py-3 rounded-lg font-medium hover:bg-[#b39a5e] transition text-sm md:text-base">
             Shop Now
           </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#fdf6f0] py-6 md:py-8 border-t">
+      <footer className="bg-[#f8f6f1] py-6 md:py-8 border-t">
         <div className="container mx-auto px-4 text-center text-xs md:text-sm text-gray-600">
           <p>&copy; 2026 Doll Wigs. All rights reserved.</p>
           <div className="flex justify-center gap-4 mt-2">
-            <Link href="/privacy" className="hover:text-[#e88b7d]">Privacy</Link>
-            <Link href="/terms" className="hover:text-[#e88b7d]">Terms</Link>
-            <Link href="/contact" className="hover:text-[#e88b7d]">Contact</Link>
+            <Link href="/privacy" className="hover:text-[#CAB276]">Privacy</Link>
+            <Link href="/terms" className="hover:text-[#CAB276]">Terms</Link>
+            <Link href="/contact" className="hover:text-[#CAB276]">Contact</Link>
           </div>
         </div>
       </footer>
