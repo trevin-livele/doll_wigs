@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Heart, ShoppingCart, Filter, ChevronDown, X, User, Menu } from "lucide-react";
+import { Heart, ShoppingCart, Filter, X, User, Menu, Minus, Plus } from "lucide-react";
 
 interface Product {
   id: number;
@@ -15,6 +15,10 @@ interface Product {
   category: string;
 }
 
+interface CartItem extends Product {
+  quantity: number;
+}
+
 const formatPrice = (price: number) => `KSh ${price.toLocaleString()}`;
 
 export default function ShopPage() {
@@ -23,6 +27,8 @@ export default function ShopPage() {
   const [sortBy, setSortBy] = useState("featured");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartOpen, setCartOpen] = useState(false);
 
   const categories = ["All", "Straight", "Curly", "Bob", "Lace Front", "HD Lace", "Colored"];
 
@@ -44,6 +50,36 @@ export default function ShopPage() {
   const toggleWishlist = (id: number) => {
     setWishlist(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
   };
+
+  const addToCart = (product: Product) => {
+    setCart(prev => {
+      const existing = prev.find(item => item.id === product.id);
+      if (existing) {
+        return prev.map(item => 
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
+    setCartOpen(true);
+  };
+
+  const removeFromCart = (id: number) => {
+    setCart(prev => prev.filter(item => item.id !== id));
+  };
+
+  const updateQuantity = (id: number, delta: number) => {
+    setCart(prev => prev.map(item => {
+      if (item.id === id) {
+        const newQty = item.quantity + delta;
+        return newQty > 0 ? { ...item, quantity: newQty } : item;
+      }
+      return item;
+    }).filter(item => item.quantity > 0));
+  };
+
+  const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const filteredProducts = products.filter(p => selectedCategory === "All" || p.category === selectedCategory);
 
@@ -70,9 +106,14 @@ export default function ShopPage() {
             <Link href="/wishlist" className="relative">
               <Heart className={`w-5 h-5 ${wishlist.length > 0 ? 'text-[#e88b7d] fill-[#e88b7d]' : 'text-gray-600'}`} />
             </Link>
-            <Link href="/cart">
+            <button onClick={() => setCartOpen(true)} className="relative">
               <ShoppingCart className="w-5 h-5 text-gray-600" />
-            </Link>
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#e88b7d] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
             <Link href="/account" className="hidden md:block">
               <User className="w-5 h-5 text-gray-600" />
             </Link>
@@ -170,9 +211,12 @@ export default function ShopPage() {
                     </button>
                     <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
                     <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition hidden md:flex items-center justify-center">
-                      <Link href="/cart" className="bg-white text-gray-800 px-6 py-2 rounded-full text-sm font-medium hover:bg-[#e88b7d] hover:text-white transition">
+                      <button 
+                        onClick={() => addToCart(product)}
+                        className="bg-white text-gray-800 px-6 py-2 rounded-full text-sm font-medium hover:bg-[#e88b7d] hover:text-white transition"
+                      >
                         Add to Cart
-                      </Link>
+                      </button>
                     </div>
                   </div>
                   <div className="p-3 md:p-4">
@@ -184,9 +228,12 @@ export default function ShopPage() {
                       <span className="font-semibold text-[#e88b7d] text-sm">{formatPrice(product.price)}</span>
                       <span className="text-gray-400 line-through text-xs">{formatPrice(product.oldPrice)}</span>
                     </div>
-                    <Link href="/cart" className="md:hidden block w-full mt-2 bg-[#e88b7d] text-white py-1.5 rounded text-center text-xs font-medium">
+                    <button 
+                      onClick={() => addToCart(product)}
+                      className="md:hidden block w-full mt-2 bg-[#e88b7d] text-white py-1.5 rounded text-center text-xs font-medium"
+                    >
                       Add to Cart
-                    </Link>
+                    </button>
                   </div>
                 </div>
               ))}
@@ -194,6 +241,88 @@ export default function ShopPage() {
           </div>
         </div>
       </div>
+
+      {/* Cart Sidebar */}
+      {cartOpen && (
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setCartOpen(false)}></div>
+          <div className="absolute right-0 top-0 h-full w-full md:w-96 bg-white shadow-xl flex flex-col">
+            <div className="p-4 border-b flex justify-between items-center">
+              <h2 className="text-lg font-semibold">Shopping Cart ({cartCount})</h2>
+              <button onClick={() => setCartOpen(false)} className="p-1 hover:bg-gray-100 rounded transition">
+                <X className="w-5 h-5 text-gray-500" />
+              </button>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto p-4">
+              {cart.length === 0 ? (
+                <div className="text-center py-12 text-gray-500">
+                  <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                  <p className="mb-4">Your cart is empty</p>
+                  <button onClick={() => setCartOpen(false)} className="text-[#e88b7d] hover:underline">
+                    Continue Shopping
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {cart.map(item => (
+                    <div key={item.id} className="flex gap-3 md:gap-4 p-3 bg-[#fdf6f0] rounded-lg">
+                      <div className="relative w-16 h-16 md:w-20 md:h-20 rounded overflow-hidden flex-shrink-0">
+                        <Image src={item.image} alt={item.name} fill className="object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-sm font-medium text-gray-800 truncate">{item.name}</h3>
+                        <p className="text-[#e88b7d] font-semibold text-sm">{formatPrice(item.price)}</p>
+                        <div className="flex items-center gap-2 mt-2">
+                          <button 
+                            onClick={() => updateQuantity(item.id, -1)}
+                            className="w-6 h-6 rounded border flex items-center justify-center hover:bg-gray-100 transition"
+                          >
+                            <Minus className="w-3 h-3" />
+                          </button>
+                          <span className="text-sm w-6 text-center">{item.quantity}</span>
+                          <button 
+                            onClick={() => updateQuantity(item.id, 1)}
+                            className="w-6 h-6 rounded border flex items-center justify-center hover:bg-gray-100 transition"
+                          >
+                            <Plus className="w-3 h-3" />
+                          </button>
+                        </div>
+                      </div>
+                      <button onClick={() => removeFromCart(item.id)} className="text-gray-400 hover:text-red-500 transition">
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {cart.length > 0 && (
+              <div className="p-4 border-t">
+                <div className="flex justify-between mb-4">
+                  <span className="text-gray-600">Subtotal:</span>
+                  <span className="font-semibold text-lg">{formatPrice(cartTotal)}</span>
+                </div>
+                <Link 
+                  href="/cart"
+                  onClick={() => setCartOpen(false)}
+                  className="block w-full bg-gray-800 text-white py-3 rounded text-center font-medium hover:bg-gray-700 transition mb-2"
+                >
+                  View Cart
+                </Link>
+                <Link 
+                  href="/checkout"
+                  onClick={() => setCartOpen(false)}
+                  className="block w-full bg-[#e88b7d] text-white py-3 rounded text-center font-medium hover:bg-[#d67a6c] transition"
+                >
+                  Checkout
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
