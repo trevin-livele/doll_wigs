@@ -16,7 +16,7 @@ export default function AccountPage() {
     lastName: "Wanjiku",
     email: "jane.wanjiku@email.com",
     phone: "+254 792 164 579",
-    avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop&crop=faces"
+    avatar: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=200&h=200&fit=crop&crop=faces"
   });
 
   const [addresses] = useState([

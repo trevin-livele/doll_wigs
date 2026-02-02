@@ -17,9 +17,9 @@ const formatPrice = (price: number) => `KSh ${price.toLocaleString()}`;
 
 export default function WishlistPage() {
   const [wishlist, setWishlist] = useState<Product[]>([
-    { id: 1, name: "Silky Straight Wig", price: 18500, oldPrice: 24000, image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&h=500&fit=crop" },
-    { id: 2, name: "Body Wave Lace Front", price: 24900, oldPrice: 32000, image: "https://images.unsplash.com/photo-1595959183082-7b570b7e1dfa?w=400&h=500&fit=crop" },
-    { id: 5, name: "Deep Wave Wig", price: 22900, oldPrice: 28500, image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=500&fit=crop" },
+    { id: 1, name: "Silky Straight Wig", price: 18500, oldPrice: 24000, image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=400&h=500&fit=crop" },
+    { id: 2, name: "Body Wave Lace Front", price: 24900, oldPrice: 32000, image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=400&h=500&fit=crop" },
+    { id: 5, name: "Deep Wave Wig", price: 22900, oldPrice: 28500, image: "https://images.unsplash.com/photo-1590086782957-93c06ef21604?w=400&h=500&fit=crop" },
   ]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

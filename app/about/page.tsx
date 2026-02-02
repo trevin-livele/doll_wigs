@@ -43,7 +43,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="relative h-[300px] md:h-[500px] rounded-xl md:rounded-2xl overflow-hidden order-2 md:order-1">
               <Image 
-                src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&h=700&fit=crop" 
+                src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=600&h=700&fit=crop" 
                 alt="Our Story" 
                 fill 
                 className="object-cover"

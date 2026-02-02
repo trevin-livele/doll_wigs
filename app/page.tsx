@@ -39,7 +39,7 @@ const heroSlides = [
     subtitle: "TOP BRANDS",
     title: "Spotless Beauty For Your\nHealthy Hair",
     description: "Premium quality wigs crafted with care. Transform your look with our collection of human hair wigs, lace fronts, and closures.",
-    image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500&h=600&fit=crop&crop=faces",
+    image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=500&h=600&fit=crop&crop=faces",
     buttonText: "Shop Now",
     buttonLink: "/shop"
   },
@@ -47,7 +47,7 @@ const heroSlides = [
     subtitle: "NEW ARRIVALS",
     title: "Lace Front Wigs\nNatural Hairline",
     description: "Discover our latest collection of HD lace front wigs. Undetectable hairline for the most natural look possible.",
-    image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&h=600&fit=crop&crop=faces",
+    image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=500&h=600&fit=crop&crop=faces",
     buttonText: "View Collection",
     buttonLink: "/shop?category=lace-front"
   },
@@ -55,7 +55,7 @@ const heroSlides = [
     subtitle: "SUMMER SALE",
     title: "Up to 30% Off\nAll Colored Wigs",
     description: "Express yourself with our vibrant colored wigs. From blonde to burgundy, find your perfect shade at amazing prices.",
-    image: "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=500&h=600&fit=crop&crop=faces",
+    image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=500&h=600&fit=crop&crop=faces",
     buttonText: "Shop Sale",
     buttonLink: "/shop?category=colored"
   }
@@ -79,23 +79,23 @@ export default function Home() {
   }, []);
 
   const categories = [
-    { name: "Straight Wigs", image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&h=200&fit=crop", slug: "straight" },
-    { name: "Curly Wigs", image: "https://images.unsplash.com/photo-1595959183082-7b570b7e1dfa?w=200&h=200&fit=crop", slug: "curly" },
-    { name: "Bob Wigs", image: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=200&h=200&fit=crop", slug: "bob" },
-    { name: "Lace Front", image: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=200&h=200&fit=crop", slug: "lace-front" },
-    { name: "HD Lace", image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop", slug: "hd-lace" },
-    { name: "Colored", image: "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=200&h=200&fit=crop", slug: "colored" },
+    { name: "Straight Wigs", image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=200&h=200&fit=crop", slug: "straight" },
+    { name: "Curly Wigs", image: "https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?w=200&h=200&fit=crop", slug: "curly" },
+    { name: "Bob Wigs", image: "https://images.unsplash.com/photo-1534614971-6be99a7a3ffd?w=200&h=200&fit=crop", slug: "bob" },
+    { name: "Lace Front", image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=200&h=200&fit=crop", slug: "lace-front" },
+    { name: "HD Lace", image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=200&h=200&fit=crop", slug: "hd-lace" },
+    { name: "Colored", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop", slug: "colored" },
   ];
 
   const products: Product[] = [
-    { id: 1, name: "Silky Straight Wig", price: 18500, oldPrice: 24000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&h=500&fit=crop", category: "Straight" },
-    { id: 2, name: "Body Wave Lace Front", price: 24900, oldPrice: 32000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1595959183082-7b570b7e1dfa?w=400&h=500&fit=crop", category: "Lace Front" },
-    { id: 3, name: "Curly Bob Wig", price: 15900, oldPrice: 21000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=400&h=500&fit=crop", category: "Bob" },
-    { id: 4, name: "HD Lace Closure Wig", price: 27900, oldPrice: 35000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=400&h=500&fit=crop", category: "HD Lace" },
-    { id: 5, name: "Deep Wave Wig", price: 22900, oldPrice: 28500, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=500&fit=crop", category: "Curly" },
-    { id: 6, name: "Blonde Straight Wig", price: 29900, oldPrice: 38000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=400&h=500&fit=crop", category: "Colored" },
-    { id: 7, name: "Kinky Curly Wig", price: 19500, oldPrice: 25900, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop", category: "Curly" },
-    { id: 8, name: "Ombre Body Wave", price: 28900, oldPrice: 36000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=500&fit=crop", category: "Colored" },
+    { id: 1, name: "Silky Straight Wig", price: 18500, oldPrice: 24000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=400&h=500&fit=crop", category: "Straight" },
+    { id: 2, name: "Body Wave Lace Front", price: 24900, oldPrice: 32000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=400&h=500&fit=crop", category: "Lace Front" },
+    { id: 3, name: "Curly Bob Wig", price: 15900, oldPrice: 21000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1534614971-6be99a7a3ffd?w=400&h=500&fit=crop", category: "Bob" },
+    { id: 4, name: "HD Lace Closure Wig", price: 27900, oldPrice: 35000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=400&h=500&fit=crop", category: "HD Lace" },
+    { id: 5, name: "Deep Wave Wig", price: 22900, oldPrice: 28500, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?w=400&h=500&fit=crop", category: "Curly" },
+    { id: 6, name: "Blonde Straight Wig", price: 29900, oldPrice: 38000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop", category: "Colored" },
+    { id: 7, name: "Kinky Curly Wig", price: 19500, oldPrice: 25900, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1590086782957-93c06ef21604?w=400&h=500&fit=crop", category: "Curly" },
+    { id: 8, name: "Ombre Body Wave", price: 28900, oldPrice: 36000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=400&h=500&fit=crop", category: "Colored" },
   ];
 
   const formatPrice = (price: number) => `KSh ${price.toLocaleString()}`;

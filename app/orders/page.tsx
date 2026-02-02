@@ -15,8 +15,8 @@ const orders = [
     total: 68300,
     mpesaRef: "QKL7X9M2NP",
     items: [
-      { name: "Silky Straight Wig", price: 18500, oldPrice: 24000, image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&h=200&fit=crop", quantity: 1 },
-      { name: "Body Wave Lace Front", price: 24900, oldPrice: 32000, image: "https://images.unsplash.com/photo-1595959183082-7b570b7e1dfa?w=200&h=200&fit=crop", quantity: 2 },
+      { name: "Silky Straight Wig", price: 18500, oldPrice: 24000, image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=200&h=200&fit=crop", quantity: 1 },
+      { name: "Body Wave Lace Front", price: 24900, oldPrice: 32000, image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=200&h=200&fit=crop", quantity: 2 },
     ]
   },
   {
@@ -26,7 +26,7 @@ const orders = [
     total: 29900,
     mpesaRef: "PLM8Y7K3QR",
     items: [
-      { name: "Blonde Straight Wig", price: 29900, oldPrice: 38000, image: "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=200&h=200&fit=crop", quantity: 1 },
+      { name: "Blonde Straight Wig", price: 29900, oldPrice: 38000, image: "https://images.unsplash.com/photo-1534614971-6be99a7a3ffd?w=200&h=200&fit=crop", quantity: 1 },
     ]
   },
   {
@@ -36,8 +36,8 @@ const orders = [
     total: 35400,
     mpesaRef: "NKJ5T2W9XZ",
     items: [
-      { name: "Curly Bob Wig", price: 15900, oldPrice: 21000, image: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=200&h=200&fit=crop", quantity: 1 },
-      { name: "Kinky Curly Wig", price: 19500, oldPrice: 25900, image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop", quantity: 1 },
+      { name: "Curly Bob Wig", price: 15900, oldPrice: 21000, image: "https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?w=200&h=200&fit=crop", quantity: 1 },
+      { name: "Kinky Curly Wig", price: 19500, oldPrice: 25900, image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=200&h=200&fit=crop", quantity: 1 },
     ]
   },
 ];

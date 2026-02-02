@@ -12,8 +12,8 @@ export default function CheckoutPage() {
   const [phoneNumber, setPhoneNumber] = useState("");
   
   const orderItems = [
-    { id: 1, name: "Silky Straight Wig", price: 18500, oldPrice: 24000, image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&h=200&fit=crop", quantity: 1 },
-    { id: 2, name: "Body Wave Lace Front", price: 24900, oldPrice: 32000, image: "https://images.unsplash.com/photo-1595959183082-7b570b7e1dfa?w=200&h=200&fit=crop", quantity: 2 },
+    { id: 1, name: "Silky Straight Wig", price: 18500, oldPrice: 24000, image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=200&h=200&fit=crop", quantity: 1 },
+    { id: 2, name: "Body Wave Lace Front", price: 24900, oldPrice: 32000, image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=200&h=200&fit=crop", quantity: 2 },
   ];
 
   const subtotal = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
