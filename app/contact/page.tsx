@@ -69,7 +69,7 @@ export default function ContactPage() {
       {/* Hero */}
       <div className="bg-gray-900 py-10 md:py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-4xl font-serif text-white mb-3 md:mb-4">Contact Us</h1>
+          <h1 className="text-3xl md:text-4xl font-serif text-white mb-3 md:mb-4 font-bold uppercase">CONTACT US</h1>
           <p className="text-gray-400 text-sm md:text-base">We&apos;d love to hear from you!</p>
         </div>
       </div>
@@ -79,7 +79,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {/* Contact Info */}
             <div>
-              <h2 className="text-xl md:text-2xl font-serif text-white mb-6 md:mb-8">Get In Touch</h2>
+              <h2 className="text-xl md:text-2xl font-serif text-white mb-6 md:mb-8 font-bold uppercase">GET IN TOUCH</h2>
               
               <div className="space-y-4 md:space-y-6">
                 <div className="flex items-start gap-3 md:gap-4">
@@ -87,7 +87,7 @@ export default function ContactPage() {
                     <Phone className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white mb-1 text-sm md:text-base">Phone / WhatsApp</h3>
+                    <h3 className="font-bold text-white mb-1 text-sm md:text-base uppercase">Phone / WhatsApp</h3>
                     <p className="text-gray-400 text-sm">+254 792 164 579</p>
                     <a href="https://wa.me/254792164579" className="text-[#CAB276] text-xs md:text-sm hover:underline">Chat on WhatsApp →</a>
                   </div>
@@ -98,7 +98,7 @@ export default function ContactPage() {
                     <Mail className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white mb-1 text-sm md:text-base">Email</h3>
+                    <h3 className="font-bold text-white mb-1 text-sm md:text-base uppercase">Email</h3>
                     <p className="text-gray-400 text-sm">info@dollwigs.co.ke</p>
                   </div>
                 </div>
@@ -108,7 +108,7 @@ export default function ContactPage() {
                     <MapPin className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white mb-1 text-sm md:text-base">Location</h3>
+                    <h3 className="font-bold text-white mb-1 text-sm md:text-base uppercase">Location</h3>
                     <p className="text-gray-400 text-sm">Westlands, Nairobi, Kenya</p>
                   </div>
                 </div>
@@ -118,7 +118,7 @@ export default function ContactPage() {
                     <Clock className="w-4 h-4 md:w-5 md:h-5 text-[#CAB276]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white mb-1 text-sm md:text-base">Business Hours</h3>
+                    <h3 className="font-bold text-white mb-1 text-sm md:text-base uppercase">Business Hours</h3>
                     <p className="text-gray-400 text-sm">Mon - Sat: 9AM - 6PM</p>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export default function ContactPage() {
               </div>
 
               <div className="mt-6">
-                <h3 className="font-semibold text-white mb-3 text-sm md:text-base">Follow Us</h3>
+                <h3 className="font-bold text-white mb-3 text-sm md:text-base uppercase">Follow Us</h3>
                 <div className="flex gap-3">
                   <a href="https://facebook.com/dollwigs" target="_blank" className="w-9 h-9 md:w-10 md:h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#CAB276] transition group">
                     <Facebook className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-black" />
@@ -153,7 +153,7 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <div className="bg-gray-900 rounded-xl md:rounded-2xl shadow-sm border border-gray-800 p-5 md:p-8">
-              <h2 className="text-xl md:text-2xl font-serif text-white mb-4 md:mb-6">Send Us a Message</h2>
+              <h2 className="text-xl md:text-2xl font-serif text-white mb-4 md:mb-6 font-bold uppercase">SEND US A MESSAGE</h2>
               <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
                 <div>
                   <label className="block text-xs md:text-sm font-medium text-gray-300 mb-1.5 md:mb-2">Full Name</label>

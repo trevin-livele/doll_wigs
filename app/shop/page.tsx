@@ -132,7 +132,7 @@ export default function ShopPage() {
       {/* Breadcrumb */}
       <div className="bg-gray-900 py-6 md:py-8">
         <div className="container mx-auto px-4">
-          <h1 className="text-2xl md:text-3xl font-serif text-white mb-2">Shop All Wigs</h1>
+          <h1 className="text-3xl md:text-4xl font-serif text-white mb-2 font-bold">SHOP ALL WIGS</h1>
           <p className="text-gray-400 text-sm">
             <Link href="/" className="hover:text-[#CAB276]">Home</Link> / Shop
           </p>
@@ -152,7 +152,7 @@ export default function ShopPage() {
           {/* Sidebar - Mobile Collapsible */}
           <div className={`${filterOpen ? 'block' : 'hidden'} md:block w-full md:w-64 flex-shrink-0`}>
             <div className="md:sticky md:top-24">
-              <h3 className="font-semibold text-white mb-4 flex items-center gap-2">
+              <h3 className="font-bold text-white mb-4 flex items-center gap-2 text-lg uppercase">
                 <Filter className="w-4 h-4" /> Categories
               </h3>
               <ul className="space-y-2 mb-6">
@@ -220,13 +220,13 @@ export default function ShopPage() {
                     </div>
                   </div>
                   <div className="p-3 md:p-4">
-                    <h3 className="font-medium text-xs md:text-sm mb-1 md:mb-2 text-white line-clamp-1">{product.name}</h3>
+                    <h3 className="font-bold text-xs md:text-base mb-1 md:mb-2 text-white line-clamp-1 uppercase">{product.name}</h3>
                     <div className="flex gap-0.5 mb-1 md:mb-2">
                       {[...Array(5)].map((_, i) => <span key={i} className="text-yellow-400 text-[10px] md:text-xs">★</span>)}
                     </div>
                     <div className="flex items-center gap-1 md:gap-2 flex-wrap">
-                      <span className="font-semibold text-[#CAB276] text-sm">{formatPrice(product.price)}</span>
-                      <span className="text-gray-400 line-through text-xs">{formatPrice(product.oldPrice)}</span>
+                      <span className="font-bold text-[#CAB276] text-sm md:text-base">{formatPrice(product.price)}</span>
+                      <span className="text-gray-400 line-through text-xs md:text-sm">{formatPrice(product.oldPrice)}</span>
                     </div>
                     <button 
                       onClick={() => addToCart(product)}

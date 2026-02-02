@@ -73,8 +73,8 @@ export default function WishlistPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-2xl md:text-3xl font-serif text-white">My Wishlist</h1>
-            <p className="text-gray-500 text-sm">{wishlist.length} items saved</p>
+            <h1 className="text-2xl md:text-3xl font-serif text-white font-bold uppercase">MY WISHLIST</h1>
+            <p className="text-gray-500 text-sm md:text-base">{wishlist.length} items saved</p>
           </div>
         </div>
 
@@ -102,13 +102,13 @@ export default function WishlistPage() {
                   <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
                 </div>
                 <div className="p-3 md:p-4">
-                  <h3 className="font-medium text-xs md:text-sm mb-1 md:mb-2 text-white line-clamp-1">{product.name}</h3>
+                  <h3 className="font-bold text-xs md:text-base mb-1 md:mb-2 text-white line-clamp-1 uppercase">{product.name}</h3>
                   <div className="flex gap-0.5 mb-1 md:mb-2">
                     {[...Array(5)].map((_, i) => <span key={i} className="text-yellow-400 text-[10px] md:text-xs">★</span>)}
                   </div>
                   <div className="flex items-center gap-1 md:gap-2 mb-2 md:mb-4 flex-wrap">
-                    <span className="font-semibold text-[#CAB276] text-sm">{formatPrice(product.price)}</span>
-                    <span className="text-gray-400 line-through text-xs">{formatPrice(product.oldPrice)}</span>
+                    <span className="font-bold text-[#CAB276] text-sm md:text-base">{formatPrice(product.price)}</span>
+                    <span className="text-gray-400 line-through text-xs md:text-sm">{formatPrice(product.oldPrice)}</span>
                   </div>
                   <Link 
                     href="/cart"
