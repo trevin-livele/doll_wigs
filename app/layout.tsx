@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
+import { ToastProvider } from "@/components/providers/toast-provider";
 
 const playfair = Playfair_Display({ 
   subsets: ["latin"],
@@ -24,7 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${inter.variable} font-sans`}>{children}</body>
+      <body className={`${playfair.variable} ${inter.variable} font-sans`}>
+        {children}
+        <ToastProvider />
+      </body>
     </html>
   );
 }

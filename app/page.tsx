@@ -3,7 +3,12 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Heart, ShoppingCart, Phone, Mail, ChevronDown, X, Plus, Minus, User, Facebook, Instagram, Menu } from "lucide-react";
+import { Search, Heart, ShoppingCart, Phone, Mail, X, Plus, Minus, User, Facebook, Instagram, Menu, Loader2 } from "lucide-react";
+import { useProducts } from "@/lib/hooks/use-products";
+import { useCart } from "@/lib/hooks/use-cart";
+import { useWishlist } from "@/lib/hooks/use-wishlist";
+import { useAuth } from "@/lib/hooks/use-auth";
+import { AuthModal } from "@/components/auth/auth-modal";
 
 const XIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} fill="currentColor">
@@ -17,54 +22,60 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-interface Product { id: number; name: string; price: number; oldPrice?: number; rating: number; sale: boolean; image: string; category: string; }
-interface CartItem extends Product { quantity: number; }
-
 const heroSlides = [
   { subtitle: "PREMIUM COLLECTION", title: "Luxury Wigs For\nThe Modern Woman", description: "Premium quality wigs crafted with care. Transform your look with our collection of human hair wigs, lace fronts, and closures.", image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=500&h=600&fit=crop&crop=faces", buttonText: "Shop Now", buttonLink: "/shop" },
   { subtitle: "NEW ARRIVALS", title: "Lace Front Wigs\nNatural Hairline", description: "Discover our latest collection of HD lace front wigs. Undetectable hairline for the most natural look possible.", image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=500&h=600&fit=crop&crop=faces", buttonText: "View Collection", buttonLink: "/shop" },
   { subtitle: "EXCLUSIVE SALE", title: "Up to 30% Off\nAll Colored Wigs", description: "Express yourself with our vibrant colored wigs. From blonde to burgundy, find your perfect shade.", image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=500&h=600&fit=crop&crop=faces", buttonText: "Shop Sale", buttonLink: "/shop" }
 ];
 
+const categories = [
+  { name: "Straight Wigs", image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=200&h=200&fit=crop", slug: "Straight" },
+  { name: "Curly Wigs", image: "https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?w=200&h=200&fit=crop", slug: "Curly" },
+  { name: "Bob Wigs", image: "https://images.unsplash.com/photo-1534614971-6be99a7a3ffd?w=200&h=200&fit=crop", slug: "Bob" },
+  { name: "Lace Front", image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=200&h=200&fit=crop", slug: "Lace Front" },
+  { name: "HD Lace", image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=200&h=200&fit=crop", slug: "HD Lace" },
+  { name: "Colored", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop", slug: "Colored" },
+];
+
 export default function Home() {
   const [cartOpen, setCartOpen] = useState(false);
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [wishlist, setWishlist] = useState<number[]>([]);
   const [activeTab, setActiveTab] = useState("All");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
-  useEffect(() => { const interval = setInterval(() => { setCurrentSlide((prev) => (prev + 1) % heroSlides.length); }, 3000); return () => clearInterval(interval); }, []);
+  const { user, signOut } = useAuth();
+  const { products, loading: productsLoading } = useProducts(activeTab === "All" ? undefined : activeTab);
+  const { items: cartItems, cartTotal, cartCount, addToCart, updateQuantity, removeFromCart } = useCart();
+  const { wishlistIds, toggleWishlist, isInWishlist } = useWishlist();
 
-  const categories = [
-    { name: "Straight Wigs", image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=200&h=200&fit=crop", slug: "straight" },
-    { name: "Curly Wigs", image: "https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?w=200&h=200&fit=crop", slug: "curly" },
-    { name: "Bob Wigs", image: "https://images.unsplash.com/photo-1534614971-6be99a7a3ffd?w=200&h=200&fit=crop", slug: "bob" },
-    { name: "Lace Front", image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=200&h=200&fit=crop", slug: "lace-front" },
-    { name: "HD Lace", image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=200&h=200&fit=crop", slug: "hd-lace" },
-    { name: "Colored", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop", slug: "colored" },
-  ];
-
-  const products: Product[] = [
-    { id: 1, name: "Silky Straight Wig", price: 18500, oldPrice: 24000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=400&h=500&fit=crop", category: "Straight" },
-    { id: 2, name: "Body Wave Lace Front", price: 24900, oldPrice: 32000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=400&h=500&fit=crop", category: "Lace Front" },
-    { id: 3, name: "Curly Bob Wig", price: 15900, oldPrice: 21000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1534614971-6be99a7a3ffd?w=400&h=500&fit=crop", category: "Bob" },
-    { id: 4, name: "HD Lace Closure Wig", price: 27900, oldPrice: 35000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=400&h=500&fit=crop", category: "HD Lace" },
-    { id: 5, name: "Deep Wave Wig", price: 22900, oldPrice: 28500, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?w=400&h=500&fit=crop", category: "Curly" },
-    { id: 6, name: "Blonde Straight Wig", price: 29900, oldPrice: 38000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop", category: "Colored" },
-    { id: 7, name: "Kinky Curly Wig", price: 19500, oldPrice: 25900, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1590086782957-93c06ef21604?w=400&h=500&fit=crop", category: "Curly" },
-    { id: 8, name: "Ombre Body Wave", price: 28900, oldPrice: 36000, rating: 5, sale: true, image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=400&h=500&fit=crop", category: "Colored" },
-  ];
+  useEffect(() => { 
+    const interval = setInterval(() => { 
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length); 
+    }, 5000); 
+    return () => clearInterval(interval); 
+  }, []);
 
   const formatPrice = (price: number) => `KSh ${price.toLocaleString()}`;
-  const addToCart = (product: Product) => { setCart(prev => { const existing = prev.find(item => item.id === product.id); if (existing) { return prev.map(item => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item); } return [...prev, { ...product, quantity: 1 }]; }); setCartOpen(true); };
-  const toggleWishlist = (productId: number) => { setWishlist(prev => prev.includes(productId) ? prev.filter(id => id !== productId) : [...prev, productId]); };
-  const removeFromCart = (id: number) => { setCart(prev => prev.filter(item => item.id !== id)); };
-  const updateQuantity = (id: number, delta: number) => { setCart(prev => prev.map(item => { if (item.id === id) { const newQty = item.quantity + delta; return newQty > 0 ? { ...item, quantity: newQty } : item; } return item; }).filter(item => item.quantity > 0)); };
-  const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const currentHero = heroSlides[currentSlide];
+
+  const handleAddToCart = async (product: { id: string; name: string }) => {
+    if (!user) {
+      setAuthModalOpen(true);
+      return;
+    }
+    await addToCart(product.id, product.name);
+    setCartOpen(true);
+  };
+
+  const handleToggleWishlist = async (productId: string, productName: string) => {
+    if (!user) {
+      setAuthModalOpen(true);
+      return;
+    }
+    await toggleWishlist(productId, productName);
+  };
 
   return (
     <div className="min-h-screen bg-black">
@@ -104,16 +115,28 @@ export default function Home() {
               <Search className="absolute right-3 top-2.5 w-4 h-4 text-gray-500" />
             </div>
             <div className="relative">
-              <button onClick={() => setUserMenuOpen(!userMenuOpen)} className="p-2 text-white hover:text-[#CAB276] transition"><User className="w-5 h-5" /></button>
-              {userMenuOpen && (<div className="absolute right-0 top-full mt-2 w-48 bg-gray-900 rounded-lg border border-gray-800 py-2 z-50">
-                <Link href="/account" className="block px-4 py-2 text-sm text-white hover:bg-gray-800 hover:text-[#CAB276]">My Account</Link>
-                <Link href="/orders" className="block px-4 py-2 text-sm text-white hover:bg-gray-800 hover:text-[#CAB276]">My Orders</Link>
-                <Link href="/wishlist" className="block px-4 py-2 text-sm text-white hover:bg-gray-800 hover:text-[#CAB276]">Wishlist</Link>
-              </div>)}
+              <button onClick={() => setUserMenuOpen(!userMenuOpen)} className="p-2 text-white hover:text-[#CAB276] transition">
+                <User className="w-5 h-5" />
+              </button>
+              {userMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-48 bg-gray-900 rounded-lg border border-gray-800 py-2 z-50">
+                  {user ? (
+                    <>
+                      <p className="px-4 py-2 text-xs text-gray-500 border-b border-gray-800">{user.email}</p>
+                      <Link href="/account" className="block px-4 py-2 text-sm text-white hover:bg-gray-800 hover:text-[#CAB276]">My Account</Link>
+                      <Link href="/orders" className="block px-4 py-2 text-sm text-white hover:bg-gray-800 hover:text-[#CAB276]">My Orders</Link>
+                      <Link href="/wishlist" className="block px-4 py-2 text-sm text-white hover:bg-gray-800 hover:text-[#CAB276]">Wishlist</Link>
+                      <button onClick={() => { signOut(); setUserMenuOpen(false); }} className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-800">Sign Out</button>
+                    </>
+                  ) : (
+                    <button onClick={() => { setAuthModalOpen(true); setUserMenuOpen(false); }} className="block w-full text-left px-4 py-2 text-sm text-[#CAB276] hover:bg-gray-800">Sign In / Sign Up</button>
+                  )}
+                </div>
+              )}
             </div>
             <Link href="/wishlist" className="relative p-2 text-white hover:text-[#CAB276] transition">
-              <Heart className={`w-5 h-5 ${wishlist.length > 0 ? 'text-[#CAB276] fill-[#CAB276]' : ''}`} />
-              {wishlist.length > 0 && <span className="absolute -top-1 -right-1 bg-[#CAB276] text-black text-xs w-4 h-4 rounded-full flex items-center justify-center font-medium">{wishlist.length}</span>}
+              <Heart className={`w-5 h-5 ${wishlistIds.length > 0 ? 'text-[#CAB276] fill-[#CAB276]' : ''}`} />
+              {wishlistIds.length > 0 && <span className="absolute -top-1 -right-1 bg-[#CAB276] text-black text-xs w-4 h-4 rounded-full flex items-center justify-center font-medium">{wishlistIds.length}</span>}
             </Link>
             <button onClick={() => setCartOpen(true)} className="relative p-2 text-white hover:text-[#CAB276] transition">
               <ShoppingCart className="w-5 h-5" />
@@ -121,26 +144,26 @@ export default function Home() {
             </button>
           </div>
         </div>
-        {mobileMenuOpen && (<div className="md:hidden absolute left-0 right-0 top-full bg-black border-b border-gray-800 z-50">
-          <nav className="flex flex-col p-4">
-            <Link href="/" className="py-3 text-[#CAB276] font-medium border-b border-gray-800">HOME</Link>
-            <Link href="/shop" className="py-3 text-white border-b border-gray-800">SHOP</Link>
-            <Link href="/about" className="py-3 text-white border-b border-gray-800">ABOUT</Link>
-            <Link href="/contact" className="py-3 text-white">CONTACT</Link>
-          </nav>
-        </div>)}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute left-0 right-0 top-full bg-black border-b border-gray-800 z-50">
+            <nav className="flex flex-col p-4">
+              <Link href="/" className="py-3 text-[#CAB276] font-medium border-b border-gray-800">HOME</Link>
+              <Link href="/shop" className="py-3 text-white border-b border-gray-800">SHOP</Link>
+              <Link href="/about" className="py-3 text-white border-b border-gray-800">ABOUT</Link>
+              <Link href="/contact" className="py-3 text-white">CONTACT</Link>
+            </nav>
+          </div>
+        )}
       </header>
 
-      {/* Hero Section - Image Left, Content Right */}
+      {/* Hero Section */}
       <section className="bg-black">
         <div className="container mx-auto px-4 py-12 md:py-20 flex flex-col md:flex-row items-center">
-          {/* Image on Left */}
           <div className="w-full md:w-1/2 flex justify-center mb-8 md:mb-0 order-2 md:order-1">
             <div className="relative w-[280px] md:w-[400px] h-[350px] md:h-[500px] rounded-t-full overflow-hidden border-4 border-[#CAB276]">
               <Image src={currentHero.image} alt="Model" fill className="object-cover" key={currentSlide} />
             </div>
           </div>
-          {/* Content on Right */}
           <div className="w-full md:w-1/2 text-center md:text-left order-1 md:order-2">
             <p className="text-[#CAB276] text-sm md:text-base tracking-[0.3em] mb-4 font-bold">{currentHero.subtitle}</p>
             <h1 className="text-4xl md:text-6xl font-serif mb-6 leading-tight text-white whitespace-pre-line font-bold uppercase">{currentHero.title}</h1>
@@ -173,7 +196,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Products Section - Black Background */}
+      {/* Products Section */}
       <section className="bg-black py-12 md:py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-serif text-center mb-4 text-white font-bold uppercase">Hand Picked Products</h2>
@@ -183,38 +206,45 @@ export default function Home() {
               <button key={tab} onClick={() => setActiveTab(tab)} className={`pb-2 text-base md:text-lg transition tracking-wide uppercase ${activeTab === tab ? 'border-b-2 border-[#CAB276] text-[#CAB276] font-bold' : 'text-gray-500 hover:text-white font-medium'}`}>{tab}</button>
             ))}
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {products.filter(p => activeTab === "All" || p.category === activeTab).slice(0, 8).map((product) => (
-              <div key={product.id} className="bg-gray-900 rounded-lg overflow-hidden group">
-                <div className="relative h-52 md:h-72 overflow-hidden">
-                  {product.sale && <span className="absolute top-3 left-3 bg-[#CAB276] text-black text-xs px-2 py-1 rounded font-medium z-10">SALE</span>}
-                  <button onClick={(e) => { e.preventDefault(); toggleWishlist(product.id); }} className="absolute top-3 right-3 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center z-10 hover:bg-black transition">
-                    <Heart className={`w-4 h-4 ${wishlist.includes(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-white'}`} />
-                  </button>
-                  <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition hidden md:flex items-center justify-center">
-                    <button onClick={() => addToCart(product)} className="bg-[#CAB276] text-black px-6 py-2 rounded font-medium hover:bg-[#b39a5e] transition">Add to Cart</button>
+          
+          {productsLoading ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="w-8 h-8 animate-spin text-[#CAB276]" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+              {products.slice(0, 8).map((product) => (
+                <div key={product.id} className="bg-gray-900 rounded-lg overflow-hidden group">
+                  <div className="relative h-52 md:h-72 overflow-hidden">
+                    {product.sale && <span className="absolute top-3 left-3 bg-[#CAB276] text-black text-xs px-2 py-1 rounded font-medium z-10">SALE</span>}
+                    <button onClick={(e) => { e.preventDefault(); handleToggleWishlist(product.id, product.name); }} className="absolute top-3 right-3 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center z-10 hover:bg-black transition">
+                      <Heart className={`w-4 h-4 ${isInWishlist(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-white'}`} />
+                    </button>
+                    <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition hidden md:flex items-center justify-center">
+                      <button onClick={() => handleAddToCart(product)} className="bg-[#CAB276] text-black px-6 py-2 rounded font-medium hover:bg-[#b39a5e] transition">Add to Cart</button>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold text-sm md:text-base mb-2 text-white uppercase">{product.name}</h3>
+                    <div className="flex gap-1 mb-2">{[...Array(5)].map((_, i) => <span key={i} className="text-[#CAB276] text-xs">★</span>)}</div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-[#CAB276] text-base md:text-lg">{formatPrice(product.price)}</span>
+                      {product.old_price && <span className="text-gray-500 line-through text-sm md:text-base">{formatPrice(product.old_price)}</span>}
+                    </div>
+                    <button onClick={() => handleAddToCart(product)} className="md:hidden w-full mt-3 bg-[#CAB276] text-black py-2 rounded text-sm font-medium">Add to Cart</button>
                   </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-sm md:text-base mb-2 text-white uppercase">{product.name}</h3>
-                  <div className="flex gap-1 mb-2">{[...Array(5)].map((_, i) => <span key={i} className="text-[#CAB276] text-xs">★</span>)}</div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-[#CAB276] text-base md:text-lg">{formatPrice(product.price)}</span>
-                    {product.oldPrice && <span className="text-gray-500 line-through text-sm md:text-base">{formatPrice(product.oldPrice)}</span>}
-                  </div>
-                  <button onClick={() => addToCart(product)} className="md:hidden w-full mt-3 bg-[#CAB276] text-black py-2 rounded text-sm font-medium">Add to Cart</button>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
           <div className="text-center mt-10">
             <Link href="/shop" className="inline-block border-2 border-[#CAB276] text-[#CAB276] px-8 py-3 rounded font-medium hover:bg-[#CAB276] hover:text-black transition tracking-wide">View All Products</Link>
           </div>
         </div>
       </section>
 
-      {/* About Section - Split */}
+      {/* About Section */}
       <section className="bg-black py-12 md:py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -307,24 +337,30 @@ export default function Home() {
               <button onClick={() => setCartOpen(false)} className="p-1 hover:bg-gray-800 rounded transition"><X className="w-5 h-5 text-gray-400" /></button>
             </div>
             <div className="flex-1 overflow-y-auto p-4">
-              {cart.length === 0 ? (
+              {cartItems.length === 0 ? (
                 <div className="text-center py-12">
                   <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-gray-700" />
-                  <p className="text-gray-500 mb-4">Your cart is empty</p>
-                  <button onClick={() => setCartOpen(false)} className="text-[#CAB276] hover:underline">Continue Shopping</button>
+                  <p className="text-gray-500 mb-4">{user ? 'Your cart is empty' : 'Sign in to view your cart'}</p>
+                  {!user ? (
+                    <button onClick={() => { setCartOpen(false); setAuthModalOpen(true); }} className="text-[#CAB276] hover:underline">Sign In</button>
+                  ) : (
+                    <button onClick={() => setCartOpen(false)} className="text-[#CAB276] hover:underline">Continue Shopping</button>
+                  )}
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {cart.map(item => (
+                  {cartItems.map(item => (
                     <div key={item.id} className="flex gap-4 p-3 bg-gray-800 rounded-lg">
-                      <div className="relative w-20 h-20 rounded overflow-hidden flex-shrink-0"><Image src={item.image} alt={item.name} fill className="object-cover" /></div>
+                      <div className="relative w-20 h-20 rounded overflow-hidden flex-shrink-0">
+                        <Image src={item.product?.image || ''} alt={item.product?.name || ''} fill className="object-cover" />
+                      </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-sm font-medium text-white truncate">{item.name}</h3>
-                        <p className="text-[#CAB276] font-semibold text-sm">{formatPrice(item.price)}</p>
+                        <h3 className="text-sm font-medium text-white truncate">{item.product?.name}</h3>
+                        <p className="text-[#CAB276] font-semibold text-sm">{formatPrice(item.product?.price || 0)}</p>
                         <div className="flex items-center gap-2 mt-2">
-                          <button onClick={() => updateQuantity(item.id, -1)} className="w-6 h-6 rounded bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition"><Minus className="w-3 h-3 text-white" /></button>
+                          <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-6 h-6 rounded bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition"><Minus className="w-3 h-3 text-white" /></button>
                           <span className="text-sm w-6 text-center text-white">{item.quantity}</span>
-                          <button onClick={() => updateQuantity(item.id, 1)} className="w-6 h-6 rounded bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition"><Plus className="w-3 h-3 text-white" /></button>
+                          <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="w-6 h-6 rounded bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition"><Plus className="w-3 h-3 text-white" /></button>
                         </div>
                       </div>
                       <button onClick={() => removeFromCart(item.id)} className="text-gray-500 hover:text-red-500 transition"><X className="w-4 h-4" /></button>
@@ -333,7 +369,7 @@ export default function Home() {
                 </div>
               )}
             </div>
-            {cart.length > 0 && (
+            {cartItems.length > 0 && (
               <div className="p-4 border-t border-gray-800">
                 <div className="flex justify-between mb-4"><span className="text-gray-400">Subtotal:</span><span className="font-semibold text-lg text-white">{formatPrice(cartTotal)}</span></div>
                 <Link href="/cart" onClick={() => setCartOpen(false)} className="block w-full bg-gray-800 text-white py-3 rounded text-center font-medium hover:bg-gray-700 transition mb-2">View Cart</Link>
@@ -343,6 +379,9 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* Auth Modal */}
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </div>
   );
 }

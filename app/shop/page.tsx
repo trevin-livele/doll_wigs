@@ -3,85 +3,62 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, ShoppingCart, Filter, X, User, Menu, Minus, Plus } from "lucide-react";
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  oldPrice: number;
-  rating: number;
-  image: string;
-  category: string;
-}
-
-interface CartItem extends Product {
-  quantity: number;
-}
+import { Heart, ShoppingCart, Filter, X, User, Menu, Minus, Plus, Loader2 } from "lucide-react";
+import { useProducts } from "@/lib/hooks/use-products";
+import { useCategories } from "@/lib/hooks/use-categories";
+import { useCart } from "@/lib/hooks/use-cart";
+import { useWishlist } from "@/lib/hooks/use-wishlist";
+import { useAuth } from "@/lib/hooks/use-auth";
+import { AuthModal } from "@/components/auth/auth-modal";
 
 const formatPrice = (price: number) => `KSh ${price.toLocaleString()}`;
 
 export default function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [wishlist, setWishlist] = useState<number[]>([]);
   const [sortBy, setSortBy] = useState("featured");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
-  const [cart, setCart] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
-  const categories = ["All", "Straight", "Curly", "Bob", "Lace Front", "HD Lace", "Colored"];
+  const { user } = useAuth();
+  const { categories, loading: categoriesLoading } = useCategories();
+  const { products, loading: productsLoading } = useProducts(selectedCategory === "All" ? undefined : selectedCategory);
+  const { items: cartItems, cartTotal, cartCount, addToCart, updateQuantity, removeFromCart } = useCart();
+  const { wishlistIds, toggleWishlist, isInWishlist } = useWishlist();
 
-  const products: Product[] = [
-    { id: 1, name: "Silky Straight Wig", price: 18500, oldPrice: 24000, rating: 5, image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=400&h=500&fit=crop", category: "Straight" },
-    { id: 2, name: "Body Wave Lace Front", price: 24900, oldPrice: 32000, rating: 5, image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=400&h=500&fit=crop", category: "Lace Front" },
-    { id: 3, name: "Curly Bob Wig", price: 15900, oldPrice: 21000, rating: 5, image: "https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?w=400&h=500&fit=crop", category: "Bob" },
-    { id: 4, name: "HD Lace Closure Wig", price: 27900, oldPrice: 35000, rating: 5, image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=400&h=500&fit=crop", category: "HD Lace" },
-    { id: 5, name: "Deep Wave Wig", price: 22900, oldPrice: 28500, rating: 5, image: "https://images.unsplash.com/photo-1590086782957-93c06ef21604?w=400&h=500&fit=crop", category: "Curly" },
-    { id: 6, name: "Blonde Straight Wig", price: 29900, oldPrice: 38000, rating: 5, image: "https://images.unsplash.com/photo-1534614971-6be99a7a3ffd?w=400&h=500&fit=crop", category: "Colored" },
-    { id: 7, name: "Kinky Curly Wig", price: 19500, oldPrice: 25900, rating: 5, image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=400&h=500&fit=crop", category: "Curly" },
-    { id: 8, name: "Ombre Body Wave", price: 28900, oldPrice: 36000, rating: 5, image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=500&fit=crop", category: "Colored" },
-    { id: 9, name: "Water Wave Wig", price: 21500, oldPrice: 27000, rating: 5, image: "https://images.unsplash.com/photo-1595959183082-7b570b7e1dfa?w=400&h=500&fit=crop", category: "Curly" },
-    { id: 10, name: "Pixie Cut Wig", price: 12900, oldPrice: 16500, rating: 5, image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=500&fit=crop", category: "Bob" },
-    { id: 11, name: "Red Lace Front", price: 32000, oldPrice: 40000, rating: 5, image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=400&h=500&fit=crop", category: "Colored" },
-    { id: 12, name: "Natural Straight", price: 16500, oldPrice: 22000, rating: 5, image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=400&h=500&fit=crop", category: "Straight" },
-  ];
-
-  const toggleWishlist = (id: number) => {
-    setWishlist(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
-  };
-
-  const addToCart = (product: Product) => {
-    setCart(prev => {
-      const existing = prev.find(item => item.id === product.id);
-      if (existing) {
-        return prev.map(item => 
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      }
-      return [...prev, { ...product, quantity: 1 }];
-    });
+  const handleAddToCart = async (product: { id: string; name: string }) => {
+    if (!user) {
+      setAuthModalOpen(true);
+      return;
+    }
+    await addToCart(product.id, product.name);
     setCartOpen(true);
   };
 
-  const removeFromCart = (id: number) => {
-    setCart(prev => prev.filter(item => item.id !== id));
+  const handleToggleWishlist = async (productId: string, productName: string) => {
+    if (!user) {
+      setAuthModalOpen(true);
+      return;
+    }
+    await toggleWishlist(productId, productName);
   };
 
-  const updateQuantity = (id: number, delta: number) => {
-    setCart(prev => prev.map(item => {
-      if (item.id === id) {
-        const newQty = item.quantity + delta;
-        return newQty > 0 ? { ...item, quantity: newQty } : item;
-      }
-      return item;
-    }).filter(item => item.quantity > 0));
-  };
+  // Sort products
+  const sortedProducts = [...products].sort((a, b) => {
+    switch (sortBy) {
+      case "price-low":
+        return a.price - b.price;
+      case "price-high":
+        return b.price - a.price;
+      case "newest":
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      default:
+        return 0;
+    }
+  });
 
-  const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-  const filteredProducts = products.filter(p => selectedCategory === "All" || p.category === selectedCategory);
+  const allCategories = ["All", ...categories.map(c => c.name.replace(" Wigs", ""))];
 
   return (
     <div className="min-h-screen bg-black">
@@ -104,12 +81,17 @@ export default function ShopPage() {
 
           <div className="flex items-center gap-2 md:gap-4">
             <Link href="/wishlist" className="relative">
-              <Heart className={`w-5 h-5 ${wishlist.length > 0 ? 'text-[#CAB276] fill-[#CAB276]' : 'text-gray-400'}`} />
+              <Heart className={`w-5 h-5 ${wishlistIds.length > 0 ? 'text-[#CAB276] fill-[#CAB276]' : 'text-gray-400'}`} />
+              {wishlistIds.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#CAB276] text-black text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                  {wishlistIds.length}
+                </span>
+              )}
             </Link>
             <button onClick={() => setCartOpen(true)} className="relative">
               <ShoppingCart className="w-5 h-5 text-gray-400" />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#CAB276] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-[#CAB276] text-black text-xs w-5 h-5 rounded-full flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
@@ -120,7 +102,7 @@ export default function ShopPage() {
           </div>
         </div>
         {mobileMenuOpen && (
-          <nav className="md:hidden flex flex-col border-t mt-3 pt-3">
+          <nav className="md:hidden flex flex-col border-t border-gray-800 mt-3 pt-3">
             <Link href="/" className="py-2 text-gray-300">HOME</Link>
             <Link href="/shop" className="py-2 text-[#CAB276] font-medium">SHOP</Link>
             <Link href="/about" className="py-2 text-gray-300">ABOUT</Link>
@@ -149,30 +131,36 @@ export default function ShopPage() {
         </button>
 
         <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-          {/* Sidebar - Mobile Collapsible */}
+          {/* Sidebar */}
           <div className={`${filterOpen ? 'block' : 'hidden'} md:block w-full md:w-64 flex-shrink-0`}>
             <div className="md:sticky md:top-24">
               <h3 className="font-bold text-white mb-4 flex items-center gap-2 text-lg uppercase">
                 <Filter className="w-4 h-4" /> Categories
               </h3>
-              <ul className="space-y-2 mb-6">
-                {categories.map(cat => (
-                  <li key={cat}>
-                    <button
-                      onClick={() => { setSelectedCategory(cat); setFilterOpen(false); }}
-                      className={`w-full text-left px-3 py-2 rounded-lg transition text-sm ${
-                        selectedCategory === cat 
-                          ? 'bg-[#CAB276] text-white' 
-                          : 'text-gray-400 hover:bg-gray-900'
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              {categoriesLoading ? (
+                <div className="flex justify-center py-4">
+                  <Loader2 className="w-5 h-5 animate-spin text-[#CAB276]" />
+                </div>
+              ) : (
+                <ul className="space-y-2 mb-6">
+                  {allCategories.map(cat => (
+                    <li key={cat}>
+                      <button
+                        onClick={() => { setSelectedCategory(cat); setFilterOpen(false); }}
+                        className={`w-full text-left px-3 py-2 rounded-lg transition text-sm ${
+                          selectedCategory === cat 
+                            ? 'bg-[#CAB276] text-black font-medium' 
+                            : 'text-gray-400 hover:bg-gray-900'
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
 
-              <div className="p-4 bg-gray-900 rounded-xl hidden md:block">
+              <div className="p-4 bg-gray-900 rounded-xl hidden md:block border border-gray-800">
                 <h4 className="font-medium text-white mb-2">Need Help?</h4>
                 <p className="text-sm text-gray-400 mb-3">Chat with us on WhatsApp</p>
                 <a href="https://wa.me/254792164579" className="text-[#CAB276] text-sm font-medium hover:underline">
@@ -185,7 +173,7 @@ export default function ShopPage() {
           {/* Products */}
           <div className="flex-1">
             <div className="flex justify-between items-center mb-4 md:mb-6">
-              <p className="text-gray-400 text-sm">{filteredProducts.length} products</p>
+              <p className="text-gray-400 text-sm">{sortedProducts.length} products</p>
               <select 
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -198,46 +186,60 @@ export default function ShopPage() {
               </select>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
-              {filteredProducts.map(product => (
-                <div key={product.id} className="bg-black rounded-lg overflow-hidden group shadow-sm hover:shadow-md transition">
-                  <div className="relative h-48 md:h-72 bg-gray-900 overflow-hidden">
-                    <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-green-500 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10">SALE</span>
-                    <button
-                      onClick={() => toggleWishlist(product.id)}
-                      className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-black rounded-full flex items-center justify-center shadow-md z-10"
-                    >
-                      <Heart className={`w-3 h-3 md:w-4 md:h-4 ${wishlist.includes(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-gray-400'}`} />
-                    </button>
-                    <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
-                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition hidden md:flex items-center justify-center">
+            {productsLoading ? (
+              <div className="flex justify-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-[#CAB276]" />
+              </div>
+            ) : sortedProducts.length === 0 ? (
+              <div className="text-center py-12 bg-gray-900 rounded-xl border border-gray-800">
+                <p className="text-gray-400">No products found in this category</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+                {sortedProducts.map(product => (
+                  <div key={product.id} className="bg-gray-900 rounded-lg overflow-hidden group shadow-sm hover:shadow-md transition border border-gray-800">
+                    <div className="relative h-48 md:h-72 bg-gray-800 overflow-hidden">
+                      {product.sale && (
+                        <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-[#CAB276] text-black text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10 font-medium">SALE</span>
+                      )}
+                      <button
+                        onClick={() => handleToggleWishlist(product.id, product.name)}
+                        className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-black/50 rounded-full flex items-center justify-center shadow-md z-10 hover:bg-black transition"
+                      >
+                        <Heart className={`w-3 h-3 md:w-4 md:h-4 ${isInWishlist(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-white'}`} />
+                      </button>
+                      <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition hidden md:flex items-center justify-center">
+                        <button 
+                          onClick={() => handleAddToCart(product)}
+                          className="bg-[#CAB276] text-black px-6 py-2 rounded font-medium hover:bg-[#b39a5e] transition"
+                        >
+                          Add to Cart
+                        </button>
+                      </div>
+                    </div>
+                    <div className="p-3 md:p-4">
+                      <h3 className="font-bold text-sm md:text-base mb-1 md:mb-2 text-white line-clamp-1 uppercase">{product.name}</h3>
+                      <div className="flex gap-0.5 mb-1 md:mb-2">
+                        {[...Array(5)].map((_, i) => <span key={i} className="text-[#CAB276] text-[10px] md:text-xs">★</span>)}
+                      </div>
+                      <div className="flex items-center gap-1 md:gap-2 flex-wrap">
+                        <span className="font-bold text-[#CAB276] text-sm md:text-base">{formatPrice(product.price)}</span>
+                        {product.old_price && (
+                          <span className="text-gray-500 line-through text-xs md:text-sm">{formatPrice(product.old_price)}</span>
+                        )}
+                      </div>
                       <button 
-                        onClick={() => addToCart(product)}
-                        className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-[#CAB276] hover:text-white transition"
+                        onClick={() => handleAddToCart(product)}
+                        className="md:hidden block w-full mt-2 bg-[#CAB276] text-black py-1.5 rounded text-center text-xs font-medium"
                       >
                         Add to Cart
                       </button>
                     </div>
                   </div>
-                  <div className="p-3 md:p-4">
-                    <h3 className="font-bold text-sm md:text-base mb-1 md:mb-2 text-white line-clamp-1 uppercase">{product.name}</h3>
-                    <div className="flex gap-0.5 mb-1 md:mb-2">
-                      {[...Array(5)].map((_, i) => <span key={i} className="text-yellow-400 text-[10px] md:text-xs">★</span>)}
-                    </div>
-                    <div className="flex items-center gap-1 md:gap-2 flex-wrap">
-                      <span className="font-bold text-[#CAB276] text-sm md:text-base">{formatPrice(product.price)}</span>
-                      <span className="text-gray-400 line-through text-xs md:text-sm">{formatPrice(product.oldPrice)}</span>
-                    </div>
-                    <button 
-                      onClick={() => addToCart(product)}
-                      className="md:hidden block w-full mt-2 bg-[#CAB276] text-white py-1.5 rounded text-center text-xs font-medium"
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -245,51 +247,53 @@ export default function ShopPage() {
       {/* Cart Sidebar */}
       {cartOpen && (
         <div className="fixed inset-0 z-50">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setCartOpen(false)}></div>
-          <div className="absolute right-0 top-0 h-full w-full md:w-96 bg-black shadow-xl flex flex-col">
+          <div className="absolute inset-0 bg-black/70" onClick={() => setCartOpen(false)}></div>
+          <div className="absolute right-0 top-0 h-full w-full md:w-96 bg-gray-900 shadow-xl flex flex-col">
             <div className="p-4 border-b border-gray-800 flex justify-between items-center">
-              <h2 className="text-lg font-semibold">Shopping Cart ({cartCount})</h2>
+              <h2 className="text-lg font-semibold text-white">Shopping Cart ({cartCount})</h2>
               <button onClick={() => setCartOpen(false)} className="p-1 hover:bg-gray-800 rounded transition">
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-gray-400" />
               </button>
             </div>
             
             <div className="flex-1 overflow-y-auto p-4">
-              {cart.length === 0 ? (
-                <div className="text-center py-12 text-gray-500">
-                  <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                  <p className="mb-4">Your cart is empty</p>
-                  <button onClick={() => setCartOpen(false)} className="text-[#CAB276] hover:underline">
-                    Continue Shopping
-                  </button>
+              {cartItems.length === 0 ? (
+                <div className="text-center py-12">
+                  <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-gray-700" />
+                  <p className="text-gray-500 mb-4">{user ? 'Your cart is empty' : 'Sign in to view your cart'}</p>
+                  {!user ? (
+                    <button onClick={() => { setCartOpen(false); setAuthModalOpen(true); }} className="text-[#CAB276] hover:underline">Sign In</button>
+                  ) : (
+                    <button onClick={() => setCartOpen(false)} className="text-[#CAB276] hover:underline">Continue Shopping</button>
+                  )}
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {cart.map(item => (
-                    <div key={item.id} className="flex gap-3 md:gap-4 p-3 bg-gray-900 rounded-lg">
+                  {cartItems.map(item => (
+                    <div key={item.id} className="flex gap-3 md:gap-4 p-3 bg-gray-800 rounded-lg">
                       <div className="relative w-16 h-16 md:w-20 md:h-20 rounded overflow-hidden flex-shrink-0">
-                        <Image src={item.image} alt={item.name} fill className="object-cover" />
+                        <Image src={item.product?.image || ''} alt={item.product?.name || ''} fill className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-sm font-medium text-white truncate">{item.name}</h3>
-                        <p className="text-[#CAB276] font-semibold text-sm">{formatPrice(item.price)}</p>
+                        <h3 className="text-sm font-medium text-white truncate">{item.product?.name}</h3>
+                        <p className="text-[#CAB276] font-semibold text-sm">{formatPrice(item.product?.price || 0)}</p>
                         <div className="flex items-center gap-2 mt-2">
                           <button 
-                            onClick={() => updateQuantity(item.id, -1)}
-                            className="w-6 h-6 rounded border flex items-center justify-center hover:bg-gray-800 transition"
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="w-6 h-6 rounded bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition"
                           >
-                            <Minus className="w-3 h-3" />
+                            <Minus className="w-3 h-3 text-white" />
                           </button>
-                          <span className="text-sm w-6 text-center">{item.quantity}</span>
+                          <span className="text-sm w-6 text-center text-white">{item.quantity}</span>
                           <button 
-                            onClick={() => updateQuantity(item.id, 1)}
-                            className="w-6 h-6 rounded border flex items-center justify-center hover:bg-gray-800 transition"
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="w-6 h-6 rounded bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition"
                           >
-                            <Plus className="w-3 h-3" />
+                            <Plus className="w-3 h-3 text-white" />
                           </button>
                         </div>
                       </div>
-                      <button onClick={() => removeFromCart(item.id)} className="text-gray-400 hover:text-red-500 transition">
+                      <button onClick={() => removeFromCart(item.id)} className="text-gray-500 hover:text-red-500 transition">
                         <X className="w-4 h-4" />
                       </button>
                     </div>
@@ -298,11 +302,11 @@ export default function ShopPage() {
               )}
             </div>
             
-            {cart.length > 0 && (
-              <div className="p-4 border-t">
+            {cartItems.length > 0 && (
+              <div className="p-4 border-t border-gray-800">
                 <div className="flex justify-between mb-4">
                   <span className="text-gray-400">Subtotal:</span>
-                  <span className="font-semibold text-lg">{formatPrice(cartTotal)}</span>
+                  <span className="font-semibold text-lg text-white">{formatPrice(cartTotal)}</span>
                 </div>
                 <Link 
                   href="/cart"
@@ -314,7 +318,7 @@ export default function ShopPage() {
                 <Link 
                   href="/checkout"
                   onClick={() => setCartOpen(false)}
-                  className="block w-full bg-[#CAB276] text-white py-3 rounded text-center font-medium hover:bg-[#b39a5e] transition"
+                  className="block w-full bg-[#CAB276] text-black py-3 rounded text-center font-medium hover:bg-[#b39a5e] transition"
                 >
                   Checkout
                 </Link>
@@ -323,6 +327,9 @@ export default function ShopPage() {
           </div>
         </div>
       )}
+
+      {/* Auth Modal */}
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </div>
   );
 }
