@@ -22,13 +22,15 @@ export interface CartItem {
 export function useCart() {
   const [items, setItems] = useState<CartItem[]>([])
   const [loading, setLoading] = useState(true)
-  const { user } = useAuth()
+  const [initialLoad, setInitialLoad] = useState(true)
+  const { user, loading: authLoading } = useAuth()
   const supabase = createClient()
 
   const fetchCart = useCallback(async () => {
     if (!user) {
       setItems([])
       setLoading(false)
+      setInitialLoad(false)
       return
     }
 
@@ -60,11 +62,15 @@ export function useCart() {
       setItems(transformedData)
     }
     setLoading(false)
+    setInitialLoad(false)
   }, [user, supabase])
 
   useEffect(() => {
-    fetchCart()
-  }, [fetchCart])
+    // Wait for auth to finish loading before fetching cart
+    if (!authLoading) {
+      fetchCart()
+    }
+  }, [fetchCart, authLoading])
 
   const addToCart = async (productId: string, productName: string) => {
     if (!user) {
@@ -165,7 +171,7 @@ export function useCart() {
 
   return {
     items,
-    loading,
+    loading: loading || authLoading || initialLoad,
     addToCart,
     updateQuantity,
     removeFromCart,

@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, ShoppingCart, User, Package, MapPin, CreditCard, Bell, LogOut, Edit2, Menu, X, Loader2, Save } from "lucide-react";
+import { Heart, ShoppingCart, User, Package, MapPin, CreditCard, Bell, LogOut, Edit2, Menu, X, Loader2, Save, Settings } from "lucide-react";
 import { useAuth } from "@/lib/hooks/use-auth";
+import { useAdmin } from "@/lib/hooks/use-admin";
 import { AuthModal } from "@/components/auth/auth-modal";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
@@ -20,6 +21,7 @@ interface Address {
 
 export default function AccountPage() {
   const { user, loading: authLoading, signOut } = useAuth();
+  const { isAdmin } = useAdmin();
   const [activeTab, setActiveTab] = useState("profile");
   const [isEditing, setIsEditing] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -211,6 +213,11 @@ export default function AccountPage() {
                   </button>
                 ); })}
               </nav>
+              {isAdmin && (
+                <Link href="/manage" className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-[#CAB276] hover:bg-[#CAB276]/10 transition mt-4 border border-[#CAB276]/30">
+                  <Settings className="w-5 h-5" /><span className="font-medium">Management</span>
+                </Link>
+              )}
               <button onClick={handleSignOut} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-red-500 hover:bg-red-900/30 transition mt-4">
                 <LogOut className="w-5 h-5" /><span className="font-medium">Logout</span>
               </button>
