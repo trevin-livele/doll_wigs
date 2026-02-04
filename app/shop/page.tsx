@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, ShoppingCart, Filter, X, User, Menu, Minus, Plus, Loader2 } from "lucide-react";
+import { Heart, ShoppingCart, Filter, X, User, Menu, Minus, Plus, Loader2, Search } from "lucide-react";
 import { useProducts } from "@/lib/hooks/use-products";
 import { useCategories } from "@/lib/hooks/use-categories";
 import { useCart } from "@/lib/hooks/use-cart";
@@ -18,6 +18,7 @@ const ITEMS_PER_PAGE = 12;
 export default function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("featured");
+  const [searchQuery, setSearchQuery] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -53,9 +54,28 @@ export default function ShopPage() {
     setFilterOpen(false);
   };
 
-  // Sort products
-  const sortedProducts = useMemo(() => {
-    return [...products].sort((a, b) => {
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    setCurrentPage(1);
+  };
+
+  // Filter by search and sort products
+  const filteredAndSortedProducts = useMemo(() => {
+    let filtered = products;
+    
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = products.filter(
+        (p) =>
+          p.name.toLowerCase().includes(query) ||
+          p.category.toLowerCase().includes(query) ||
+          p.description?.toLowerCase().includes(query)
+      );
+    }
+    
+    // Apply sorting
+    return [...filtered].sort((a, b) => {
       switch (sortBy) {
         case "price-low":
           return a.price - b.price;
@@ -67,13 +87,13 @@ export default function ShopPage() {
           return 0;
       }
     });
-  }, [products, sortBy]);
+  }, [products, searchQuery, sortBy]);
 
-  const totalPages = Math.ceil(sortedProducts.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(filteredAndSortedProducts.length / ITEMS_PER_PAGE);
   const paginatedProducts = useMemo(() => {
     const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    return sortedProducts.slice(start, start + ITEMS_PER_PAGE);
-  }, [sortedProducts, currentPage]);
+    return filteredAndSortedProducts.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredAndSortedProducts, currentPage]);
 
   const allCategories = ["All", ...categories.map(c => c.slug)];
 
@@ -138,7 +158,27 @@ export default function ShopPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-6 md:py-8">
+      {/* Search Bar */}
+      <div className="container mx-auto px-4 pt-6">
+        <div className="relative max-w-md">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            className="w-full bg-gray-900 border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#CAB276]"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => handleSearchChange("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      </div>      <div className="container mx-auto px-4 py-6 md:py-8">
         {/* Mobile Filter Button */}
         <button 
           onClick={() => setFilterOpen(!filterOpen)}
@@ -190,7 +230,7 @@ export default function ShopPage() {
           {/* Products */}
           <div className="flex-1">
             <div className="flex justify-between items-center mb-4 md:mb-6">
-              <p className="text-gray-400 text-sm">{sortedProducts.length} products</p>
+              <p className="text-gray-400 text-sm">{filteredAndSortedProducts.length} products</p>
               <select 
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -207,9 +247,19 @@ export default function ShopPage() {
               <div className="flex justify-center py-12">
                 <Loader2 className="w-8 h-8 animate-spin text-[#CAB276]" />
               </div>
-            ) : sortedProducts.length === 0 ? (
+            ) : filteredAndSortedProducts.length === 0 ? (
               <div className="text-center py-12 bg-gray-900 rounded-xl border border-gray-800">
-                <p className="text-gray-400">No products found in this category</p>
+                <p className="text-gray-400">
+                  {searchQuery ? `No products found for "${searchQuery}"` : "No products found in this category"}
+                </p>
+                {searchQuery && (
+                  <button
+                    onClick={() => handleSearchChange("")}
+                    className="mt-3 text-[#CAB276] hover:underline text-sm"
+                  >
+                    Clear search
+                  </button>
+                )}
               </div>
             ) : (
               <>
