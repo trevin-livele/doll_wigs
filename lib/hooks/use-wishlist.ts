@@ -8,13 +8,15 @@ import { toast } from 'sonner'
 export function useWishlist() {
   const [wishlistIds, setWishlistIds] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
-  const { user } = useAuth()
+  const [initialLoad, setInitialLoad] = useState(true)
+  const { user, loading: authLoading } = useAuth()
   const supabase = createClient()
 
   const fetchWishlist = useCallback(async () => {
     if (!user) {
       setWishlistIds([])
       setLoading(false)
+      setInitialLoad(false)
       return
     }
 
@@ -25,11 +27,14 @@ export function useWishlist() {
 
     setWishlistIds(data?.map((item: { product_id: string }) => item.product_id) || [])
     setLoading(false)
+    setInitialLoad(false)
   }, [user, supabase])
 
   useEffect(() => {
-    fetchWishlist()
-  }, [fetchWishlist])
+    if (!authLoading) {
+      fetchWishlist()
+    }
+  }, [fetchWishlist, authLoading])
 
   const toggleWishlist = async (productId: string, productName?: string) => {
     if (!user) {
@@ -70,5 +75,5 @@ export function useWishlist() {
 
   const isInWishlist = (productId: string) => wishlistIds.includes(productId)
 
-  return { wishlistIds, loading, toggleWishlist, isInWishlist, refetch: fetchWishlist }
+  return { wishlistIds, loading: loading || authLoading || initialLoad, toggleWishlist, isInWishlist, refetch: fetchWishlist }
 }

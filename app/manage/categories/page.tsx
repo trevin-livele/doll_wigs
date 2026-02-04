@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { Plus, Pencil, Trash2, Loader2, X } from "lucide-react";
 import { useAdminCategories } from "@/lib/hooks/use-admin";
+import { Pagination } from "@/components/ui/pagination";
 
 type CategoryForm = { name: string; slug: string; image: string };
-
 const emptyForm: CategoryForm = { name: "", slug: "", image: "" };
+const ITEMS_PER_PAGE = 9;
 
 export default function ManageCategories() {
   const { categories, loading, createCategory, updateCategory, deleteCategory } = useAdminCategories();
@@ -15,6 +16,13 @@ export default function ManageCategories() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<CategoryForm>(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(categories.length / ITEMS_PER_PAGE);
+  const paginatedCategories = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return categories.slice(start, start + ITEMS_PER_PAGE);
+  }, [categories, currentPage]);
 
   const openCreate = () => {
     setEditingId(null);
@@ -73,39 +81,41 @@ export default function ManageCategories() {
           <Loader2 className="w-8 h-8 animate-spin text-[#CAB276]" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {categories.map((category) => (
-            <div
-              key={category.id}
-              className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden group"
-            >
-              <div className="relative h-32 bg-gray-800">
-                <Image src={category.image} alt={category.name} fill className="object-cover" />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2">
-                  <button
-                    onClick={() => openEdit(category)}
-                    className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition"
-                  >
-                    <Pencil className="w-4 h-4 text-white" />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(category.id, category.name)}
-                    className="p-2 bg-red-500/50 rounded-lg hover:bg-red-500/70 transition"
-                  >
-                    <Trash2 className="w-4 h-4 text-white" />
-                  </button>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {paginatedCategories.map((category) => (
+              <div
+                key={category.id}
+                className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden group"
+              >
+                <div className="relative h-32 bg-gray-800">
+                  <Image src={category.image} alt={category.name} fill className="object-cover" />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2">
+                    <button
+                      onClick={() => openEdit(category)}
+                      className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition"
+                    >
+                      <Pencil className="w-4 h-4 text-white" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(category.id, category.name)}
+                      className="p-2 bg-red-500/50 rounded-lg hover:bg-red-500/70 transition"
+                    >
+                      <Trash2 className="w-4 h-4 text-white" />
+                    </button>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="text-white font-medium">{category.name}</h3>
+                  <p className="text-gray-500 text-sm">Slug: {category.slug}</p>
                 </div>
               </div>
-              <div className="p-4">
-                <h3 className="text-white font-medium">{category.name}</h3>
-                <p className="text-gray-500 text-sm">Slug: {category.slug}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+        </>
       )}
 
-      {/* Modal */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/70" onClick={() => setModalOpen(false)} />

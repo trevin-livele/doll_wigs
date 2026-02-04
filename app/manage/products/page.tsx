@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { Plus, Pencil, Trash2, Loader2, X, Search } from "lucide-react";
 import { useAdminProducts, useAdminCategories } from "@/lib/hooks/use-admin";
+import { Pagination } from "@/components/ui/pagination";
 import type { Product } from "@/lib/hooks/use-products";
 
 const formatPrice = (price: number) => `KSh ${price.toLocaleString()}`;
+const ITEMS_PER_PAGE = 10;
 
 type ProductForm = Omit<Product, "id" | "created_at" | "updated_at">;
 
@@ -30,12 +32,27 @@ export default function ManageProducts() {
   const [form, setForm] = useState<ProductForm>(emptyForm);
   const [saving, setSaving] = useState(false);
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredProducts = products.filter(
-    (p) =>
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.category.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredProducts = useMemo(() => {
+    return products.filter(
+      (p) =>
+        p.name.toLowerCase().includes(search.toLowerCase()) ||
+        p.category.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [products, search]);
+
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredProducts, currentPage]);
+
+  // Reset to page 1 when search changes
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    setCurrentPage(1);
+  };
 
   const openCreate = () => {
     setEditingId(null);
@@ -84,7 +101,7 @@ export default function ManageProducts() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Products</h1>
-          <p className="text-gray-400 text-sm">{products.length} products</p>
+          <p className="text-gray-400 text-sm">{filteredProducts.length} products</p>
         </div>
         <button
           onClick={openCreate}
@@ -94,14 +111,13 @@ export default function ManageProducts() {
         </button>
       </div>
 
-      {/* Search */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
         <input
           type="text"
           placeholder="Search products..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => handleSearch(e.target.value)}
           className="w-full bg-gray-900 border border-gray-800 rounded-lg pl-10 pr-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-[#CAB276]"
         />
       </div>
@@ -111,72 +127,74 @@ export default function ManageProducts() {
           <Loader2 className="w-8 h-8 animate-spin text-[#CAB276]" />
         </div>
       ) : (
-        <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-800/50">
-                <tr>
-                  <th className="text-left p-4 text-gray-400 font-medium text-sm">Product</th>
-                  <th className="text-left p-4 text-gray-400 font-medium text-sm">Category</th>
-                  <th className="text-left p-4 text-gray-400 font-medium text-sm">Price</th>
-                  <th className="text-left p-4 text-gray-400 font-medium text-sm">Stock</th>
-                  <th className="text-right p-4 text-gray-400 font-medium text-sm">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-800">
-                {filteredProducts.map((product) => (
-                  <tr key={product.id} className="hover:bg-gray-800/30">
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-800 relative flex-shrink-0">
-                          <Image src={product.image} alt={product.name} fill className="object-cover" />
-                        </div>
-                        <div className="min-w-0">
-                          <p className="text-white font-medium truncate">{product.name}</p>
-                          {product.sale && (
-                            <span className="text-xs bg-[#CAB276]/20 text-[#CAB276] px-1.5 py-0.5 rounded">
-                              Sale
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-4 text-gray-400">{product.category}</td>
-                    <td className="p-4">
-                      <span className="text-[#CAB276] font-medium">{formatPrice(product.price)}</span>
-                      {product.old_price && (
-                        <span className="text-gray-500 line-through text-sm ml-2">
-                          {formatPrice(product.old_price)}
-                        </span>
-                      )}
-                    </td>
-                    <td className="p-4 text-gray-400">{product.stock}</td>
-                    <td className="p-4">
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => openEdit(product)}
-                          className="p-2 hover:bg-gray-800 rounded-lg transition"
-                        >
-                          <Pencil className="w-4 h-4 text-gray-400" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(product.id, product.name)}
-                          className="p-2 hover:bg-red-500/20 rounded-lg transition"
-                        >
-                          <Trash2 className="w-4 h-4 text-red-400" />
-                        </button>
-                      </div>
-                    </td>
+        <>
+          <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-800/50">
+                  <tr>
+                    <th className="text-left p-4 text-gray-400 font-medium text-sm">Product</th>
+                    <th className="text-left p-4 text-gray-400 font-medium text-sm">Category</th>
+                    <th className="text-left p-4 text-gray-400 font-medium text-sm">Price</th>
+                    <th className="text-left p-4 text-gray-400 font-medium text-sm">Stock</th>
+                    <th className="text-right p-4 text-gray-400 font-medium text-sm">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-800">
+                  {paginatedProducts.map((product) => (
+                    <tr key={product.id} className="hover:bg-gray-800/30">
+                      <td className="p-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-800 relative flex-shrink-0">
+                            <Image src={product.image} alt={product.name} fill className="object-cover" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-white font-medium truncate">{product.name}</p>
+                            {product.sale && (
+                              <span className="text-xs bg-[#CAB276]/20 text-[#CAB276] px-1.5 py-0.5 rounded">
+                                Sale
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="p-4 text-gray-400">{product.category}</td>
+                      <td className="p-4">
+                        <span className="text-[#CAB276] font-medium">{formatPrice(product.price)}</span>
+                        {product.old_price && (
+                          <span className="text-gray-500 line-through text-sm ml-2">
+                            {formatPrice(product.old_price)}
+                          </span>
+                        )}
+                      </td>
+                      <td className="p-4 text-gray-400">{product.stock}</td>
+                      <td className="p-4">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => openEdit(product)}
+                            className="p-2 hover:bg-gray-800 rounded-lg transition"
+                          >
+                            <Pencil className="w-4 h-4 text-gray-400" />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(product.id, product.name)}
+                            className="p-2 hover:bg-red-500/20 rounded-lg transition"
+                          >
+                            <Trash2 className="w-4 h-4 text-red-400" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+        </>
       )}
 
 
-      {/* Modal */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/70" onClick={() => setModalOpen(false)} />
@@ -237,7 +255,7 @@ export default function ManageProducts() {
                   >
                     <option value="">Select category</option>
                     {categories.map((cat) => (
-                      <option key={cat.id} value={cat.name.replace(" Wigs", "")}>
+                      <option key={cat.id} value={cat.slug}>
                         {cat.name}
                       </option>
                     ))}

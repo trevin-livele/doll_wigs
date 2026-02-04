@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingCart, Filter, X, User, Menu, Minus, Plus, Loader2 } from "lucide-react";
@@ -10,8 +10,10 @@ import { useCart } from "@/lib/hooks/use-cart";
 import { useWishlist } from "@/lib/hooks/use-wishlist";
 import { useAuth } from "@/lib/hooks/use-auth";
 import { AuthModal } from "@/components/auth/auth-modal";
+import { Pagination } from "@/components/ui/pagination";
 
 const formatPrice = (price: number) => `KSh ${price.toLocaleString()}`;
+const ITEMS_PER_PAGE = 12;
 
 export default function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -20,6 +22,7 @@ export default function ShopPage() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { user } = useAuth();
   const { categories, loading: categoriesLoading } = useCategories();
@@ -44,21 +47,35 @@ export default function ShopPage() {
     await toggleWishlist(productId, productName);
   };
 
-  // Sort products
-  const sortedProducts = [...products].sort((a, b) => {
-    switch (sortBy) {
-      case "price-low":
-        return a.price - b.price;
-      case "price-high":
-        return b.price - a.price;
-      case "newest":
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      default:
-        return 0;
-    }
-  });
+  const handleCategoryChange = (cat: string) => {
+    setSelectedCategory(cat);
+    setCurrentPage(1);
+    setFilterOpen(false);
+  };
 
-  const allCategories = ["All", ...categories.map(c => c.name.replace(" Wigs", ""))];
+  // Sort products
+  const sortedProducts = useMemo(() => {
+    return [...products].sort((a, b) => {
+      switch (sortBy) {
+        case "price-low":
+          return a.price - b.price;
+        case "price-high":
+          return b.price - a.price;
+        case "newest":
+          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        default:
+          return 0;
+      }
+    });
+  }, [products, sortBy]);
+
+  const totalPages = Math.ceil(sortedProducts.length / ITEMS_PER_PAGE);
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return sortedProducts.slice(start, start + ITEMS_PER_PAGE);
+  }, [sortedProducts, currentPage]);
+
+  const allCategories = ["All", ...categories.map(c => c.slug)];
 
   return (
     <div className="min-h-screen bg-black">
@@ -146,7 +163,7 @@ export default function ShopPage() {
                   {allCategories.map(cat => (
                     <li key={cat}>
                       <button
-                        onClick={() => { setSelectedCategory(cat); setFilterOpen(false); }}
+                        onClick={() => handleCategoryChange(cat)}
                         className={`w-full text-left px-3 py-2 rounded-lg transition text-sm ${
                           selectedCategory === cat 
                             ? 'bg-[#CAB276] text-black font-medium' 
@@ -195,50 +212,53 @@ export default function ShopPage() {
                 <p className="text-gray-400">No products found in this category</p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
-                {sortedProducts.map(product => (
-                  <div key={product.id} className="bg-gray-900 rounded-lg overflow-hidden group shadow-sm hover:shadow-md transition border border-gray-800">
-                    <div className="relative h-48 md:h-72 bg-gray-800 overflow-hidden">
-                      {product.sale && (
-                        <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-[#CAB276] text-black text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10 font-medium">SALE</span>
-                      )}
-                      <button
-                        onClick={() => handleToggleWishlist(product.id, product.name)}
-                        className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-black/50 rounded-full flex items-center justify-center shadow-md z-10 hover:bg-black transition"
-                      >
-                        <Heart className={`w-3 h-3 md:w-4 md:h-4 ${isInWishlist(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-white'}`} />
-                      </button>
-                      <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition hidden md:flex items-center justify-center">
+              <>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+                  {paginatedProducts.map(product => (
+                    <div key={product.id} className="bg-gray-900 rounded-lg overflow-hidden group shadow-sm hover:shadow-md transition border border-gray-800">
+                      <div className="relative h-48 md:h-72 bg-gray-800 overflow-hidden">
+                        {product.sale && (
+                          <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-[#CAB276] text-black text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10 font-medium">SALE</span>
+                        )}
+                        <button
+                          onClick={() => handleToggleWishlist(product.id, product.name)}
+                          className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-black/50 rounded-full flex items-center justify-center shadow-md z-10 hover:bg-black transition"
+                        >
+                          <Heart className={`w-3 h-3 md:w-4 md:h-4 ${isInWishlist(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-white'}`} />
+                        </button>
+                        <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition hidden md:flex items-center justify-center">
+                          <button 
+                            onClick={() => handleAddToCart(product)}
+                            className="bg-[#CAB276] text-black px-6 py-2 rounded font-medium hover:bg-[#b39a5e] transition"
+                          >
+                            Add to Cart
+                          </button>
+                        </div>
+                      </div>
+                      <div className="p-3 md:p-4">
+                        <h3 className="font-bold text-sm md:text-base mb-1 md:mb-2 text-white line-clamp-1 uppercase">{product.name}</h3>
+                        <div className="flex gap-0.5 mb-1 md:mb-2">
+                          {[...Array(5)].map((_, i) => <span key={i} className="text-[#CAB276] text-[10px] md:text-xs">★</span>)}
+                        </div>
+                        <div className="flex items-center gap-1 md:gap-2 flex-wrap">
+                          <span className="font-bold text-[#CAB276] text-sm md:text-base">{formatPrice(product.price)}</span>
+                          {product.old_price && (
+                            <span className="text-gray-500 line-through text-xs md:text-sm">{formatPrice(product.old_price)}</span>
+                          )}
+                        </div>
                         <button 
                           onClick={() => handleAddToCart(product)}
-                          className="bg-[#CAB276] text-black px-6 py-2 rounded font-medium hover:bg-[#b39a5e] transition"
+                          className="md:hidden block w-full mt-2 bg-[#CAB276] text-black py-1.5 rounded text-center text-xs font-medium"
                         >
                           Add to Cart
                         </button>
                       </div>
                     </div>
-                    <div className="p-3 md:p-4">
-                      <h3 className="font-bold text-sm md:text-base mb-1 md:mb-2 text-white line-clamp-1 uppercase">{product.name}</h3>
-                      <div className="flex gap-0.5 mb-1 md:mb-2">
-                        {[...Array(5)].map((_, i) => <span key={i} className="text-[#CAB276] text-[10px] md:text-xs">★</span>)}
-                      </div>
-                      <div className="flex items-center gap-1 md:gap-2 flex-wrap">
-                        <span className="font-bold text-[#CAB276] text-sm md:text-base">{formatPrice(product.price)}</span>
-                        {product.old_price && (
-                          <span className="text-gray-500 line-through text-xs md:text-sm">{formatPrice(product.old_price)}</span>
-                        )}
-                      </div>
-                      <button 
-                        onClick={() => handleAddToCart(product)}
-                        className="md:hidden block w-full mt-2 bg-[#CAB276] text-black py-1.5 rounded text-center text-xs font-medium"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+              </>
             )}
           </div>
         </div>
