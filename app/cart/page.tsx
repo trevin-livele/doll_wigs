@@ -17,11 +17,7 @@ export default function CartPage() {
 
   const loading = authLoading || cartLoading;
 
-  const savings = cart.reduce((sum, item) => {
-    const oldPrice = item.product?.old_price || item.product?.price || 0;
-    const price = item.product?.price || 0;
-    return sum + (oldPrice - price) * item.quantity;
-  }, 0);
+  const savings = 0;
   const shipping = cartTotal > 25000 ? 0 : 500;
   const total = cartTotal + shipping;
 
@@ -116,7 +112,6 @@ export default function CartPage() {
                           </button>
                         </div>
                         <p className="text-[#CAB276] font-semibold text-sm mt-1">{formatPrice(item.product?.price || 0)}</p>
-                        {item.product?.old_price && <p className="text-xs text-gray-400 line-through">{formatPrice(item.product.old_price)}</p>}
                         <div className="flex items-center justify-between mt-2">
                           <div className="flex items-center gap-2">
                             <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-7 h-7 rounded border border-gray-700 flex items-center justify-center text-white">
@@ -141,12 +136,10 @@ export default function CartPage() {
                         </div>
                         <div>
                           <span className="font-medium text-white">{item.product?.name}</span>
-                          {item.product?.old_price && <p className="text-xs text-green-600 mt-1">Save {formatPrice(item.product.old_price - (item.product?.price || 0))}</p>}
                         </div>
                       </div>
                       <div className="col-span-2 text-center">
                         <span className="font-semibold text-[#CAB276]">{formatPrice(item.product?.price || 0)}</span>
-                        {item.product?.old_price && <p className="text-xs text-gray-400 line-through">{formatPrice(item.product.old_price)}</p>}
                       </div>
                       <div className="col-span-2 flex items-center justify-center gap-2">
                         <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-8 h-8 rounded-lg border-2 border-gray-800 flex items-center justify-center hover:border-[#CAB276] hover:text-[#CAB276] transition text-white">
