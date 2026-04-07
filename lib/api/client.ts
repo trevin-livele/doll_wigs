@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:31304/dollwigs/api'
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.trelvoltd.com/dollwigs/api'
 
 interface RequestOptions {
   method?: string
