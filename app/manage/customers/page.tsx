@@ -2,25 +2,36 @@
 
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Loader2, Users, Search } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
+import { api } from "@/lib/api/client";
 import { Pagination } from "@/components/ui/pagination";
-import type { Profile } from "@/lib/hooks/use-admin";
+
+interface Customer {
+  id: string;
+  email: string;
+  displayName: string | null;
+  phoneNumber: string | null;
+  role: string;
+  createdAt: string;
+}
 
 const ITEMS_PER_PAGE = 15;
 
 export default function ManageCustomers() {
-  const [customers, setCustomers] = useState<Profile[]>([]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const supabase = createClient();
 
   const fetchCustomers = useCallback(async () => {
     setLoading(true);
-    const { data } = await supabase.rpc("admin_get_all_profiles");
-    setCustomers(data || []);
+    try {
+      const data = await api<Customer[]>("/admin/users");
+      setCustomers(data);
+    } catch {
+      setCustomers([]);
+    }
     setLoading(false);
-  }, [supabase]);
+  }, []);
 
   useEffect(() => {
     fetchCustomers();
@@ -30,7 +41,7 @@ export default function ManageCustomers() {
     return customers.filter(
       (c) =>
         c.email.toLowerCase().includes(search.toLowerCase()) ||
-        c.full_name?.toLowerCase().includes(search.toLowerCase())
+        c.displayName?.toLowerCase().includes(search.toLowerCase())
     );
   }, [customers, search]);
 
@@ -45,9 +56,8 @@ export default function ManageCustomers() {
     setCurrentPage(1);
   };
 
-  // Stats
   const adminCount = customers.filter((c) => c.role === "admin").length;
-  const customerCount = customers.filter((c) => c.role === "customer").length;
+  const customerCount = customers.filter((c) => c.role === "user").length;
 
   return (
     <div className="space-y-6">
@@ -96,24 +106,22 @@ export default function ManageCustomers() {
                     <tr key={customer.id} className="hover:bg-gray-800/30">
                       <td className="p-4">
                         <div>
-                          <p className="text-white font-medium">{customer.full_name || "—"}</p>
+                          <p className="text-white font-medium">{customer.displayName || "—"}</p>
                           <p className="text-gray-500 text-sm">{customer.email}</p>
                         </div>
                       </td>
-                      <td className="p-4 text-gray-400">{customer.phone || "—"}</td>
+                      <td className="p-4 text-gray-400">{customer.phoneNumber || "—"}</td>
                       <td className="p-4">
-                        <span
-                          className={`text-xs px-2 py-0.5 rounded capitalize ${
-                            customer.role === "admin"
-                              ? "bg-purple-500/20 text-purple-400"
-                              : "bg-gray-700 text-gray-400"
-                          }`}
-                        >
+                        <span className={`text-xs px-2 py-0.5 rounded capitalize ${
+                          customer.role === "admin"
+                            ? "bg-purple-500/20 text-purple-400"
+                            : "bg-gray-700 text-gray-400"
+                        }`}>
                           {customer.role}
                         </span>
                       </td>
                       <td className="p-4 text-gray-400 text-sm">
-                        {new Date(customer.created_at).toLocaleDateString()}
+                        {new Date(customer.createdAt).toLocaleDateString()}
                       </td>
                     </tr>
                   ))}
