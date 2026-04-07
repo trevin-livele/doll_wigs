@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Package, Truck, CheckCircle, Clock, Phone, MapPin, Loader2, User } from "lucide-react";
 import { useOrders } from "@/lib/hooks/use-orders";
@@ -82,7 +81,7 @@ export default function OrdersPage() {
             {orders.map(order => {
               const status = statusConfig[order.status] || statusConfig.pending;
               const StatusIcon = status.icon;
-              const orderDate = new Date(order.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+              const orderDate = new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
               
               return (
                 <div key={order.id} className="bg-gray-900 rounded-xl md:rounded-2xl overflow-hidden border border-gray-800">
@@ -103,15 +102,12 @@ export default function OrdersPage() {
                     <div className="space-y-3 md:space-y-4">
                       {order.items.map((item) => (
                         <div key={item.id} className="flex items-center gap-3 md:gap-5">
-                          <div className="relative w-14 h-14 md:w-20 md:h-20 rounded-lg md:rounded-xl overflow-hidden flex-shrink-0 bg-gray-800">
-                            {item.product_image && <Image src={item.product_image} alt={item.product_name} fill className="object-cover" />}
-                          </div>
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-bold text-white text-sm md:text-base truncate uppercase">{item.product_name}</h3>
+                            <h3 className="font-bold text-white text-sm md:text-base truncate uppercase">{item.productName}</h3>
                             <p className="text-xs md:text-sm text-gray-500">Qty: {item.quantity}</p>
                           </div>
                           <div className="text-right">
-                            <p className="font-bold text-[#CAB276] text-sm md:text-base">{formatPrice(item.price * item.quantity)}</p>
+                            <p className="font-bold text-[#CAB276] text-sm md:text-base">{formatPrice(item.lineTotal)}</p>
                           </div>
                         </div>
                       ))}
@@ -120,7 +116,7 @@ export default function OrdersPage() {
 
                   <div className="p-4 md:p-5 border-t border-gray-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                     <div className="text-xs md:text-sm text-gray-500">
-                      <span className="text-gray-400">Deliver to:</span> {order.shipping_address?.name}, {order.shipping_address?.city}
+                      <span className="text-gray-400">Customer:</span> {order.customerName || order.customerEmail}
                     </div>
                     <div className="flex gap-2 md:gap-3 w-full md:w-auto">
                       {order.status === "delivered" && (
