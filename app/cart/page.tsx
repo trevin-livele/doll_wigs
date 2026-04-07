@@ -106,7 +106,7 @@ export default function CartPage() {
                   <div key={item.id} className="p-4 md:p-5 border-b border-gray-800 hover:bg-gray-800 transition">
                     <div className="md:hidden flex gap-3">
                       <div className="relative w-20 h-20 rounded-lg overflow-hidden shadow-sm flex-shrink-0">
-                        <Image src={item.product?.image || ''} alt={item.product?.name || ''} fill className="object-cover" />
+                        <Image src={item.product?.image_url || '/logo.svg'} alt={item.product?.name || ''} fill className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start">
@@ -137,7 +137,7 @@ export default function CartPage() {
                           <X className="w-4 h-4" />
                         </button>
                         <div className="relative w-20 h-20 rounded-lg overflow-hidden shadow-sm">
-                          <Image src={item.product?.image || ''} alt={item.product?.name || ''} fill className="object-cover" />
+                          <Image src={item.product?.image_url || '/logo.svg'} alt={item.product?.name || ''} fill className="object-cover" />
                         </div>
                         <div>
                           <span className="font-medium text-white">{item.product?.name}</span>

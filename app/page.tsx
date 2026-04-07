@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, Heart, ShoppingCart, Phone, Mail, X, Plus, Minus, User, Facebook, Instagram, Menu, Loader2 } from "lucide-react";
 import { useProducts } from "@/lib/hooks/use-products";
+import { useCategories } from "@/lib/hooks/use-categories";
 import { useCart } from "@/lib/hooks/use-cart";
 import { useWishlist } from "@/lib/hooks/use-wishlist";
 import { useAuth } from "@/lib/hooks/use-auth";
@@ -28,15 +29,6 @@ const heroSlides = [
   { subtitle: "EXCLUSIVE SALE", title: "Up to 30% Off\nAll Colored Wigs", description: "Express yourself with our vibrant colored wigs. From blonde to burgundy, find your perfect shade.", image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=500&h=600&fit=crop&crop=faces", buttonText: "Shop Sale", buttonLink: "/shop" }
 ];
 
-const categories = [
-  { name: "Straight Wigs", image: "https://images.unsplash.com/photo-1611432579699-484f7990b127?w=200&h=200&fit=crop", slug: "Straight" },
-  { name: "Curly Wigs", image: "https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?w=200&h=200&fit=crop", slug: "Curly" },
-  { name: "Bob Wigs", image: "https://images.unsplash.com/photo-1534614971-6be99a7a3ffd?w=200&h=200&fit=crop", slug: "Bob" },
-  { name: "Lace Front", image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=200&h=200&fit=crop", slug: "Lace Front" },
-  { name: "HD Lace", image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=200&h=200&fit=crop", slug: "HD Lace" },
-  { name: "Colored", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop", slug: "Colored" },
-];
-
 export default function Home() {
   const [cartOpen, setCartOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("All");
@@ -49,6 +41,7 @@ export default function Home() {
   const { products, loading: productsLoading } = useProducts(activeTab === "All" ? undefined : activeTab);
   const { items: cartItems, cartTotal, cartCount, addToCart, updateQuantity, removeFromCart } = useCart();
   const { wishlistIds, toggleWishlist, isInWishlist } = useWishlist();
+  const { categories } = useCategories();
 
   useEffect(() => { 
     const interval = setInterval(() => { 
@@ -184,8 +177,8 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-serif text-center mb-10 text-black font-bold uppercase">Shop By Category</h2>
           <div className="flex gap-6 md:gap-10 overflow-x-auto pb-4 md:pb-0 md:justify-center scrollbar-hide">
-            {categories.map((category, index) => (
-              <Link key={index} href={`/shop?category=${category.slug}`} className="text-center group flex-shrink-0">
+            {categories.map((category) => (
+              <Link key={category.id} href={`/shop?category=${category.slug}`} className="text-center group flex-shrink-0">
                 <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden mx-auto mb-3 border-2 border-transparent group-hover:border-[#CAB276] transition-all shadow-lg">
                   <Image src={category.image} alt={category.name} width={112} height={112} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
                 </div>
@@ -220,7 +213,7 @@ export default function Home() {
                     <button onClick={(e) => { e.preventDefault(); handleToggleWishlist(product.id, product.name); }} className="absolute top-3 right-3 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center z-10 hover:bg-black transition">
                       <Heart className={`w-4 h-4 ${isInWishlist(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-white'}`} />
                     </button>
-                    <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <Image src={product.image_url} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition hidden md:flex items-center justify-center">
                       <button onClick={() => handleAddToCart(product)} className="bg-[#CAB276] text-black px-6 py-2 rounded font-medium hover:bg-[#b39a5e] transition">Add to Cart</button>
                     </div>

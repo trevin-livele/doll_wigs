@@ -1,78 +1,86 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import type { User } from '@supabase/supabase-js'
+import { api, setTokens, clearTokens } from '@/lib/api/client'
 import { toast } from 'sonner'
 
+export interface AuthUser {
+  id: string
+  email: string
+  displayName: string | null
+  phoneNumber: string | null
+  photoURL: string | null
+  role: string
+  organizationId: string
+}
+
 export function useAuth() {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<AuthUser | null>(null)
   const [loading, setLoading] = useState(true)
-  const supabase = createClient()
 
   const refreshUser = useCallback(async () => {
-    const { data: { user } } = await supabase.auth.getUser()
-    setUser(user)
+    try {
+      const data = await api<{ user: AuthUser }>('/auth/me')
+      setUser(data.user)
+    } catch {
+      setUser(null)
+    }
     setLoading(false)
-    return user
-  }, [supabase.auth])
+  }, [])
 
   useEffect(() => {
-    refreshUser()
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth event:', event)
-      
-      if (event === 'SIGNED_IN') {
-        setUser(session?.user ?? null)
-        toast.success('Welcome back!')
-      } else if (event === 'SIGNED_OUT') {
-        setUser(null)
-        toast.success('Signed out successfully')
-      } else if (event === 'USER_UPDATED') {
-        setUser(session?.user ?? null)
-      } else if (event === 'TOKEN_REFRESHED') {
-        setUser(session?.user ?? null)
-      } else {
-        setUser(session?.user ?? null)
-      }
-      
+    // Check if we have a token stored
+    const token = localStorage.getItem('accessToken')
+    if (token) {
+      refreshUser()
+    } else {
       setLoading(false)
-    })
+    }
 
-    return () => subscription.unsubscribe()
-  }, [supabase.auth, refreshUser])
+    const handleLogout = () => {
+      setUser(null)
+    }
+    window.addEventListener('auth:logout', handleLogout)
+    return () => window.removeEventListener('auth:logout', handleLogout)
+  }, [refreshUser])
 
   const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) {
-      toast.error(error.message)
+    try {
+      const data = await api<{ accessToken: string; refreshToken: string; user: AuthUser }>('/auth/login', {
+        method: 'POST',
+        body: { email, password },
+      })
+      setTokens(data.accessToken, data.refreshToken)
+      setUser(data.user)
+      toast.success('Welcome back!')
+      return { data, error: null }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Login failed'
+      toast.error(message)
+      return { data: null, error: { message } }
     }
-    return { data, error }
   }
 
-  const signUp = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({ 
-      email, 
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`
-      }
-    })
-    if (error) {
-      toast.error(error.message)
-    } else if (data.user && !data.session) {
-      toast.success('Check your email to confirm your account!')
+  const signUp = async (email: string, password: string, displayName?: string) => {
+    try {
+      await api('/auth/register', {
+        method: 'POST',
+        body: { email, password, displayName: displayName || email.split('@')[0] },
+      })
+      toast.success('Registration successful. Please log in.')
+      return { error: null }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Registration failed'
+      toast.error(message)
+      return { error: { message } }
     }
-    return { data, error }
   }
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (error) {
-      toast.error(error.message)
-    }
-    return { error }
+    clearTokens()
+    setUser(null)
+    toast.success('Signed out successfully')
+    return { error: null }
   }
 
   return { user, loading, signIn, signUp, signOut, refreshUser }

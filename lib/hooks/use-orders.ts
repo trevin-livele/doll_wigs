@@ -1,34 +1,27 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { createClient } from '@/lib/supabase/client'
+import { api } from '@/lib/api/client'
 import { useAuth } from './use-auth'
 
 interface OrderItem {
   id: string
-  order_id: string
-  product_id: string
-  product_name: string
-  product_image: string | null
+  productId: string
+  productName: string
   quantity: number
-  price: number
+  unitPrice: number
+  lineTotal: number
 }
 
 interface Order {
   id: string
-  user_id: string
   status: string
   total: number
-  shipping_address: {
-    name: string
-    phone: string
-    address: string
-    city: string
-    county?: string
-    area?: string
-  }
-  created_at: string
-  updated_at: string
+  customerName: string
+  customerPhone: string
+  customerEmail: string
+  createdAt: string
+  updatedAt: string
   items: OrderItem[]
 }
 
@@ -36,7 +29,6 @@ export function useOrders() {
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const { user } = useAuth()
-  const supabase = createClient()
 
   const fetchOrders = useCallback(async () => {
     if (!user) {
@@ -45,33 +37,14 @@ export function useOrders() {
       return
     }
 
-    const { data: ordersData, error } = await supabase
-      .from('orders')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
-
-    if (error) {
-      console.error('Error fetching orders:', error)
-      setLoading(false)
-      return
-    }
-
-    if (ordersData) {
-      const ordersWithItems = await Promise.all(
-        ordersData.map(async (order) => {
-          const { data: items } = await supabase
-            .from('order_items')
-            .select('*')
-            .eq('order_id', order.id)
-
-          return { ...order, items: items || [] }
-        })
-      )
-      setOrders(ordersWithItems)
+    try {
+      const data = await api<Order[]>('/storefront/orders')
+      setOrders(data)
+    } catch {
+      console.error('Error fetching orders')
     }
     setLoading(false)
-  }, [user, supabase])
+  }, [user])
 
   useEffect(() => {
     fetchOrders()

@@ -8,14 +8,13 @@ import { useWishlist } from "@/lib/hooks/use-wishlist";
 import { useCart } from "@/lib/hooks/use-cart";
 import { useAuth } from "@/lib/hooks/use-auth";
 import { AuthModal } from "@/components/auth/auth-modal";
-import { createClient } from "@/lib/supabase/client";
+import { api } from "@/lib/api/client";
 
 interface Product {
   id: string;
   name: string;
   price: number;
-  old_price: number | null;
-  image: string;
+  image_url: string | null;
 }
 
 const formatPrice = (price: number) => `KSh ${price.toLocaleString()}`;
@@ -28,7 +27,6 @@ export default function WishlistPage() {
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const supabase = createClient();
 
   useEffect(() => {
     const fetchWishlistProducts = async () => {
@@ -38,19 +36,19 @@ export default function WishlistPage() {
         return;
       }
 
-      const { data } = await supabase
-        .from('products')
-        .select('id, name, price, old_price, image')
-        .in('id', wishlistIds);
-
-      setProducts(data || []);
+      try {
+        const data = await api<{ productId: string; product: Product }[]>('/wishlist/details');
+        setProducts(data.map(w => w.product).filter(Boolean));
+      } catch {
+        setProducts([]);
+      }
       setLoadingProducts(false);
     };
 
     if (!wishlistLoading) {
       fetchWishlistProducts();
     }
-  }, [wishlistIds, wishlistLoading, supabase]);
+  }, [wishlistIds, wishlistLoading]);
 
   const handleRemove = async (productId: string, productName: string) => {
     await toggleWishlist(productId, productName);
@@ -167,14 +165,13 @@ export default function WishlistPage() {
             {products.map(product => (
               <div key={product.id} className="bg-gray-900 rounded-lg md:rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group border border-gray-800">
                 <div className="relative h-48 md:h-72 bg-gray-800 overflow-hidden">
-                  {product.old_price && <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-red-600 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10">SALE</span>}
                   <button
                     onClick={() => handleRemove(product.id, product.name)}
                     className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-gray-900 rounded-full flex items-center justify-center shadow-md z-10 hover:bg-red-900/50 transition"
                   >
                     <Trash2 className="w-3 h-3 md:w-4 md:h-4 text-red-500" />
                   </button>
-                  <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
+                  <Image src={product.image_url || '/logo.svg'} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
                 </div>
                 <div className="p-3 md:p-4">
                   <h3 className="font-bold text-sm md:text-base mb-1 md:mb-2 text-white line-clamp-1 uppercase">{product.name}</h3>
@@ -183,7 +180,6 @@ export default function WishlistPage() {
                   </div>
                   <div className="flex items-center gap-1 md:gap-2 mb-2 md:mb-4 flex-wrap">
                     <span className="font-bold text-[#CAB276] text-sm md:text-base">{formatPrice(product.price)}</span>
-                    {product.old_price && <span className="text-gray-400 line-through text-xs md:text-sm">{formatPrice(product.old_price)}</span>}
                   </div>
                   <button 
                     onClick={() => handleAddToCart(product)}

@@ -8,7 +8,7 @@ import { ArrowLeft, Smartphone, Shield, CheckCircle, MapPin, Loader2, User } fro
 import { useCart } from "@/lib/hooks/use-cart";
 import { useAuth } from "@/lib/hooks/use-auth";
 import { AuthModal } from "@/components/auth/auth-modal";
-import { createClient } from "@/lib/supabase/client";
+import { api } from "@/lib/api/client";
 import { toast } from "sonner";
 
 const formatPrice = (price: number) => `KSh ${price.toLocaleString()}`;
@@ -21,7 +21,6 @@ export default function CheckoutPage() {
   const [processing, setProcessing] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
-  const supabase = createClient();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -40,32 +39,25 @@ export default function CheckoutPage() {
   useEffect(() => {
     const loadProfile = async () => {
       if (!user) return;
-      const { data } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-      
-      if (data) {
-        const names = (data.full_name || '').split(' ');
+      try {
+        const data = await api<{ displayName: string; email: string; phoneNumber: string }>('/profile');
+        const names = (data.displayName || '').split(' ');
         setFormData(prev => ({
           ...prev,
           firstName: names[0] || '',
           lastName: names.slice(1).join(' ') || '',
-          email: data.email || user.email || '',
-          phone: data.phone || '',
-          mpesaPhone: data.phone || ''
+          email: data.email || '',
+          phone: data.phoneNumber || '',
+          mpesaPhone: data.phoneNumber || ''
         }));
+      } catch {
+        // silent
       }
     };
     loadProfile();
-  }, [user, supabase]);
+  }, [user]);
 
-  const savings = cartItems.reduce((sum, item) => {
-    const oldPrice = item.product?.old_price || item.product?.price || 0;
-    const price = item.product?.price || 0;
-    return sum + (oldPrice - price) * item.quantity;
-  }, 0);
+  const savings = 0; // Discount calculation handled by backend
   const shipping = cartTotal > 25000 ? 0 : 500;
   const total = cartTotal + shipping;
 
@@ -87,14 +79,10 @@ export default function CheckoutPage() {
 
     setProcessing(true);
     try {
-      // Create order
-      const { data: order, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-          user_id: user.id,
-          total,
-          status: 'pending',
-          shipping_address: {
+      const order = await api<{ id: string }>('/storefront/orders', {
+        method: 'POST',
+        body: {
+          shippingAddress: {
             name: `${formData.firstName} ${formData.lastName}`,
             phone: formData.phone,
             address: formData.address,
@@ -102,42 +90,17 @@ export default function CheckoutPage() {
             county: formData.county,
             area: formData.area,
             instructions: formData.instructions
-          }
-        })
-        .select()
-        .single();
+          },
+          items: cartItems.map(item => ({
+            productId: item.productId || item.id,
+            productName: item.product?.name || '',
+            productImage: item.product?.image_url || '',
+            quantity: item.quantity,
+            price: item.product?.price || 0
+          }))
+        }
+      });
 
-      if (orderError || !order) {
-        throw new Error(orderError?.message || 'Failed to create order');
-      }
-
-      // Create order items
-      const orderItems = cartItems.map(item => ({
-        order_id: order.id,
-        product_id: item.product_id,
-        product_name: item.product?.name || '',
-        product_image: item.product?.image || '',
-        quantity: item.quantity,
-        price: item.product?.price || 0
-      }));
-
-      const { error: itemsError } = await supabase
-        .from('order_items')
-        .insert(orderItems);
-
-      if (itemsError) {
-        throw new Error(itemsError.message);
-      }
-
-      // Update order status to processing (simulating M-Pesa payment)
-      await supabase
-        .from('orders')
-        .update({ status: 'processing' })
-        .eq('id', order.id);
-
-      // Clear cart
-      await clearCart();
-      
       setOrderId(order.id);
       setStep(3);
       toast.success('Order placed successfully!');
@@ -326,13 +289,12 @@ export default function CheckoutPage() {
                   {cartItems.map(item => (
                     <div key={item.id} className="flex gap-3 md:gap-4">
                       <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
-                        <Image src={item.product?.image || ''} alt={item.product?.name || ''} fill className="object-cover" />
+                        <Image src={item.product?.image_url || '/logo.svg'} alt={item.product?.name || ''} fill className="object-cover" />
                         <span className="absolute -top-1 -right-1 bg-[#CAB276] text-black text-[10px] md:text-xs w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center font-medium">{item.quantity}</span>
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs md:text-sm font-medium text-white truncate">{item.product?.name}</p>
                         <p className="text-xs md:text-sm font-bold text-[#CAB276]">{formatPrice(item.product?.price || 0)}</p>
-                        {item.product?.old_price && <p className="text-[10px] md:text-xs text-gray-500 line-through">{formatPrice(item.product.old_price)}</p>}
                       </div>
                     </div>
                   ))}

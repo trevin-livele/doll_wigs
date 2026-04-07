@@ -7,7 +7,7 @@ import { Heart, ShoppingCart, User, Package, MapPin, CreditCard, Bell, LogOut, E
 import { useAuth } from "@/lib/hooks/use-auth";
 import { useAdmin } from "@/lib/hooks/use-admin";
 import { AuthModal } from "@/components/auth/auth-modal";
-import { createClient } from "@/lib/supabase/client";
+import { api } from "@/lib/api/client";
 import { toast } from "sonner";
 
 interface Address {
@@ -28,7 +28,6 @@ export default function AccountPage() {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [saving, setSaving] = useState(false);
-  const supabase = createClient();
 
   const [profile, setProfile] = useState({
     fullName: "",
@@ -48,34 +47,40 @@ export default function AccountPage() {
 
   const fetchProfile = async () => {
     if (!user) return;
-    const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single();
-    if (data) {
+    try {
+      const data = await api<{ displayName: string; email: string; phoneNumber: string; address: string }>('/profile');
       setProfile({
-        fullName: data.full_name || "",
+        fullName: data.displayName || "",
         email: data.email,
-        phone: data.phone || "",
+        phone: data.phoneNumber || "",
       });
-      // Load addresses from profile
-      if (data.address && Array.isArray(data.address)) {
-        setAddresses(data.address);
+      // Addresses stored as JSON string in address field
+      if (data.address) {
+        try {
+          const parsed = JSON.parse(data.address);
+          if (Array.isArray(parsed)) setAddresses(parsed);
+        } catch { /* not JSON, ignore */ }
       }
+    } catch {
+      // silent
     }
   };
 
   const handleSaveProfile = async () => {
     if (!user) return;
     setSaving(true);
-    const { error } = await supabase.from('profiles').update({
-      full_name: profile.fullName,
-      phone: profile.phone,
-      updated_at: new Date().toISOString()
-    }).eq('id', user.id);
-
-    if (error) {
-      toast.error('Failed to update profile');
-    } else {
+    try {
+      await api('/profile', {
+        method: 'PUT',
+        body: {
+          displayName: profile.fullName,
+          phoneNumber: profile.phone,
+        },
+      });
       toast.success('Profile updated successfully');
       setIsEditing(false);
+    } catch {
+      toast.error('Failed to update profile');
     }
     setSaving(false);
   };
@@ -90,29 +95,39 @@ export default function AccountPage() {
       ? [...addresses.map(a => ({ ...a, isDefault: false })), newAddr]
       : [...addresses, newAddr];
     
-    const { error } = await supabase.from('profiles').update({ address: updatedAddresses }).eq('id', user.id);
-    if (!error) {
+    try {
+      await api('/profile', { method: 'PUT', body: { address: JSON.stringify(updatedAddresses) } });
       setAddresses(updatedAddresses);
       setNewAddress({ label: "", address: "", city: "", county: "", isDefault: false });
       setShowAddAddress(false);
       toast.success('Address added');
+    } catch {
+      toast.error('Failed to add address');
     }
   };
 
   const handleDeleteAddress = async (id: string) => {
     if (!user) return;
     const updatedAddresses = addresses.filter(a => a.id !== id);
-    await supabase.from('profiles').update({ address: updatedAddresses }).eq('id', user.id);
-    setAddresses(updatedAddresses);
-    toast.success('Address removed');
+    try {
+      await api('/profile', { method: 'PUT', body: { address: JSON.stringify(updatedAddresses) } });
+      setAddresses(updatedAddresses);
+      toast.success('Address removed');
+    } catch {
+      toast.error('Failed to remove address');
+    }
   };
 
   const handleSetDefaultAddress = async (id: string) => {
     if (!user) return;
     const updatedAddresses = addresses.map(a => ({ ...a, isDefault: a.id === id }));
-    await supabase.from('profiles').update({ address: updatedAddresses }).eq('id', user.id);
-    setAddresses(updatedAddresses);
-    toast.success('Default address updated');
+    try {
+      await api('/profile', { method: 'PUT', body: { address: JSON.stringify(updatedAddresses) } });
+      setAddresses(updatedAddresses);
+      toast.success('Default address updated');
+    } catch {
+      toast.error('Failed to update default address');
+    }
   };
 
   const handleSignOut = async () => {

@@ -10,18 +10,22 @@ import type { Product } from "@/lib/hooks/use-products";
 const formatPrice = (price: number) => `KSh ${price.toLocaleString()}`;
 const ITEMS_PER_PAGE = 10;
 
-type ProductForm = Omit<Product, "id" | "created_at" | "updated_at">;
+type ProductForm = {
+  name: string;
+  price: number;
+  description: string | null;
+  category: string;
+  image_url: string;
+  stock_quantity: number;
+};
 
 const emptyForm: ProductForm = {
   name: "",
   price: 0,
-  old_price: null,
-  rating: 5,
-  sale: false,
-  image: "",
+  image_url: "",
   category: "",
   description: "",
-  stock: 100,
+  stock_quantity: 100,
 };
 
 export default function ManageProducts() {
@@ -65,13 +69,10 @@ export default function ManageProducts() {
     setForm({
       name: product.name,
       price: product.price,
-      old_price: product.old_price,
-      rating: product.rating,
-      sale: product.sale,
-      image: product.image,
+      image_url: product.image_url,
       category: product.category,
       description: product.description,
-      stock: product.stock,
+      stock_quantity: product.stock_quantity,
     });
     setModalOpen(true);
   };
@@ -146,28 +147,18 @@ export default function ManageProducts() {
                       <td className="p-4">
                         <div className="flex items-center gap-3">
                           <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-800 relative flex-shrink-0">
-                            <Image src={product.image} alt={product.name} fill className="object-cover" />
+                            <Image src={product.image_url} alt={product.name} fill className="object-cover" />
                           </div>
                           <div className="min-w-0">
                             <p className="text-white font-medium truncate">{product.name}</p>
-                            {product.sale && (
-                              <span className="text-xs bg-[#CAB276]/20 text-[#CAB276] px-1.5 py-0.5 rounded">
-                                Sale
-                              </span>
-                            )}
                           </div>
                         </div>
                       </td>
                       <td className="p-4 text-gray-400">{product.category}</td>
                       <td className="p-4">
                         <span className="text-[#CAB276] font-medium">{formatPrice(product.price)}</span>
-                        {product.old_price && (
-                          <span className="text-gray-500 line-through text-sm ml-2">
-                            {formatPrice(product.old_price)}
-                          </span>
-                        )}
                       </td>
-                      <td className="p-4 text-gray-400">{product.stock}</td>
+                      <td className="p-4 text-gray-400">{product.stock_quantity}</td>
                       <td className="p-4">
                         <div className="flex items-center justify-end gap-2">
                           <button
@@ -235,11 +226,12 @@ export default function ManageProducts() {
                   <label className="block text-sm text-gray-400 mb-1">Old Price (optional)</label>
                   <input
                     type="number"
-                    value={form.old_price || ""}
+                    value={form.stock_quantity}
                     onChange={(e) =>
-                      setForm({ ...form, old_price: e.target.value ? parseInt(e.target.value) : null })
+                      setForm({ ...form, stock_quantity: parseInt(e.target.value) || 0 })
                     }
                     className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#CAB276]"
+                    placeholder="Stock quantity"
                   />
                 </div>
               </div>
@@ -266,8 +258,8 @@ export default function ManageProducts() {
                   <input
                     type="number"
                     required
-                    value={form.stock}
-                    onChange={(e) => setForm({ ...form, stock: parseInt(e.target.value) || 0 })}
+                    value={form.stock_quantity}
+                    onChange={(e) => setForm({ ...form, stock_quantity: parseInt(e.target.value) || 0 })}
                     className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#CAB276]"
                   />
                 </div>
@@ -278,8 +270,8 @@ export default function ManageProducts() {
                 <input
                   type="url"
                   required
-                  value={form.image}
-                  onChange={(e) => setForm({ ...form, image: e.target.value })}
+                  value={form.image_url}
+                  onChange={(e) => setForm({ ...form, image_url: e.target.value })}
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#CAB276]"
                 />
               </div>
@@ -292,18 +284,6 @@ export default function ManageProducts() {
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#CAB276] resize-none"
                 />
-              </div>
-
-              <div className="flex items-center gap-4">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={form.sale}
-                    onChange={(e) => setForm({ ...form, sale: e.target.checked })}
-                    className="w-4 h-4 rounded border-gray-700 bg-gray-800 text-[#CAB276] focus:ring-[#CAB276]"
-                  />
-                  <span className="text-gray-400 text-sm">On Sale</span>
-                </label>
               </div>
 
               <div className="flex gap-3 pt-2">

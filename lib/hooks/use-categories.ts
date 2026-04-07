@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
+import { api } from '@/lib/api/client'
 
 export interface Category {
   id: string
@@ -13,23 +13,20 @@ export interface Category {
 export function useCategories() {
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
-  const supabase = createClient()
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const { data, error } = await supabase
-        .from('categories')
-        .select('*')
-        .order('name')
-
-      if (!error && data) {
+      try {
+        const data = await api<Category[]>('/storefront/categories')
         setCategories(data)
+      } catch {
+        // silent fail for categories
       }
       setLoading(false)
     }
 
     fetchCategories()
-  }, [supabase])
+  }, [])
 
   return { categories, loading }
 }

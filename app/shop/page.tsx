@@ -276,7 +276,7 @@ export default function ShopPage() {
                         >
                           <Heart className={`w-3 h-3 md:w-4 md:h-4 ${isInWishlist(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-white'}`} />
                         </button>
-                        <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
+                        <Image src={product.image_url} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition hidden md:flex items-center justify-center">
                           <button 
                             onClick={() => handleAddToCart(product)}

@@ -33,13 +33,10 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
           onSuccess?.()
         }
       } else {
-        const { data, error } = await signUp(email, password)
-        if (!error && data.user && !data.session) {
+        const { error } = await signUp(email, password, name || undefined)
+        if (!error) {
+          // Registration successful — prompt to sign in
           setEmailSent(true)
-        } else if (!error && data.session) {
-          // User was auto-confirmed
-          onClose()
-          onSuccess?.()
         }
       }
     } catch {
@@ -72,13 +69,13 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
             <div className="w-16 h-16 bg-[#CAB276]/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <Mail className="w-8 h-8 text-[#CAB276]" />
             </div>
-            <h2 className="text-2xl font-serif text-white mb-2">Check Your Email</h2>
+            <h2 className="text-2xl font-serif text-white mb-2">Account Created</h2>
             <p className="text-gray-400 mb-6">
-              We&apos;ve sent a confirmation link to<br />
+              Your account has been created for<br />
               <span className="text-white font-medium">{email}</span>
             </p>
             <p className="text-sm text-gray-500 mb-6">
-              Click the link in the email to verify your account and start shopping.
+              You can now sign in with your credentials.
             </p>
             <button
               onClick={() => {
