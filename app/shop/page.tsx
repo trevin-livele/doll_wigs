@@ -82,7 +82,7 @@ export default function ShopPage() {
         case "price-high":
           return b.price - a.price;
         case "newest":
-          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
         default:
           return 0;
       }
