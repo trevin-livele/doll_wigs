@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Package, Truck, CheckCircle, Clock, Phone, MapPin, Loader2, User } from "lucide-react";
 import { useOrders } from "@/lib/hooks/use-orders";
