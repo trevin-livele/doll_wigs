@@ -82,7 +82,7 @@ export default function ShopPage() {
         case "price-high":
           return b.price - a.price;
         case "newest":
-          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
         default:
           return 0;
       }
@@ -267,9 +267,6 @@ export default function ShopPage() {
                   {paginatedProducts.map(product => (
                     <div key={product.id} className="bg-gray-900 rounded-lg overflow-hidden group shadow-sm hover:shadow-md transition border border-gray-800">
                       <div className="relative h-48 md:h-72 bg-gray-800 overflow-hidden">
-                        {product.sale && (
-                          <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-[#CAB276] text-black text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10 font-medium">SALE</span>
-                        )}
                         <button
                           onClick={() => handleToggleWishlist(product.id, product.name)}
                           className="absolute top-2 right-2 md:top-3 md:right-3 w-6 h-6 md:w-8 md:h-8 bg-black/50 rounded-full flex items-center justify-center shadow-md z-10 hover:bg-black transition"
@@ -342,7 +339,7 @@ export default function ShopPage() {
                   {cartItems.map(item => (
                     <div key={item.id} className="flex gap-3 md:gap-4 p-3 bg-gray-800 rounded-lg">
                       <div className="relative w-16 h-16 md:w-20 md:h-20 rounded overflow-hidden flex-shrink-0">
-                        <Image src={item.product?.image || ''} alt={item.product?.name || ''} fill className="object-cover" />
+                        <Image src={item.product?.image_url || '/logo.svg'} alt={item.product?.name || ''} fill className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-sm font-medium text-white truncate">{item.product?.name}</h3>

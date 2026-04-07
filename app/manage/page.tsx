@@ -22,7 +22,7 @@ export default function ManageDashboard() {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
       const dateStr = date.toISOString().split("T")[0];
-      const dayOrders = orders.filter((o) => o.created_at.startsWith(dateStr));
+      const dayOrders = orders.filter((o) => o.createdAt.startsWith(dateStr));
       
       days.push({
         date: date.toLocaleDateString("en-US", { weekday: "short" }),
@@ -194,10 +194,10 @@ export default function ManageDashboard() {
                 <div key={order.id} className="p-4 flex items-center gap-4">
                   <div className="flex-1 min-w-0">
                     <p className="text-white font-medium truncate">
-                      {order.shipping_address?.name || "Customer"}
+                      {order.customerName || order.customerEmail || "Customer"}
                     </p>
                     <p className="text-gray-500 text-sm">
-                      {new Date(order.created_at).toLocaleDateString()}
+                      {new Date(order.createdAt).toLocaleDateString()}
                     </p>
                   </div>
                   <div className="text-right">

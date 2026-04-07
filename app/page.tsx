@@ -209,7 +209,6 @@ export default function Home() {
               {products.slice(0, 8).map((product) => (
                 <div key={product.id} className="bg-gray-900 rounded-lg overflow-hidden group">
                   <div className="relative h-52 md:h-72 overflow-hidden">
-                    {product.sale && <span className="absolute top-3 left-3 bg-[#CAB276] text-black text-xs px-2 py-1 rounded font-medium z-10">SALE</span>}
                     <button onClick={(e) => { e.preventDefault(); handleToggleWishlist(product.id, product.name); }} className="absolute top-3 right-3 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center z-10 hover:bg-black transition">
                       <Heart className={`w-4 h-4 ${isInWishlist(product.id) ? 'text-[#CAB276] fill-[#CAB276]' : 'text-white'}`} />
                     </button>
@@ -345,7 +344,7 @@ export default function Home() {
                   {cartItems.map(item => (
                     <div key={item.id} className="flex gap-4 p-3 bg-gray-800 rounded-lg">
                       <div className="relative w-20 h-20 rounded overflow-hidden flex-shrink-0">
-                        <Image src={item.product?.image || ''} alt={item.product?.name || ''} fill className="object-cover" />
+                        <Image src={item.product?.image_url || '/logo.svg'} alt={item.product?.name || ''} fill className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-sm font-medium text-white truncate">{item.product?.name}</h3>
